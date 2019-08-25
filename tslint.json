@@ -1,0 +1,19 @@
+{
+  "defaultSeverity": "warning",
+  "extends": [
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-microsoft-contrib",
+    "tslint-clean-code",
+    "rxjs-tslint-rules"
+  ],
+  "jsRules": {},
+  "rules": {
+    "typedef": [
+      false,
+      "variable-declaration"
+    ],
+    "semicolon": false
+  },
+  "rulesDirectory": []
+}
