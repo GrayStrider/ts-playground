@@ -33,3 +33,11 @@ function fail() { // Inferred return type is never
 let someValue: any = "this is a string";
 let strLength: number = (<string>someValue).length; // type assertion
 let strLength2: number = (someValue as string).length; // using as syntax
+
+const objc: { [key: string]: string } = {
+  // type string accepts numbers, while type number
+  // does not accept string (JS coerces keys to string)
+  2: 'prop',
+  1: 'prop2',
+  4: 'prop3'
+};

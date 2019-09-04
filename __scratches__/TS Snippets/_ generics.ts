@@ -75,7 +75,7 @@ console.log(v2)
 
 
 function reverse<T>(items: T[]): T[] {
-  const toreturn = []
+  const toreturn: T[] = [] // god
   for (let i = items.length - 1; i >= 0; i--) {
     toreturn.push(items[i]);
   }
@@ -139,7 +139,8 @@ class Vespa extends Car {
   numWheels = 2
 }
 
-function washCar <T extends Car> (car: T) : T {
+
+const washCar = <T extends Car>(car: T): T => {
   console.log(`Received a ${car.label} in the car wash.`)
   console.log(`Cleaning all ${car.numWheels} tires.`)
   console.log('Beeping horn -', Car.horn())

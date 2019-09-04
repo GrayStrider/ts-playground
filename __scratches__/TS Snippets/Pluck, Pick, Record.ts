@@ -34,4 +34,4 @@ const cats: CatList = {
 }
 
 type ThreeStringProps = Record<'prop1' | 'prop2' | 'prop3', string>
-type ThreeStringProps = { prop1: string, prop2: string, prop3: string }
+type ThreeStringProps2 = { prop1: string, prop2: string, prop3: string }

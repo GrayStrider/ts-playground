@@ -1,3 +1,5 @@
+export default {}
+
 /**
  * The Handler interface declares a method for building the chain of handlers.
  * It also declares a method for executing a request.
@@ -44,7 +46,6 @@ class MonkeyHandler extends AbstractHandler {
 
   }
 }
-
 class SquirrelHandler extends AbstractHandler {
   public handle(request: string): string | null {
     if (request === 'Nut') {
@@ -67,7 +68,7 @@ class DogHandler extends AbstractHandler {
  * The client code is usually suited to work with a single handler. In most
  * cases, it is not even aware that the handler is part of a chain.
  */
-function clientCode(handler: Handler) {
+const clientCode = (handler: Handler) => {
   const foods = ['Nut', 'Banana', 'Cup of coffee'];
 
   for (const food of foods) {
