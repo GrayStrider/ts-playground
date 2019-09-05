@@ -2,9 +2,7 @@ const sum = (numbers: number[]): number =>
   numbers.reduce((prev, current) => prev + current)
 
 const range = (length: number): number[] =>
-  [...Array(length + 1).keys()]
-
-console.log(sum(range(12)))
+  [...Array(length).keys()]
 
 interface Student {
   name: string
@@ -24,3 +22,13 @@ const aboveTenSum = students
   .reduce((acc, curr) => acc + curr, 0)
 
 console.log(aboveTenSum)
+
+const objectify = (target: Student[]) =>
+  target.reduce((previousValue, currentValue) => ({
+    ...previousValue,
+    [currentValue.name]: currentValue.grade
+  }), {}) //?
+
+objectify(students) //?
+
+export {objectify, Student, sum, range}

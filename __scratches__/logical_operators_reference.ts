@@ -1,3 +1,7 @@
+/**
+ * returns the first falsy value;
+ * otherwise returns the last truthy value
+ */
 console.log(true && true) // t && t returns true
 console.log(true && false) // t && f returns false
 console.log(false && true) // f && t returns false
@@ -8,6 +12,12 @@ console.log(false && 'Cat') // f && t returns false
 console.log('Cat' && false) // t && f returns false
 console.log('' && false) // f && f returns ""
 console.log(false && '') // f && f returns false
+
+
+/**
+ * returns the first truthy value;
+ * otherwise returns the last falsy value
+ */
 console.log(true || true) // t || t returns true
 console.log(false || true) // f || t returns true
 console.log(true || false) // t || f returns true

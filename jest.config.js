@@ -13,12 +13,14 @@
 
 module.exports = {
   "roots": [
-    "<rootDir>/src/"
+    "<rootDir>/src/",
+    "<rootDir>/__scratches__/"
   ],
   "transform": {
     "^.+\\.tsx?$": "ts-jest"
   },
   "modulePaths": [
-    "<rootDir>/src/"
+    "<rootDir>/src/",
+    "<rootDir>/__scratches__/"
   ],
 }

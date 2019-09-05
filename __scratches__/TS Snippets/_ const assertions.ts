@@ -21,5 +21,4 @@ console.log(typeof x_.x)
 const str: 'string!' = 'string!' // will not widen
 console.log(typeof str) // type 'string!'
 
-let str2 = str
-console.log(typeof str2) // widened to string
+console.log(typeof str) // widened to string

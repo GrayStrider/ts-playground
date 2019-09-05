@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react';
 import * as React from 'react';
-import { sum } from '../sum';
 import { App } from 'app/index';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';

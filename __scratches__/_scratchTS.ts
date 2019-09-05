@@ -31,9 +31,9 @@ inst.param2 = 'newvalue'
 inst.param2 //?
 
 const double = (value: number, index: number) =>
-  ({[index]: value * 2})
+  ({ [index]: value * 2 })
 console.log(
-  [1,3,4].map(double))
+  [1, 3, 4].map(double))
 
 
 const optionalArgs = (number: number, message?: string) => {
@@ -46,7 +46,22 @@ optionalArgs(3)//?
 
 
 const nullishCoalescing = (n: number) =>
-	(n || n === 0) ? n : false
+  (n || n === 0) ? n : false
 
 nullishCoalescing(12) // ?
 nullishCoalescing(0) // ?
+
+
+/**
+ * readonly
+ */
+// const arr: readonly string[] = ['one', 'two']
+const arr = ['one', 'two'] as const
+
+
+/**
+ * using ternary as 'if' statement
+ */
+(1 > 0)
+? console.log('false')
+: console.log('true')

@@ -1,3 +1,5 @@
+export default {}
+
 /**
  * The Abstract Factory interface declares a set of methods that return
  * different abstract products. These products are called a family and are
