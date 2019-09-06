@@ -14,12 +14,13 @@ let greeter = new Greeter3('world')
 // Inheritance
 abstract class Animal { // cannot be instantiated directly
   protected owner: string // cannot be accessed externaly
+
   protected constructor(private readonly name: string) {
     this.owner = 'None!'
   }
 
   move(distanceInMeters: number = 0) {
-    console.log(`${this.name} moved ${distanceInMeters}m.`)
+    console.log(`${this.name} moved ${distanceInMeters.toPrecision(4)}m.`)
   }
 }
 

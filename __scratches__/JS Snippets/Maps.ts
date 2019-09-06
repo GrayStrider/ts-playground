@@ -1,35 +1,67 @@
-/*
-A Map object is a simple key/value map and can iterate its elements in insertion order.
-
-- Use maps over objects when keys are unknown until run time,
-and when all keys are the same type and all values are the same type.
-- Use maps if there is a need to store primitive values as keys because
-object treats each key as a string whether it's a number value,
-boolean value or any other primitive value.
-- Use objects when there is logic that operates on individual elements.
+/**
+ * allows pairs of key/value of any type
+ * if specifying values at initialisation, Map type gets locked at the value of first entry
+ * Have to use THE SAME object/array/function/etc (non-primities) (const) for set/get
+ *
+ * the order of insertion preserved.
  */
 
-let sayings = new Map();
-sayings.set('dog', 'woof');
-sayings.set('cat', 'meow');
-sayings.set('elephant', 'toot');
-console.log(sayings.size); // 3
-sayings.get('fox'); // undefined
-sayings.has('bird'); // false
-sayings.delete('dog');
-sayings.has('dog'); // false
+let typedMap = new Map([
+  [() => 0, 40]
+])
+// typedMap.set(false, {}) // error!
 
-// "cat goes meow"
-// "elephant goes toot"
-sayings.clear();
+let map = new Map()
 
-console.log(sayings.size); // 0
-sayings.set(false, 'true string!')
-sayings.get(false) //?
-sayings.set({ key: 'value' }, 'object')
+const [funcKey, arrKey, objKey, symbolKey] = [
+  (arg) => typeof arg,
+  [1, 2, false],
+  { prop: 'value!' },
+  Symbol('symbol!').description
+]
 
-sayings.get({ key: 'value'}) //?
+/**
+ * possible to chain sets
+ */
+map.set(funcKey, 'string value!')
+   .set(arrKey, ['array value'])
+   .set(objKey, { prop2: 'propvalue' })
+   .set(symbolKey, Symbol('symbol value!').description)
+   .set('stringKey', (arg: string) => arg.toUpperCase() + ' returned through func value')
+   .set(NaN, 'NaN value / key')
 
-for (const [key, value] of sayings) {
-  console.log(key + ' goes ' + value);
-}
+   /**
+    * no way to refer to the function without creating variable,
+    * so the only way to access it is through iteration; same with array/objects/etc
+    */
+   .set(() => 0, 'cant get me!')
+
+console.log(map.get('stringKey')('string'))
+console.log(map.get(NaN))
+console.log(map.has(NaN))
+console.log(map.delete(NaN)) // deletes entry; returns success of the operation
+// map.clear() // deletes everything
+console.log(map.size)
+
+/**
+ * symbols cannot be represented as a string,
+ * to log have to use Symbol.description
+ *
+ * in for/of map.entries() is used by default implicitly
+ */
+for (const [key, value] of map)
+  console.log(key + ': ' + value)
+
+for (const entry of map)
+  console.log(entry)
+
+console.log(map)
+console.log([...map.entries()])
+console.log([...map.values()])
+console.log([...map.keys()])
+
+/**
+ * built-in iterable method
+ */
+map.forEach((value, key) =>
+  console.log(`${key}: ${value}`))

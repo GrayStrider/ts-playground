@@ -49,25 +49,19 @@ const nullishCoalescing = (n: number) =>
   (n || n === 0) ? n : false
 
 nullishCoalescing(12) // ?
-nullishCoalescing(0) // ?
-
-
-/**
- * readonly
- */
-// const arr: readonly string[] = ['one', 'two']
-const arr = ['one', 'two'] as const
+nullishCoalescing(0); // ?
 
 
 /**
  * using ternary as 'if' statement
+ * needs to be prefixed by a semicolon
  */
 (1 > 0)
 ? console.log('false')
 : console.log('true')
 
 const x = 'Ω'.charCodeAt(0)//?
-const hex = d => "0x" + Number(d).toString(16)
+const hex = d => '0x' + Number(d).toString(16)
 console.log(hex(x))
 const y = '1'.charCodeAt(0) //?
 String.fromCharCode(937) //?

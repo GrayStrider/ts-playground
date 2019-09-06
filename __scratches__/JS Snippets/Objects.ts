@@ -1,0 +1,69 @@
+export default {}
+
+interface Person {
+  readonly name: string
+  age: number
+  grades: number[]
+  isEmployed: boolean
+  action(subj: string): string
+}
+
+const target = {
+  newprop: 'newPropValue',
+  symbol:  Symbol('hi')
+}
+
+/**
+ * Object with types
+ */
+const person: Person = {
+  name:       'John',
+  age:        30,
+  grades:     [20, 5, 3],
+  isEmployed: false,
+  action:     (subj) => subj.toUpperCase()
+}
+
+/**
+ * combination with Map
+ * combination of entries/fromEntries can be used to
+ * modify object with map/filter/reduce/etc
+ * although, lodash is a better alternative
+ */
+let map = new Map(
+  Object.entries(person)
+)
+console.log(map.get('name'))
+// ...and the other way:
+console.log(JSON.stringify(
+  Object.fromEntries(map) // implicit .entries()
+))
+
+/**
+ * Methods
+ */
+console.log(person.action('testString'))
+console.log(person.isEmployed)
+console.log(!!person['grades'])
+console.log('grades' in person)
+
+// etc
+console.log(Object.keys(person))
+console.log(Object.entries(person))
+const person2 = Object.assign(target, person) // enumerable only
+console.log(person2)
+console.log(Object.seal(person2)) //prevent modification
+// person2['anotherProp'] = 'test' //error
+person2.age = 99 // allowed!
+console.log(Object.isSealed(person2))
+console.log(Object.isExtensible(person2))
+console.log(Object.getOwnPropertyDescriptors(['test']))
+console.log(Object.freeze(person2))
+// person2.age = 30 // error! Frozen!
+console.log(Object.isFrozen(person2))
+// freezing/sealing is permanent for the object.
+console.log(person2.hasOwnProperty('age'))
+console.log(Object.getOwnPropertyNames(person2))
+console.log(Object.getOwnPropertyDescriptors(person2))
+console.log(Object.getOwnPropertySymbols(person2))
+console.log(Reflect.ownKeys(person2))

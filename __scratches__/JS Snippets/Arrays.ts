@@ -1,15 +1,17 @@
 export default {}
+
 import { range } from './Generators, Iterators, array-like'
 
 const isEven = (num: number) => !(num % 2)
 const NUMS: number[] = Array.from(Array(10).keys())
 const STRS: string[] = ['one', 'two', 'three', 'one']
-const ANY = [() => 0, {}, Symbol('hi')] //?
+const ANY: unknown[] = [() => 0, {}, Symbol('hi')] //?
 
 /**
  * methods
  */
 console.log(STRS[2])
+// console.log('two' in STRS)
 console.log(STRS.length)
 // can truncate:
 NUMS.length = 8

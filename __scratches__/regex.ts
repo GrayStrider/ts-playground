@@ -35,11 +35,11 @@ const concat = obj
   .reduce((acc, curr) => acc + curr.data, '')
 console.log(concat)
 
-const arr = obj
-  .filter(item => !/\d/.test(item.data))
-  .map(item => item.data)
-  .join('-')
-console.log(arr)
+// const arr = obj
+//   .filter(item => !/\d/.test(item.data))
+//   .map(item => item.data)
+//   .join('-')
+// console.log(arr)
 
 
 const test = '12weord test'
@@ -57,3 +57,8 @@ foo.match(/(?<!not )foo/) //?
 test.match(/(?<!\d{2})[a-z]+/gi) //?
 // only matches the one with gidits; can't figure out how to reverse
 test.match(/(\d+)[a-z]+/gi) //?
+
+const regExp = /(?<=Strider)(🐌)/gi
+regExp.test("Strider🐌") //?
+
+'Stride4r🐌'.match(regExp)
