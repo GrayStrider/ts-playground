@@ -1,3 +1,5 @@
+export {objectify, Student, sum, range}
+
 const sum = (numbers: number[]): number =>
   numbers.reduce((prev, current) => prev + current)
 
@@ -31,4 +33,5 @@ const objectify = (target: Student[]) =>
 
 objectify(students) //?
 
-export {objectify, Student, sum, range}
+console.log(
+  [...range(10)])

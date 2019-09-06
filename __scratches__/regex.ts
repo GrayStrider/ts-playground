@@ -1,4 +1,5 @@
 export default {}
+
 const file = 'text.txt'
 
 

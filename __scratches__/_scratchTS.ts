@@ -65,3 +65,15 @@ const arr = ['one', 'two'] as const
 (1 > 0)
 ? console.log('false')
 : console.log('true')
+
+const x = 'Ω'.charCodeAt(0)//?
+const hex = d => "0x" + Number(d).toString(16)
+console.log(hex(x))
+const y = '1'.charCodeAt(0) //?
+String.fromCharCode(937) //?
+String.fromCodePoint(937, 45, 78) //?
+const hexa = hex(x)//?
+const n36 = Number(99999999999999999).toString(36)
+
+console.log(999845..toString(36)) // call method directly on number
+console.log((999845).toString(36)) // call method directly on number
