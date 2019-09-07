@@ -27,6 +27,7 @@ let obj: x1 = {
   optional:  'optional'
   // another: false
 }
+
 // functions in JS can not return nothing, use undefined
 type returnsVoid = (...args: number[]) => void
 
@@ -40,49 +41,49 @@ const foo: returnsVoid /* IReturnsVoid */ = (...args) => {
 }
 foo(3, 4, 5)
 
-interface ClockConstructor {
-  new(hour: number, minute: number): ClockInterface; // constructor interface
-}
-
-interface ClockInterface {
-  tick(): void;
-}
-
-function createClock(ctor: ClockConstructor, hour: number, minute: number): ClockInterface {
-  return new ctor(hour, minute)
-}
-
-class DigitalClock implements ClockInterface {
-  constructor(h: number, m: number) {
+namespace Clock {
+  interface ClockConstructor {
+    new(hour: number, minute: number): ClockInterface; // constructor interface
   }
 
-  tick() {
-    console.log('beep beep')
-  }
-}
-
-class AnalogClock implements ClockInterface {
-  constructor(h: number, m: number) {
+  interface ClockInterface {
+    tick(): void;
   }
 
-  tick() {
-    console.log('tick tock')
-  }
-}
+  const createClock = (ctor: ClockConstructor, hour: number, minute: number): ClockInterface => new ctor(hour, minute)
 
-let digital = createClock(DigitalClock, 12, 17)
-let analog = createClock(AnalogClock, 7, 32)
-const Clock: ClockConstructor = class Clock implements ClockInterface { // class expressions
-  constructor(h: number, m: number) {
+  class DigitalClock implements ClockInterface {
+    constructor(h: number, m: number) {
+    }
+
+    tick() {
+      console.log('beep beep')
+    }
   }
 
-  tick() {
-    console.log('beep beep')
+  class AnalogClock implements ClockInterface {
+    constructor(h: number, m: number) {
+    }
+
+    tick() {
+      console.log('tick tock')
+    }
+  }
+
+  let digital = createClock(DigitalClock, 12, 17)
+  let analog = createClock(AnalogClock, 7, 32)
+  const Clock: ClockConstructor = class Clock implements ClockInterface { // class expressions
+    constructor(h: number, m: number) {
+    }
+
+    tick() {
+      console.log('beep beep')
+    }
   }
 }
 
 enum Colors {
-  black, blue
+  black = 1, blue = 2
 }
 
 interface Shape {
@@ -167,15 +168,15 @@ interface ISquareWithArea extends ISquareDefault {
 // }
 
 class SquareDefault {
-  public color = 'white';
-  public width = 10;
+  public color = 'white'
+  public width = 10
 
   constructor(config: ISquareDefault) {
     if (config.color) {
-      this.color = config.color;
+      this.color = config.color
     }
     if (config.width) {
-      this.width = config.width;
+      this.width = config.width
     }
   }
 
@@ -185,20 +186,20 @@ class SquareDefault {
 }
 
 class SquareWithArea extends SquareDefault {
-  private readonly area: number;
+  private readonly area: number
 
   constructor(config: ISquareWithArea) {
-    super(config);
+    super(config)
     if (config.area) {
-      this.area = config.area;
-      this.width = config.area / 2;
+      this.area = config.area
+      this.width = config.area / 2
     }
 
     this.area = this.width * 2
   }
 
   public getArea() {
-    return this.area;
+    return this.area
   }
 }
 
@@ -213,39 +214,58 @@ class SquareWithArea extends SquareDefault {
 // // [area]: 225 // square itself doesn't have 'width' property, but 'area'
 // // property updates accordingly.
 
-const mySquare3 = new SquareWithArea({area: 500});
-console.log(mySquare3);
-console.log(`area: ${mySquare3.getArea()}`);
-printProps(mySquare3);
+const mySquare3 = new SquareWithArea({ area: 500 })
+console.log(mySquare3)
+console.log(`area: ${mySquare3.getArea()}`)
+printProps(mySquare3)
 
-const mySquare4 = new SquareDefault({});
-printProps(mySquare4);
+const mySquare4 = new SquareDefault({})
+printProps(mySquare4)
 
 function printProps(object: object) {
   // will display private class variables because of string literal usage in log.
   for (const prop in object) {
     if (object.hasOwnProperty(prop)) {
-      console.log(`[${prop}]: ${object[prop]}`);
+      console.log(`[${prop}]: ${object[prop]}`)
     }
   }
-  console.log('');
+  console.log('')
 }
 
 
 type ISearchFunc = (source: string, subString: string) => boolean;
 
 const mySearch: ISearchFunc = (src, sub) => {
-  const result = src.search(sub);
-  return result > -1;
-};
+  const result = src.search(sub)
+  return result > -1
+}
 
-console.log(mySearch('test234test', '34')); // true
-console.log(mySearch('test', '3')); // false
+console.log(mySearch('test234test', '34')) // true
+console.log(mySearch('test', '3')) // false
 
 
 type IStringArrayRO = readonly string[]
 
-let myArray: IStringArrayRO = ["Bob", "Fred"];
+let myArray: IStringArrayRO = ['Bob', 'Fred']
 
-console.log(myArray[0]);
+console.log(myArray[0])
 // myArray[0] = 'test'; // error! read-only!
+
+namespace IntersectionA {
+  interface A {
+    propA: 'stringA' | 'stringB'
+    propA1: string
+  }
+
+  interface B {
+    propB: 50
+  }
+
+  type TaggedUnion = A & B
+
+  const object: TaggedUnion = {
+    propA:  'stringA',
+    propB:  50,
+    propA1: 'anystring'
+  }
+}

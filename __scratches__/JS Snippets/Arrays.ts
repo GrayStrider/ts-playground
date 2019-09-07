@@ -7,37 +7,37 @@ const NUMS: number[] = Array.from(Array(10).keys())
 const STRS: string[] = ['one', 'two', 'three', 'one']
 const ANY: unknown[] = [() => 0, {}, Symbol('hi')] //?
 
-/**
- * methods
- */
-console.log(STRS[2])
-// console.log('two' in STRS)
-console.log(STRS.length)
+namespace methods {
+  console.log(STRS[2])
+  console.log('two' in STRS)
+  console.log(STRS.length)
 // can truncate:
-NUMS.length = 8
-console.log(NUMS)
-console.log(STRS.concat('test'))
-const str = STRS.join('-')
-console.log(str.split('-'))
-console.log(STRS.push('five')) // to the end, return new len
-console.log(STRS.pop()) // from the end
+  NUMS.length = 8
+  console.log(NUMS)
+  console.log(STRS.concat('test'))
+  const str = STRS.join('-')
+  console.log(str.split('-'))
+  console.log(STRS.push('five')) // to the end, return new len
+  console.log(STRS.pop()) // from the end
 // next 2 are much slower!
-console.log(STRS.shift()) // from the front
-console.log(STRS.unshift('one')) // adds to the front, returns new len
-console.log(STRS.reverse())
-console.log(NUMS.every(isEven))
-console.log(NUMS.some(isEven))
-console.log(NUMS.find(value => value > 3))
-console.log(STRS.findIndex((value) => value.length > 3)) // it's reversed..
-console.log(STRS.indexOf('one'))
-console.log(STRS.lastIndexOf('one'))
-console.log(STRS.includes('one'))
-console.log(NUMS.filter(value => value > 7))
-console.log(NUMS.splice(1, 2, 0, 0, 0)) // mutates and returns deleted
-console.log(NUMS) // inserted elements
-console.log(NUMS.slice(-3, -1)) // piece of arrray, does not mutate
-console.log(NUMS.concat([2, 3, 4]))
-console.log([...NUMS, 2, 3, '3']) // alternative, does not inherit the type
+  console.log(STRS.shift()) // from the front
+  console.log(STRS.unshift('one')) // adds to the front, returns new len
+  console.log(STRS.reverse())
+  console.log(NUMS.every(isEven))
+  console.log(NUMS.some(isEven))
+  console.log(NUMS.find(value => value > 3))
+  console.log(STRS.findIndex((value) => value.length > 3)) // it's reversed..
+  console.log(STRS.indexOf('one'))
+  console.log(STRS.lastIndexOf('one'))
+  console.log(STRS.includes('one'))
+  console.log(NUMS.filter(value => value > 7))
+  console.log(NUMS.splice(1, 2, 0, 0, 0)) // mutates and returns deleted
+  console.log(NUMS) // inserted elements
+  console.log(NUMS.slice(-3, -1)) // piece of arrray, does not mutate
+  console.log(NUMS.concat([2, 3, 4]))
+  console.log([...NUMS, 2, 3, '3']) // alternative, does not inherit the type
+}
+
 
 /**
  * functional;

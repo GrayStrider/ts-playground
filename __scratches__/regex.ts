@@ -67,7 +67,7 @@ regExp.test('Strider🐌') //?
  * doesn't look very reliable
  *
  * Alternative: second regexp for matching required character/s
- * Notice non-null assertion before [0]
+ * Notice non-null assertion before [0] !
  * (I handle the possible null in return statement)
  *
  * UPDATE:

@@ -94,3 +94,10 @@ const hash = (...args) =>
 
 console.log(hash(1, 2, 3))
 
+/**
+ * code organization
+ */
+namespace Utilities {
+  export const foo = () => 0
+}
+console.log(Utilities.foo())

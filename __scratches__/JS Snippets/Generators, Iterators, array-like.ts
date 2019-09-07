@@ -58,3 +58,7 @@ console.log(Array.from(range(-3, 5), (num) =>
   num !== undefined
   ? num * 2
   : undefined))
+
+namespace Generators {
+
+}

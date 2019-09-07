@@ -80,3 +80,21 @@ console.log(iceCream.flavor)
 
 iceCream.flavor = 'cherry'
 console.log(iceCream.flavor)
+
+namespace C {
+  class C {
+    @readonly
+    @enumerable(false)
+    method() { }
+  }
+
+  function readonly(target, key, descriptor) {
+    descriptor.writable = false
+  }
+
+  function enumerable(value) {
+    return function(target, key, descriptor) {
+      descriptor.enumerable = value
+    }
+  }
+}

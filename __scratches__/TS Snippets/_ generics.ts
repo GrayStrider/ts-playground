@@ -1,38 +1,43 @@
 class Queue<T> {
   private data = [] as any
-  push(item: T) { this.data.push(item); }
-  pop(): T | undefined { return this.data.shift(); }
+
+  push(item: T) { this.data.push(item) }
+
+  pop(): T | undefined { return this.data.shift() }
 }
 
 /** Sample usage */
-const queue = new Queue<number>();
-queue.push(0);
+const queue = new Queue<number>()
+queue.push(0)
+
 // queue.push("1"); // ERROR : cannot push a string. Only numbers allowed
 
 interface GenericIdentityFn {
   <T>(arg: T): T;
 }
+
 function identity<T>(arg: T): T {
-  return arg;
+  return arg
 }
-let myIdentity: GenericIdentityFn = identity;
+
+let myIdentity: GenericIdentityFn = identity
 
 
 class GenericNumber<T> {
   zeroValue!: T
-  add!: (x: T, y: T) => T;
+  add!: (x: T, y: T) => T
 }
 
-let myGenericNumber = new GenericNumber<number>();
-myGenericNumber.zeroValue = 0;
-myGenericNumber.add = function(x, y) { return x + y; };
+let myGenericNumber = new GenericNumber<number>()
+myGenericNumber.zeroValue = 0
+myGenericNumber.add = function(x, y) { return x + y }
 
 
-let stringNumeric = new GenericNumber<string>();
-stringNumeric.zeroValue = "null_";
-stringNumeric.add = function(x, y) { return x + y; };
+let stringNumeric = new GenericNumber<string>()
+stringNumeric.zeroValue = 'null_'
+stringNumeric.add = function(x, y) { return x + y }
 
-console.log(stringNumeric.add(stringNumeric.zeroValue, "test"));
+console.log(stringNumeric.add(stringNumeric.zeroValue, 'test'))
 
 
 interface Lengthwise {
@@ -40,25 +45,26 @@ interface Lengthwise {
 }
 
 const loggingIdentity = <T extends Lengthwise>(arg: T): T => {
-  console.log(arg.length);  // Now we know it has a .length property, so no more error
-  return arg;
+  console.log(arg.length)  // Now we know it has a .length property, so no more error
+  return arg
 }
 
 
 const getProperty = <T, K extends keyof T>(obj: T, key: K) =>
   obj[key]
 
-let x = { a: 1, b: 2, c: 3, d: 4 };
+let x = { a: 1, b: 2, c: 3, d: 4 }
 
-getProperty(x, "a"); // okay
+getProperty(x, 'a') // okay
 // getProperty(x, "m"); // error: Argument of type 'm' isn't assignable to 'a' | 'b' | 'c' | 'd'.
 
 
 function prop<T, K extends keyof T>(obj: T, key: K) {
-  return obj[key];
+  return obj[key]
 }
+
 function prop2<T>(obj: T, key: keyof T) {
-  return obj[key];
+  return obj[key]
 }
 
 let o = {
@@ -76,21 +82,21 @@ console.log(v2)
 function reverse<T>(items: T[]): T[] {
   const toreturn: T[] = [] // god
   for (let i = items.length - 1; i >= 0; i--) {
-    toreturn.push(items[i]);
+    toreturn.push(items[i])
   }
-  return toreturn;
+  return toreturn
 }
 
 const sample = [1, 2, 3]
 let reversed = reverse(sample)
-console.log(reversed); // 3,2,1
+console.log(reversed) // 3,2,1
 
 // Safety!
 // reversed[0] = '1';     // Error!
 // reversed = ['1', '2']; // Error!
 
-reversed[0] = 1;       // Okay
-reversed = [1, 2];     // Okay
+reversed[0] = 1       // Okay
+reversed = [1, 2]     // Okay
 
 
 // const getJSON = <T>(config: {
@@ -123,8 +129,9 @@ reversed = [1, 2];     // Okay
 class Car {
   label: string = 'Generic Car'
   numWheels: Number = 4
+
   static horn() {
-    return "beep beep!"
+    return 'beep beep!'
   }
 }
 
@@ -155,3 +162,29 @@ washCar(myVespa)
 washCar(myTruck)
 washCar(car)
 
+
+namespace TuplePair {
+  interface Tuple<A, B> {
+    a: A;
+    b: B;
+  }
+
+  type Pair<T> = Tuple<T, T>
+
+  const pair: Pair<number> = { a: 10, b: 30 }
+}
+
+namespace Constraints {
+  function assign<T extends U, U extends any>(target: T, source: U): T {
+    for (let id in source) {
+      if (source.hasOwnProperty(id)) {
+        target[id] = source[id]
+      }
+    }
+    return target
+  }
+
+  let x = { a: 1, b: 2, c: 3, d: 4 }
+  assign(x, { b: 10, d: 20 })
+  // assign(x, { e: 0 })  // Error
+}

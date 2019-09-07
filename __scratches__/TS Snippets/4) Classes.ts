@@ -104,3 +104,27 @@ const songDurationFromMS = getSongDuration(
   new Song('Wonderful Wonderful', 330000)
 )
 console.log(songDurationFromMS)
+
+namespace AbstractPropertiesAccessors {
+  abstract class Base {
+    abstract name: string
+
+    abstract get value();
+    abstract set value(v: number);
+  }
+
+  // ok
+  class Derived extends Base {
+    name = 'derived'
+    value = 1
+  }
+
+  // have to be abstract
+  abstract class DerivedAbstract extends Base {
+    value = 20
+  }
+
+  const derived = new Derived()
+  console.log(derived.value = 5)
+  console.log(derived.value)
+}

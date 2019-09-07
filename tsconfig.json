@@ -9,14 +9,17 @@
     "jsx": "react",
     "lib": ["dom", "es2019"],
     "module": "es6",
-    "moduleResolution": "node",
-    "noImplicitAny": false,
+    "moduleResolution": "node", // can comment!
+//    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noUnusedLocals": false,
+    /**
+    * Even multiline!
+    **/
     "outDir": "build",
+    "strict": true,
     "removeComments": true,
     "sourceMap": true,
-    "strict": true,
     "target": "es5",
     "paths": {
       "app/*": ["./app/*"]
