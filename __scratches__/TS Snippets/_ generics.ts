@@ -39,15 +39,14 @@ interface Lengthwise {
   length: number;
 }
 
-function loggingIdentity<T extends Lengthwise>(arg: T): T {
+const loggingIdentity = <T extends Lengthwise>(arg: T): T => {
   console.log(arg.length);  // Now we know it has a .length property, so no more error
   return arg;
 }
 
 
-function getProperty<T, K extends keyof T>(obj: T, key: K) {
-  return obj[key];
-}
+const getProperty = <T, K extends keyof T>(obj: T, key: K) =>
+  obj[key]
 
 let x = { a: 1, b: 2, c: 3, d: 4 };
 

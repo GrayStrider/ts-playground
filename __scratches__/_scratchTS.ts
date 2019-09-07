@@ -84,3 +84,13 @@ const mapperFoo = (value, key) => key + ': ' + String(value * 2)
 console.log(
   range(10).map(mapperFoo)
 )
+
+let sayHi = new Function('console.log("Hello")')
+
+sayHi() // Hello
+
+const hash = (...args) =>
+  args.join(', ')
+
+console.log(hash(1, 2, 3))
+
