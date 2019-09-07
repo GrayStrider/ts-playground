@@ -84,16 +84,15 @@ console.log(text
       firstGroup.toUpperCase())
 )
 
-// console.log(text
-//   .replace(regexp,
-//     (x) => {
-//       console.log(x)
-//       const match = x
-//         .match(regexpReplacer)![0] //?
-//       return match
-//              ? match.toUpperCase()
-//              : ''
-//     }))
+console.log(text
+  .replace(regexp,
+    (x) => {
+      console.log(x)
+      const match = x
+        .match(regexpReplacer)![0] //?
+      return match.toUpperCase() || ''
+
+    }))
 
 /**
  * backreference; no way to modify the value before replacement
@@ -102,3 +101,7 @@ console.log(text
   .replace(regexp, '$1')
 )
 
+console.log(
+  [1, 4, 5, 6, 3, 4, 2, 12, 0, null]
+    .map(value => value || 'empty')
+)

@@ -52,6 +52,7 @@ console.log(NUMS.sort((a, b) => a - b)) // provide comparator
 
 for (let str1 of STRS) {console.log(str1)}
 STRS.forEach((value) => console.log(value))
+
 /**
  * array to object, optional starting value
  */

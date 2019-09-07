@@ -18,12 +18,10 @@ const students: Student[] = [
   { name: 'Nathalie', grade: 9 }
 ]
 
-const aboveTenSum = students
+console.log(students
   .map(student => student.grade)
   .filter(grade => grade >= 10)
-  .reduce((acc, curr) => acc + curr, 0)
-
-console.log(aboveTenSum)
+  .reduce((acc, curr) => acc + curr, 0))
 
 const objectify = (target: Student[]) =>
   target.reduce((previousValue, currentValue) => ({
@@ -31,7 +29,7 @@ const objectify = (target: Student[]) =>
     [currentValue.name]: currentValue.grade
   }), {}) //?
 
-objectify(students) //?
+console.log(objectify(students))
 
 console.log(
   [...range(10)])

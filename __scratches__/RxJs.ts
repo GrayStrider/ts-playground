@@ -51,7 +51,7 @@ const diff = new Difference()
 /**
  * emit each letter after delay
  */
-from(STR) // of
+from(STR)
   .pipe(
     concatMap(x => of(x).pipe(
       delay(1000)
@@ -59,6 +59,7 @@ from(STR) // of
     endWith('Done')
   )
 // .subscribe(x => console.log(x))
+
 /**
  * OR bind each value to an interval emit!
  */
@@ -72,6 +73,7 @@ interval(300)
 
 
 /**
+ * of,
  * filter,
  * map each value
  */

@@ -1,6 +1,7 @@
 export default {} // fix 'cannot redeclare block-scoped variable'
 import { string } from 'prop-types'
 import { optimize } from 'webpack'
+import { range } from './JS Snippets/reduce'
 
 /**
  * USE LIVE TEMPLATES / POSTFIX / PLOP
@@ -71,3 +72,15 @@ const n36 = Number(99999999999999999).toString(36)
 
 console.log(999845..toString(36)) // call method directly on number
 console.log((999845).toString(36)) // call method directly on number
+
+
+/**
+ * I can add and remove key and other parameters
+ * in mapperFoo without touring the map itself
+ * no need for (value, key) => mapperFoo(value, key)
+ */
+const mapperFoo = (value, key) => key + ': ' + String(value * 2)
+
+console.log(
+  range(10).map(mapperFoo)
+)

@@ -29,6 +29,10 @@ const person: Person = {
  * combination of entries/fromEntries can be used to
  * modify object with map/filter/reduce/etc
  * although, lodash is a better alternative
+ *
+ * JSON.stringify
+ * JSON.parse parses a string to object,
+ * use 'replacer' to transform data types based on key name
  */
 let map = new Map(
   Object.entries(person)
@@ -39,6 +43,13 @@ console.log(JSON.stringify(
   Object.fromEntries(map) // implicit .entries()
 ))
 
+console.log(JSON.stringify(
+  { ...person, prop: { age: 40 } },
+  (key, value) =>
+    key === 'age' ? undefined : value,
+  // all except 'age'; RECURSIVELY REMOVED SECOND NESTED 'age'
+  2
+))
 /**
  * Methods
  */

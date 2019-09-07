@@ -9,24 +9,34 @@ const object = {
 }
 
 
-/**
- * pickBy
- */
-const result =
+console.log(
+  _.pickBy(object,
+    (value, key) =>
+      key.length === 1 && typeof value === 'number'),
+
   Object.fromEntries(
     Object.entries(object)
           .filter(([key, value]) =>
             key.length === 1 && typeof value === 'number')
-  )
-
-const result2 =
-  _.pickBy(object, (value, key) =>
-    key.length === 1 && typeof value === 'number')
-
-console.log(result2, result)
+  ))
 
 console.log(_(object)
   .pickBy((value, key) =>
     value === 50 && key.length === 1)
   .value()
+)
+
+
+/**
+ * filter returns an array of values matching the predicate
+ */
+console.log(
+  _(object)
+    .filter((value) => typeof value === 'number')
+    .value()
+)
+
+console.log(
+  _.filter(object,
+    (value) => !!value)
 )

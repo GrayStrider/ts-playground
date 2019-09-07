@@ -1,4 +1,8 @@
 /**
+ * Use instead of ternaries; be mindful '', [], 0 === false
+ */
+
+/**
  * returns the first falsy value;
  * otherwise returns the last truthy value
  */
@@ -29,3 +33,10 @@ console.log('Cat' || false) // t || f returns "Cat"
 console.log('' || false) // f || f returns false
 console.log(false || '') // f || f returns ""
 console.log(false || [1, 2, 3]) // f || object returns object
+
+
+const empty = true
+/**
+ * goes from left to right, just like ternary
+ */
+console.log('' || empty && 0)

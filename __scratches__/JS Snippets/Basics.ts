@@ -1,4 +1,5 @@
 import { type } from 'os'
+import { take } from 'rxjs/operators'
 
 export default {}
 
@@ -59,15 +60,15 @@ console.log(!!person.age)
 
 console.log({ ...person, propAdded: 2 })
 
-const array = [4, 5]
 let [first, second, defaultValue = 3] = [1, 2]
 const [firstName, surname] = 'Ilya Kantor'.split(' ')
 console.log(first, second, defaultValue)
 console.log(firstName, surname);
 
 [first, second] = [second, first]// has to be prefixed by a semicolon
-console.log(first, second);
+console.log(first, second)
 
+const array = [4, 5];
 [first, second] = array // same
 console.log(first, second)
 
@@ -150,3 +151,15 @@ console.log(size)
 
 console.log(what === options)
 console.log(what === size)
+
+/**
+ * use in these cases instead of ternary
+ * @param arg
+ */
+const takesOptional = (arg?: string) =>
+  arg || 'no argument'
+
+console.log(
+	takesOptional(),
+	takesOptional(', logical or!')
+)
