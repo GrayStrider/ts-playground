@@ -10,12 +10,12 @@ const file = 'text.txt'
  */
 const [, name, extension] = file.match(/(^.*)(\..*)/i) //?
 const parseProtocol = url => {
-  const parsedURL = /^(\w+):\/\/([^\/]+)\/(.*)$/.exec(url);
+  const parsedURL = /^(\w+):\/\/([^\/]+)\/(.*)$/.exec(url)
   if (!parsedURL) {
-    return false;
+    return false
   }
-  const [, protocol, fullhost, fullpath] = parsedURL;
-  return [protocol, fullhost, fullpath];
+  const [, protocol, fullhost, fullpath] = parsedURL
+  return [protocol, fullhost, fullpath]
 }
 
 /**
@@ -31,15 +31,13 @@ const obj: { data: string }[] = [
   { data: 'test2' }
 ]
 
-const concat = obj
-  .reduce((acc, curr) => acc + curr.data, '')
-console.log(concat)
+console.log(obj
+  .reduce((acc, curr) => acc + curr.data, ''))
 
-// const arr = obj
-//   .filter(item => !/\d/.test(item.data))
-//   .map(item => item.data)
-//   .join('-')
-// console.log(arr)
+console.log(obj
+  .filter(item => !/\d/.test(item.data))
+  .map(item => item.data)
+  .join('-'))
 
 
 const test = '12weord test'
@@ -59,6 +57,48 @@ test.match(/(?<!\d{2})[a-z]+/gi) //?
 test.match(/(\d+)[a-z]+/gi) //?
 
 const regExp = /(?<=Strider)(🐌)/gi
-regExp.test("Strider🐌") //?
+regExp.test('Strider🐌') //?
 
 'Stride4r🐌'.match(regExp)
+
+
+/**
+ * using (skip, skip, ..., value) => value replacer (string destructuring)
+ * doesn't look very reliable
+ *
+ * Alternative: second regexp for matching required character/s
+ * Notice non-null assertion before [0]
+ * (I handle the possible null in return statement)
+ *
+ * UPDATE:
+ * it's not string destructuring, replace actually returns capture groups
+ * even with /g. (look ...rest)
+ */
+const text = 'test_abas_ere_fd_JF'
+const regexp = /[_-](.)/gi
+const regexpReplacer = /(?<=[_-])(.)/ig
+
+console.log(text
+  .replace(regexp,
+    (fullMatch, firstGroup, ...rest) =>
+      firstGroup.toUpperCase())
+)
+
+// console.log(text
+//   .replace(regexp,
+//     (x) => {
+//       console.log(x)
+//       const match = x
+//         .match(regexpReplacer)![0] //?
+//       return match
+//              ? match.toUpperCase()
+//              : ''
+//     }))
+
+/**
+ * backreference; no way to modify the value before replacement
+ */
+console.log(text
+  .replace(regexp, '$1')
+)
+
