@@ -1,6 +1,8 @@
 //boolean
 // number
 // string, template
+
+let object: object = {}
 let arr: number[] = [1, 2] // array
 let arr2: Array<number> = [1, 2] // generic Array type
 let tuple: [number, string, boolean?] = [12, 'hello'] // tuple, optional params
@@ -35,7 +37,6 @@ let vUnknown: unknown = 10
 // vAny.method() // no error (only during call)
 // console.log(vUnknown.metod()); // error
 
-// object is a type that represents the non-primitive type
 let someValue: any = 'this is a string'
 let strLength: number = (<string>someValue).length // type assertion
 let strLength2: number = (someValue as string).length // using as syntax

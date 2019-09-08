@@ -128,3 +128,43 @@ namespace AbstractPropertiesAccessors {
   console.log(derived.value = 5)
   console.log(derived.value)
 }
+
+namespace Mixins {
+  class Point {
+    constructor(public x: number, public y: number) {}
+  }
+
+  class Person {
+    constructor(public name: string) {}
+  }
+
+  type Constructor<T> = new(...args: any[]) => T;
+
+  function Tagged<T extends Constructor<{}>>(Base: T) {
+    return class extends Base {
+      _tag: string
+
+      constructor(...args: any[]) {
+        super(...args)
+        this._tag = ''
+      }
+    }
+  }
+
+  const TaggedPoint = Tagged(Point)
+
+  let point = new TaggedPoint(10, 20)
+  point._tag = 'hello'
+
+  class Customer extends Tagged(Person) {
+    accountBalance!: number
+  }
+
+  let customer = new Customer('Joe')
+  customer._tag = 'test'
+  customer.accountBalance = 0
+}
+
+namespace Namespace {
+
+}

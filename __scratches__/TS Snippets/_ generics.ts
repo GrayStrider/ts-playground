@@ -177,10 +177,16 @@ namespace TuplePair {
 namespace Constraints {
   function assign<T extends U, U extends any>(target: T, source: U): T {
     for (let id in source) {
+      // if (source.hasOwnProperty(id)) {
+      //   target[id] = source[id]
+      // }
       if (source.hasOwnProperty(id)) {
         target[id] = source[id]
+
       }
+
     }
+
     return target
   }
 
@@ -188,3 +194,4 @@ namespace Constraints {
   assign(x, { b: 10, d: 20 })
   // assign(x, { e: 0 })  // Error
 }
+

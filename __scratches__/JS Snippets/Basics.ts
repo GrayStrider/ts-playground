@@ -40,7 +40,7 @@ for (let i = 0; i < 10; i++) {
  * all declarations other than those you plan to modify should use const.
  */
 
-const person: Person = { age: 65, name: 'Sam', gender: 'male' }
+const person: Person = { age: 65, name: 'Sam', gender: 'male'}
 
 /**
  * in / !!
@@ -150,7 +150,7 @@ console.log(what)
 console.log(size)
 
 console.log(what === options)
-console.log(what === size)
+// console.log(what === size)
 
 /**
  * use in these cases instead of ternary
@@ -177,7 +177,7 @@ let company = { // the same object, compressed for brevity
   }
 }
 
-function sumSalaries(department) {
+function sumSalaries(department: object) {
   if (Array.isArray(department)) { // case (1)
     return department.reduce((prev, current) => prev + current.salary, 0) // sum the array
   } else { // case (2)
@@ -218,3 +218,8 @@ console.log(JSON.stringify(
 // prepend a value to the list
 list = { value: 'new item', next: list }
 console.log(list)
+
+list = { next: list, value: 'newitem' }
+
+const another = { list: list }
+const oneMore = { list: list}
