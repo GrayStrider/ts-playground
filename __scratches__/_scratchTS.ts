@@ -100,3 +100,107 @@ console.log(foo2(0))
 
 const test343 = (n: number) =>
   n
+
+namespace MapGeneric {
+
+  const arrayMap = <Elem, Mapped>(func: (elem: Elem) => Mapped):
+    (arr: Elem[]) => Mapped[] =>
+    arr => arr.map(func)
+
+  const lengths: (a: string[]) => number[] =
+    arrayMap(s => s.length)
+
+  console.log(
+    lengths(['123', '343', 'test']))
+
+  console.log(
+    arrayMap((elem: number) => elem * 2)
+    ([1, 2, 3]))
+
+  interface Mappable<T> {
+    map<U>(f: (x: T) => U): Mappable<U>;
+  }
+
+  declare let a: Mappable<number>
+  declare let b: Mappable<string | number>
+
+  const mappable: Mappable<string> = ['test', 'another']
+  console.log(mappable)
+
+  interface Interface {
+    method: () => 0
+  }
+
+}
+
+namespace ConstantNamedProps {
+  const Foo = 'string_key'
+  const Bar = '-another-one-'
+  const Baz = 'puts in brackets if not a valid key'
+
+  let x = {
+    [Foo]: 100,
+    [Bar]: 'hello',
+    [Baz]: true
+  }
+  const a = x[Baz]
+  console.log(a)
+  console.log(x)
+  console.log(Object.values(x))
+  console.log(Object.keys(x))
+}
+
+namespace DefinitiveAssignmentAssertion {
+  class C {
+    foo!: number
+    // ^
+    // Notice this '!' modifier.
+    // This is the "definite assignment assertion"
+
+    constructor() {
+      this.initialize()
+    }
+
+    initialize() {
+      this.foo = 0
+    }
+  }
+
+  let x!: number
+  initialize()
+
+  // No error!
+  console.log(x + x)
+
+  // equal to x! + x!
+
+  /**
+   * will not work with function expression
+   */
+  function initialize() {
+    x = 10
+  }
+
+  /**
+   * non-null assertion
+   */
+  let y: number
+  console.log(y! + 12) // no error!
+}
+
+const million = 1_000_000
+console.log(million) // numeric separators
+
+/**
+ * typeguards, is keyword,
+ * rest spread
+ */
+namespace TypeGuards {
+  type NonEmptyArray<T> = [T, ...T[]];
+
+  const isNonEmptyArray = <T>(arr: T[]):
+    arr is NonEmptyArray<T> =>
+    arr.length > 0
+
+  const arr: NonEmptyArray<string | number> = ['string', 0]
+}

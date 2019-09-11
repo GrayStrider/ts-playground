@@ -21,7 +21,7 @@ const deleteNth = (arr: (number)[], x: number) => {
  */
 
 const sum_pairs = (ints: number[], sum: number): number[] => {
-  const seen = {}
+  const seen: { [key: number]: boolean } = {}
   for (let i = 0; i < ints.length; ++i) {
     if (seen[sum - ints[i]]) return [sum - ints[i], ints[i]]
     seen[ints[i]] = true
@@ -37,9 +37,9 @@ console.log(sum_pairs([10, 5, 2, 3, 7, 5, -10], -5))
  * @param int
  */
 const findOutlier = (int: number[]) => {
-  const even = int.filter(a => a % 2 === 0); // filter by even
-  const odd = int.filter(a => a % 2 !== 0); // filter by odd
-  return even.length === 1 ? even[0] : odd[0]; // whichever has one alement is the one wee need.
+  const even = int.filter(a => a % 2 === 0) // filter by even
+  const odd = int.filter(a => a % 2 !== 0) // filter by odd
+  return even.length === 1 ? even[0] : odd[0] // whichever has one alement is the one wee need.
 }
 
 export default {}

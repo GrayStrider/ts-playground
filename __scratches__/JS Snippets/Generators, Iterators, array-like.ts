@@ -1,3 +1,5 @@
+import { sleep } from '../Async/sleep'
+
 export { range }
 
 /**
@@ -61,4 +63,19 @@ console.log(Array.from(range(-3, 5), (num) =>
 
 namespace Generators {
 
+  async function* g() {
+    yield 1
+    await sleep(100)
+    yield* [2, 3]
+    yield* (async function* () {
+      await sleep(100)
+      yield 4
+    })()
+  }
+
+  async function f() {
+    for await (const x of g()) {
+      console.log(x)
+    }
+  }
 }

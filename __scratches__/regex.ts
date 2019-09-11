@@ -8,8 +8,10 @@ const file = 'text.txt'
  * global match (/g) will return only full matches
  * without capture groups!
  */
-const [, name, extension] = file.match(/(^.*)(\..*)/i) //?
-const parseProtocol = url => {
+const [, name, extension] = file.match(/(^.*)(\..*)/i)
+console.log(name, extension)
+
+const parseProtocol = (url: string) => {
   const parsedURL = /^(\w+):\/\/([^\/]+)\/(.*)$/.exec(url)
   if (!parsedURL) {
     return false
@@ -39,6 +41,7 @@ console.log(obj
   .map(item => item.data)
   .join('-'))
 
+const data = obj.map((item) => item.data)
 
 const test = '12weord test'
 // Non-capture group:
@@ -81,7 +84,7 @@ const regexpReplacer = /(?<=[_-])(.)/ig
 console.log(text
   .replace(regexp,
     (fullMatch, firstGroup, ...rest) =>
-      firstGroup.toUpperCase())
+      firstGroup.toLowerCase())
 )
 
 console.log(text

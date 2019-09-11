@@ -1,3 +1,5 @@
+import { Constructor } from 'react-native'
+
 class Greeter3 {
   private readonly greeting: string // private member, readonly
   constructor(message: string) {
@@ -138,10 +140,9 @@ namespace Mixins {
     constructor(public name: string) {}
   }
 
-  type Constructor<T> = new(...args: any[]) => T;
 
-  function Tagged<T extends Constructor<{}>>(Base: T) {
-    return class extends Base {
+  const Tagged = <T extends Constructor<{}>>(Base: T) =>
+    class extends Base {
       _tag: string
 
       constructor(...args: any[]) {
@@ -149,7 +150,6 @@ namespace Mixins {
         this._tag = ''
       }
     }
-  }
 
   const TaggedPoint = Tagged(Point)
 
@@ -157,14 +157,36 @@ namespace Mixins {
   point._tag = 'hello'
 
   class Customer extends Tagged(Person) {
-    accountBalance!: number
+    accountBalance: number | undefined
   }
 
   let customer = new Customer('Joe')
   customer._tag = 'test'
   customer.accountBalance = 0
+
 }
 
-namespace Namespace {
+namespace Mixins2 {
+  interface IPoint {
+    x: number;
+    y: number;
+  }
 
+  class Point implements IPoint {
+    constructor(public x: number, public y: number) {}
+  }
+
+  const WithLocation = <T extends Constructor<IPoint>>(Base: T) =>
+    class extends Base {
+      private _location: [number, number] = [this.x, this.y]
+
+      get location(): [number, number] {
+        return this._location
+      }
+    }
+
+  const point = new Point(10, 12)
+  const pointWithLocation = WithLocation(Point)
+  const point2 = new pointWithLocation(10, 12)
+  console.log(point2.location)
 }

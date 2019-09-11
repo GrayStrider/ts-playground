@@ -7,7 +7,7 @@ const dir = 'C:\\tools\\bash test\\'
  */
 const regex = /^(?:_+)?(.*?)(?:_+)?$/gi
 
-const renameFile = (file) => {
+const renameFile = (file: string) => {
   const [, name, extension] = file.match(/(.*)(\..*)/)
   fs.rename(
     dir + file,
@@ -19,8 +19,8 @@ fs.readdirSync(dir)
   .forEach(file => {
       try {
         renameFile(file)
-      } catch (e) {
-        console.log(e)
+      } catch { // can omit variable
+        console.log('Error')
       }
     }
   )

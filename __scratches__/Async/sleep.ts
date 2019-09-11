@@ -1,11 +1,11 @@
-export default {}
+export { sleep }
 /**
  * sleep for x sec
  */
-const sleep = m =>
-  new Promise(r => setTimeout(r, m))
+const sleep = (time: number) =>
+  new Promise(r => setTimeout(r, time))
 
-const asyncText = async (text, time) => {
+const asyncText = async (text: string, time: number) => {
   console.log('waiting ' + (time / 1000).toFixed(1) + 's..')
   await sleep(time)
   return text

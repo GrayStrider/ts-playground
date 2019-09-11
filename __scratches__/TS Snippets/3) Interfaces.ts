@@ -222,16 +222,16 @@ printProps(mySquare3)
 const mySquare4 = new SquareDefault({})
 printProps(mySquare4)
 
-function printProps(object: object) {
+function printProps(object: { [key: string]: any }) {
   // will display private class variables because of string literal usage in log.
   for (const prop in object) {
     if (object.hasOwnProperty(prop)) {
       console.log(`[${prop}]: ${object[prop]}`)
     }
   }
-  console.log('')
 }
 
+printProps({}) // fails hasOwnProp check, doesn't print anything
 
 type ISearchFunc = (source: string, subString: string) => boolean;
 
