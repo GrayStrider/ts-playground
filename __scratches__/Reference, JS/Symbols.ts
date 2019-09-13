@@ -60,3 +60,20 @@ class C {
 
 let c = new C()
 let className = c[getClassNameSymbol]() //?
+
+
+/**
+ * Symbols also work as property keys, but are not iterable,
+ * which is great for serialisation
+ */
+const print = Symbol('print')
+const user = {
+  name:    'Stefan',
+  age:     37,
+  [print]: function() {
+    console.log(`${this.name} is ${this.age} years old`)
+  }
+}
+
+JSON.stringify(user) // { name: 'Stefan', age: 37 }
+user[print]() // Stefan is 37 years old

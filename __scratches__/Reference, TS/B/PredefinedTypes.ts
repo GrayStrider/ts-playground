@@ -1,4 +1,18 @@
+import _ from 'lodash'
+
 export {}
+
+interface Person {
+  name: string;
+  age: number;
+  occupation: string;
+}
+
+let person: Person = {
+  name:       'Jarid',
+  age:        35,
+  occupation: 'Janitor'
+}
 
 interface Part {
   id: number;
@@ -12,6 +26,14 @@ const Options: Record<number, number> = { '33': 4, 10_10: 54.3 /*test: 'str'*/ }
 const Options2: Record<string, number> = { 3: 4, 10_10: 54.3 }
 // coerces number to string
 const Options3: Record<string, number[]> = { 10: [1, 2], 'string': [1, 2, 3] }
+
+enum names {
+  prop1, prop2, prop3
+}
+
+type ThreeStringProps = Record<names, string>
+// equivalent to
+type ThreeStringProps2 = { prop1: string, prop2: string, prop3: string }
 
 /**
  * add or remove modifier of a mapped type,
@@ -30,6 +52,14 @@ type Bar = Required<Foo>;  // Same as { a: string }
 
 type T44 = Pick<Part, 'id' | 'name'>
 const t44: T44 = { id: 30, name: 'namestr' }
+
+function pluck<T, K extends keyof T>(o: T, names: K[]): T[K][] {
+  return names.map(n => o[n])
+}
+
+console.log(pluck(person, ['name', 'occupation']))
+const picked = _.pick(person, ['name']) // doesn't infer type..
+console.log(picked)
 
 type T45 = Omit<Part, 'updatePart'>
 const t45: T45 = { name: 'names', id: 40, subparts: [] }

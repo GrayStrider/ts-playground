@@ -37,7 +37,7 @@ console.log(player.active)
 player.active = true
 console.log(player.active)
 
-let data = {passcode: 'secret passcode'}
+let data = { passcode: 'secret passcode' }
 
 class Employee {
 
@@ -67,7 +67,7 @@ console.log(employee.fullName)
 /**
  * https://stackoverflow.com/questions/15260732/does-typescript-support-the-operator-and-whats-it-called
  **/
-export function o<T>(someObject: T, defaultValue: T = {} as T): T {
+export const o = <T>(someObject: T, defaultValue: T = {} as T): T => {
   if (typeof someObject === 'undefined' || someObject === null)
     return defaultValue
   else

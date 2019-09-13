@@ -1,4 +1,4 @@
-import { sleep } from '../Async/sleep'
+import { sleep } from './Async/sleep'
 
 export { range }
 

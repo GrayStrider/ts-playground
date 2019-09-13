@@ -26,9 +26,9 @@ console.log(typeof x_.x)
 const arr = ['string'] as const
 console.log(arr)
 
-
 const str: 'string!' = 'string!' // will not widen
 const str2 = 'string!' as const
+
 console.log(typeof str2) // type 'string!'
 const str4: string = 'string!' as const
 console.log(str4, str)

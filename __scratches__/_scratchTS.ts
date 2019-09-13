@@ -98,8 +98,7 @@ const foo2 = (n: number) =>
 console.log(foo2(4))
 console.log(foo2(0))
 
-const test343 = (n: number) =>
-  n
+const test343 = (n: number) => n
 
 namespace MapGeneric {
 
@@ -203,4 +202,18 @@ namespace TypeGuards {
     arr.length > 0
 
   const arr: NonEmptyArray<string | number> = ['string', 0]
+}
+
+/**
+ * Hey, TypeScript, I would like to be able to index into this
+ * interface with a string, and I should get either a string or a
+ * number back. Oh, and please don’t let me add any other thing to any
+ * object that implements this interface that I didn’t explicitly
+ * specify.
+ */
+interface ComponentState {
+  nameError: string;
+  ageError: string;
+  numOfFields: number;
+  readonly [x: string]: string | number;
 }

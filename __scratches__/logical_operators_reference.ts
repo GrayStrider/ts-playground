@@ -34,8 +34,8 @@ console.log('' || false) // f || f returns false
 console.log(false || '') // f || f returns ""
 console.log(false || [1, 2, 3]) // f || object returns object
 
-
 const empty = true
+
 /**
  * goes from left to right, just like ternary
  */

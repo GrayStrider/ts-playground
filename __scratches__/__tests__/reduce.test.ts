@@ -1,4 +1,4 @@
-import { objectify, range, sum } from '../JS Snippets/reduce'
+import { objectify, range, sum } from '../Reference, JS/reduce'
 
 it('should sum values',
   () => {

@@ -1,28 +1,23 @@
 export default {}
 
-const file = 'text.txt'
-
-
 /**
  * - destructuring
  * global match (/g) will return only full matches
  * without capture groups!
+ * except when using .replace
  */
-const [, name, extension] = file.match(/(^.*)(\..*)/i)
-console.log(name, extension)
-
 const parseProtocol = (url: string) => {
   const parsedURL = /^(\w+):\/\/([^\/]+)\/(.*)$/.exec(url)
   if (!parsedURL) {
-    return false
+    return null
   }
-  const [, protocol, fullhost, fullpath] = parsedURL
+  const [, protocol, fullhost, fullpath]: string[] = parsedURL
   return [protocol, fullhost, fullpath]
 }
 
 /**
  * filter out numbers;
- * test
+ * .test
  */
 const obj: { data: string }[] = [
   { data: 'test' },
@@ -32,35 +27,30 @@ const obj: { data: string }[] = [
   { data: 'test' },
   { data: 'test2' }
 ]
-
-console.log(obj
-  .reduce((acc, curr) => acc + curr.data, ''))
-
 console.log(obj
   .filter(item => !/\d/.test(item.data))
   .map(item => item.data)
   .join('-'))
 
-const data = obj.map((item) => item.data)
 
 const test = '12weord test'
 // Non-capture group:
-test.match(/(?:\d+)(\w+)/) //?
+console.log(test.match(/(?:\d+)(\w+)/))
 // Positive lookahead: (one or more \d, followed by one or more \w)
-test.match(/(\d+)(?=\w+)/) /*?*/
+console.log(test.match(/(\d+)(?=\w+)/))
 // Negative lookahead: matches only 1 digit, otherwise would had to return null (pattern shouldn't match)
-test.match(/(\d+)(?![a-z]+)/) /*?*/
+console.log(test.match(/(\d+)(?![a-z]+)/))
 // Positive lookbehind: does not create a group; must have a fixed width!
-test.match(/(?<=\d{2})(\w*)/) /*?*/
+console.log(test.match(/(?<=\d{2})(\w*)/))
 // Negative lookbehind: only foo that is not being preceded by 'not '; must have fixed width!
 const foo = 'not foo but foo'
-foo.match(/(?<!not )foo/) //?
-test.match(/(?<!\d{2})[a-z]+/gi) //?
+console.log(foo.match(/(?<!not )foo/))
+console.log(test.match(/(?<!\d{2})[a-z]+/gi))
 // only matches the one with gidits; can't figure out how to reverse
-test.match(/(\d+)[a-z]+/gi) //?
+console.log(test.match(/(\d+)[a-z]+/gi))
 
 const regExp = /(?<=Strider)(🐌)/gi
-regExp.test('Strider🐌') //?
+console.log(regExp.test('Strider🐌'))
 
 'Stride4r🐌'.match(regExp)
 
@@ -92,7 +82,7 @@ console.log(text
     (x) => {
       console.log(x)
       const match = x
-        .match(regexpReplacer)![0] //?
+        .match(regexpReplacer)![0]
       return match.toUpperCase() || ''
 
     }))
