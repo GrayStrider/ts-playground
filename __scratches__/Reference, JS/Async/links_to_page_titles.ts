@@ -1,10 +1,10 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 const source = '[https://dev.to/mattdionis/never-too-late-to-learn-my-meandering-path-to-a-career-in-software-engineering-1p97](https://dev.to/mattdionis/never-too-late-to-learn-my-meandering-path-to-a-career-in-software-engineering-1p97)\n' +
-  '[A CEO\'s #1 Tip On How Stand Out As A New Full-Stack Developer in A Competitive Market ⚡ - DEV Community 👩‍💻👨‍💻 ](https://dev.to/skill_pathway/a-ceo-s-1-tip-on-how-stand-out-as-a-new-full-stack-developer-in-a-competitive-market-6h2?utm_source=digest_mailer&utm_medium=email&utm_campaign=digest_email)\n' +
-  '[How to make your tech LinkedIn profile rock - DEV Community 👩‍💻👨‍💻 ](https://dev.to/stetsenko_me/how-to-make-your-tech-linkedin-profile-rock-54ge?utm_source=digest_mailer&utm_medium=email&utm_campaign=digest_email)\n' +
-  '[Job Search Resources and Tips - DEV Community 👩‍💻👨‍💻 ](https://dev.to/kcarrel/job-search-resources-and-tips-50od?utm_source=digest_mailer&utm_medium=email&utm_campaign=digest_email)\n' +
-  '[Douglas Makey Mendez Molero - DEV Community 👩‍💻👨‍💻 ](https://dev.to/douglasmakey)\n' +
+  '[A CEO\'s #1 Tip On How Stand Out As A New Full-Stack Developer in A Competitive Market ⚡ - DEV Community 👩💻👨💻 ](https://dev.to/skill_pathway/a-ceo-s-1-tip-on-how-stand-out-as-a-new-full-stack-developer-in-a-competitive-market-6h2?utm_source=digest_mailer&utm_medium=email&utm_campaign=digest_email)\n' +
+  '[How to make your tech LinkedIn profile rock - DEV Community 👩💻👨💻 ](https://dev.to/stetsenko_me/how-to-make-your-tech-linkedin-profile-rock-54ge?utm_source=digest_mailer&utm_medium=email&utm_campaign=digest_email)\n' +
+  '[Job Search Resources and Tips - DEV Community 👩💻👨💻 ](https://dev.to/kcarrel/job-search-resources-and-tips-50od?utm_source=digest_mailer&utm_medium=email&utm_campaign=digest_email)\n' +
+  '[Douglas Makey Mendez Molero - DEV Community 👩💻👨💻 ](https://dev.to/douglasmakey)\n' +
   'https://usefyi.com/remote-work-report/\n' +
   '[https://dev.to/websmyth/are-you-sure-you-want-to-go-freelance-2pli](https://dev.to/websmyth/are-you-sure-you-want-to-go-freelance-2pli)\n' +
   'hackajob\n' +
@@ -20,10 +20,10 @@ urls = [...new Set(urls)]
 
 const titleR = new RegExp(/(?<=<title>)(.+)(?=<\/title>)/)
 
-const extractTitle = response =>
+const extractTitle = (response: AxiosResponse) =>
   response.data.match(titleR)[0]
 
-const fetchTitles = async (urls) => {
+const fetchTitles = async (urls: string[]) => {
   const total = urls.length
   let left = urls.length
   const promises = urls.map(url =>
