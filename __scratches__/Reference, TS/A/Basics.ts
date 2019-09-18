@@ -12,6 +12,26 @@ enum Colors { // enums
   Red, Green, Yellow = 3
 }
 
+// string or undefined inferred
+const foo2 = (optional?: string) =>
+  optional
+
+
+const immutable = (arr: readonly any[]) => {
+  const [first] = arr
+  // arr.push('new') // can't mutate, readonly arg
+}
+/**
+ * tuple type for ...rest
+ * rest element in tuple types []
+ */
+const foo3 = (...args: [boolean, number, Function?, ...string[]]) =>
+  args
+console.log(foo3(false, 30))
+console.log(foo3(false, 30, () => 0))
+console.log(foo3(false, 30, () => 0, 'str'))
+// console.log(foo3(false, 30, 'str')) // note the error due to types order
+
 console.log(Colors.Yellow, Colors.Green) // assign index manually
 // enums get reverse mappings
 console.log(Colors)

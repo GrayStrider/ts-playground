@@ -210,6 +210,8 @@ namespace TypeGuards {
  * number back. Oh, and please don’t let me add any other thing to any
  * object that implements this interface that I didn’t explicitly
  * specify.
+ *
+ * PROBABLY NOT NEEDED, but interesting usage of readonly.
  */
 interface ComponentState {
   nameError: string;
@@ -217,3 +219,23 @@ interface ComponentState {
   numOfFields: number;
   readonly [x: string]: string | number;
 }
+
+
+interface A {
+  prop: string
+}
+
+interface B {
+  prop: number
+  prop2: boolean
+}
+
+interface C {
+  prop: string
+  prop2: boolean
+
+}
+
+const test: A | B | C = { prop: 40, prop2: false } // implement either interface
+const test2: A & C = { prop: 'false', prop2: false } // implement all interfaces
+// const test3: B & C = { prop: 'false', prop2: false } // impossible type; string and number are incompatible

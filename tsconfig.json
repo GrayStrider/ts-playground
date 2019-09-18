@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "incremental": true,
     "allowJs": true,
     "baseUrl": "src",
     "declaration": false,
@@ -7,10 +8,15 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "jsx": "react",
-    "lib": ["dom", "es2019"],
+    "lib": [
+      "dom",
+      "es2019",
+      "esnext"
+    ],
     "module": "es6",
-    "moduleResolution": "node", // can comment!
-//    "noImplicitAny": false,
+    "moduleResolution": "node",
+    // can comment!
+    //    "noImplicitAny": false,
     "noImplicitReturns": true,
     "noUnusedLocals": false,
     /**
@@ -20,10 +26,17 @@
     "strict": true,
     "removeComments": true,
     "sourceMap": true,
-    "target": "es5",
+    //    "target": "es5",
+    "target": "esnext",
+    // for bigint, possible caveats?
     "paths": {
-      "app/*": ["./app/*"]
+      "app/*": [
+        "./app/*"
+      ]
     }
   },
-  "exclude": ["build", "node_modules"]
+  "exclude": [
+    "build",
+    "node_modules"
+  ]
 }

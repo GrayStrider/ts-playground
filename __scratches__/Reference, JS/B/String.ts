@@ -26,6 +26,8 @@ console.log(STR.trim())
 console.log(STR.repeat(3))
 console.log(STR.toUpperCase())
 console.log(STR.toLowerCase())
+console.log(STR.padEnd(25, '-'))
+console.log(STR.padStart(25, '-'))
 
 
 String.fromCharCode(937, 45, 78) //?
@@ -35,11 +37,11 @@ String.fromCodePoint(937, 45, 78) //?
 const peculiarChar = '𝒳' // surrogate pair
 console.log(peculiarChar[0] + peculiarChar + peculiarChar.charCodeAt(0) + `, ${peculiarChar.length}!`)
 
-let str = "As sly as a fox, as strong as an ox";
-let target = "as";
-let pos = -1;
+let str = 'As sly as a fox, as strong as an ox'
+let target = 'as'
+let pos = -1
 while ((pos = str.indexOf(target, pos + 1)) != -1) {
-  console.log( pos );
+  console.log(pos)
 }
 // console.log(
 //   str.match(new RegExp(target, 'gi'))
@@ -48,11 +50,9 @@ while ((pos = str.indexOf(target, pos + 1)) != -1) {
 
 /**
  * tagged template literals
- * @param strings
- * @param values
- * @constructor
+ * note argument types
  */
-const F = (strings, ...values) => {
+const F = (strings: TemplateStringsArray, ...values: number[]) => {
 
   let result = ``
 
@@ -77,12 +77,11 @@ const F = (strings, ...values) => {
 
   return result
 }
-
 console.log(F` ${3} String ${1} ${2} and this`)
 
-const template = (strings, ...args) => {
-  let result = strings.map((value, index) => `${index}: ${value}`)
+const template = (strings: TemplateStringsArray, ...args: string[]) => {
+  let result = strings.map((value, index) =>
+    `${index}: ${value}`)
   return [...result, ...args]
 }
-
 console.log(template`String Another ${'test'} one`)

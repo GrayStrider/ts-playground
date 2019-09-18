@@ -40,6 +40,7 @@ type Boxed<T> = T extends any[]
 type T20 = Boxed<string>;  // BoxedValue<string>;
 type T21 = Boxed<number[]>;  // BoxedArray<number>;
 type T22 = Boxed<string | number[]>;  // BoxedValue<string> | BoxedArray<number>
+type T23 = Boxed<string | number[]>;  // BoxedValue<string> | BoxedArray<number>
 
 const boxed1: T20 = { value: 'string_value' }
 const boxed2: T21 = { array: [1, 2, 3] }
@@ -94,6 +95,7 @@ interface Part {
   id: number;
   name: string;
   subparts: Part[];
+  price: number
   updatePart(newName: string): void;
 }
 
@@ -102,5 +104,52 @@ type T41 = NonFunctionPropertyNames<Part>;  // "id" | "name" | "subparts"
 type T42 = FunctionProperties<Part>;  // { updatePart(newName: string): void }
 type T43 = NonFunctionProperties<Part>;  // { id: number, name: string, subparts: Part[] }
 
-const update: T40 = 'updatePart'
-const foo = () => 0
+type test<T> = {
+  [K in keyof T]: T[K] extends string ? K : never
+}[keyof T]
+
+const test: test<Part> = 'name'
+
+interface User {
+  id: number;
+  name: string;
+  points: number;
+  action: () => void
+}
+
+type numberKeys = User[keyof User]
+type keys = keyof User
+
+
+/**
+ * mapped types
+ */
+type PropsOfType<T, T2> = {
+  [K in keyof T]: T[K] extends T2 ? K : never
+}[keyof T];
+
+type T45 = PropsOfType<Part, number>
+
+type GetElementType<T extends Array<any>> = T extends (infer U)[] ? U : never
+
+const getType: GetElementType<number[]> = 0
+const getType2: GetElementType<string[]> = '0'
+const getTypeTuple: GetElementType<['const', 40]> = 'const'
+
+
+type MapArraysToValues<T extends { [key: string]: any[] }> = {
+  [key in keyof T]: GetElementType<T[key]>;
+};
+
+// Output === { x: number, y: string }
+type Output = MapArraysToValues<{ x: number[], y: string[] }>;
+
+
+function excludeTag<T extends { tag: string }>(obj: T) {
+  let { tag, ...rest } = obj
+  return rest  // Pick<T, Exclude<keyof T, "tag">>
+}
+
+const taggedPoint = { x: 10, y: 20, tag: 'point' }
+const pointWithoutTag = excludeTag(taggedPoint)  // { x: number, y: number }
+console.log(pointWithoutTag)

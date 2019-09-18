@@ -1,6 +1,6 @@
 export default {}
 
-import { range } from './Generators, Iterators, array-like'
+import { range } from '../C/Generators, Iterators, array-like'
 
 const isEven = (num: number) => !(num % 2)
 const NUMS: number[] = Array.from(Array(10).keys())
@@ -52,6 +52,42 @@ console.log(NUMS.sort((a, b) => a - b)) // provide comparator
 
 for (let str1 of STRS) {console.log(str1)}
 STRS.forEach((value) => console.log(value))
+
+namespace Reduce {
+  const sum = (numbers: number[]): number =>
+    numbers.reduce((prev, current) => prev + current)
+
+  const range = (length: number): number[] =>
+    [...Array(length).keys()]
+
+  interface Student {
+    name: string
+    grade: number
+  }
+
+  const students: Student[] = [
+    { name: 'Nick', grade: 10 },
+    { name: 'John', grade: 15 },
+    { name: 'Julia', grade: 19 },
+    { name: 'Nathalie', grade: 9 }
+  ]
+
+  console.log(students
+    .map(student => student.grade)
+    .filter(grade => grade >= 10)
+    .reduce((acc, curr) => acc + curr, 0))
+
+  const objectify = (target: Student[]) =>
+    target.reduce((previousValue, currentValue) => ({
+      ...previousValue,
+      [currentValue.name]: currentValue.grade
+    }), {}) //?
+
+  console.log(objectify(students))
+
+  console.log(
+    [...range(10)])
+}
 
 /**
  * array to object, optional starting value

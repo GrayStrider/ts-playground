@@ -71,8 +71,10 @@
   },
   "dependencies": {
     "@types/async": "^3.0.1",
+    "@types/bluebird": "^3.5.27",
     "aigle": "^1.14.1",
     "axios": "^0.19.0",
+    "bluebird": "^3.5.5",
     "chance": "^1.0.18",
     "classnames": "^2.2.6",
     "cuid": "^2.1.6",
@@ -80,6 +82,7 @@
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "neo-async": "^2.6.1",
+    "nock": "^11.3.4",
     "prop-types": "latest",
     "react": "^16.8.1",
     "react-custom-scrollbars": "^4.2.1",
@@ -95,6 +98,8 @@
     "semantic-ui-calendar-react": "^0.15.0",
     "semantic-ui-react": "^0.86.0",
     "styled-components": "^4.2.0",
-    "typesafe-actions": "^4.2.0"
+    "ts-optchain": "^0.1.8",
+    "typesafe-actions": "^4.2.0",
+    "xmlhttprequest": "^1.8.0"
   }
 }

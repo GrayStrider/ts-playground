@@ -1,12 +1,10 @@
-import { type } from 'os'
-import { take } from 'rxjs/operators'
-
 export default {}
 
 interface Person {
   readonly name: string
   age: number
   gender: 'male' | 'female'
+  occupation: string
 }
 
 interface Options {
@@ -40,7 +38,7 @@ for (let i = 0; i < 10; i++) {
  * all declarations other than those you plan to modify should use const.
  */
 
-const person: Person = { age: 65, name: 'Sam', gender: 'male'}
+const person: Person = { age: 65, name: 'Sam', gender: 'male', occupation: 'Unemployed' }
 
 /**
  * in / !!
@@ -83,9 +81,32 @@ console.log(Name, rest.gender.length, rest.age + 'y/o')
 
 const readonly: readonly number[] = [1, 2, 3]
 const readonly2: readonly [number, number, boolean] = [1, 2, false]
-// compare types with:
+
+/**
+ * as const assention
+ *
+ * - no literal types in that expression should be widened (e.g. no going from "hello" to string)
+ * - object literals get readonly properties
+ * - array literals become readonly tuples
+ */
 const readonlyAsConst = [1, false, 'str'] as const
+const string = <const>'test' // same
 console.log(readonly, readonly2, readonlyAsConst)
+// Works with no types referenced or declared.
+// We only needed a single const assertion.
+const getShapes = () => ([
+  { kind: 'circle', radius: 100 },
+  { kind: 'square', sideLength: 50 }
+] as const)
+
+for (const shape of getShapes()) {
+  // Narrows perfectly!
+  if (shape.kind === 'circle') {
+    console.log('Circle radius', shape.radius)
+  } else {
+    console.log('Square side length', shape.sideLength)
+  }
+}
 
 
 /**
@@ -222,4 +243,4 @@ console.log(list)
 list = { next: list, value: 'newitem' }
 
 const another = { list: list }
-const oneMore = { list: list}
+const oneMore = { list: list }

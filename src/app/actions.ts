@@ -1,30 +1,29 @@
+import { ETabs, TTaskID } from 'app/types/types'
 
+export const MODIFY_TASK = 'MODIFY_TASK'
+export const MODIFY_LIST = 'MODIFY_LIST'
+export const DELETE_TASK_FROM_LIST = 'DELETE_TASK_FROM_LIST'
+export const ADD_TASK_TO_LIST = 'ADD_TASK_TO_LIST'
 
-import { ETabs, ITask, TTaskID } from 'app/types/types';
-
-export const MODIFY_TASK = 'MODIFY_TASK';
-export const MODIFY_LIST = 'MODIFY_LIST';
-export const DELETE_TASK_FROM_LIST = 'DELETE_TASK_FROM_LIST';
-export const ADD_TASK_TO_LIST = 'ADD_TASK_TO_LIST';
-
-export function modifyTask(payload) {
+export function modifyTask(payload: { taskID: any; data: any; }) {
   return {
     type: MODIFY_TASK,
-    payload,
-  };
+    payload
+  }
 }
 
-export function modifyList(payload) {
+export function modifyList(payload: any) {
   return {
     type: MODIFY_LIST,
-    payload,
-  };
+    payload
+  }
 }
-export function deleteTaskFromList (payload) {
+
+export function deleteTaskFromList(payload: any) {
   return {
     type: DELETE_TASK_FROM_LIST,
-    payload,
-  };
+    payload
+  }
 }
 
 type TAddTaskToList = {
@@ -32,9 +31,10 @@ type TAddTaskToList = {
   type: ETabs
   listID: string
 }
-export function addTaskToList2 (payload: TAddTaskToList) {
+
+export function addTaskToList2(payload: TAddTaskToList) {
   return {
     type: ADD_TASK_TO_LIST,
-    payload,
-  };
+    payload
+  }
 }

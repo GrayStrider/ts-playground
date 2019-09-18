@@ -37,7 +37,8 @@ console.log(player.active)
 player.active = true
 console.log(player.active)
 
-let data = { passcode: 'secret passcode' }
+let data: { passcode?: string } = { passcode: 'secret passcode' }
+let data2: { passcode?: string } = {}
 
 class Employee {
 
@@ -50,7 +51,9 @@ class Employee {
   }
 
   set fullName(newName: string) {
-    if (oc(data).passcode() == 'secret passcode') {
+    const passcode = oc(data2).passcode('default optional, could be undefined')
+    console.log(passcode)
+    if (passcode == 'secret passcode') {
       this._fullName = newName
     } else {
       console.log('Error: Unauthorized update of employee!')
@@ -72,4 +75,61 @@ export const o = <T>(someObject: T, defaultValue: T = {} as T): T => {
     return defaultValue
   else
     return someObject
+}
+
+namespace tsOptchainExamples {
+  interface I {
+    a?: string;
+    b?: {
+      d?: string;
+    };
+    c?: Array<{
+      u?: {
+        v?: number;
+      };
+    }>;
+    e?: {
+      f?: string;
+      g?: () => string;
+    };
+  }
+
+  const x: I = {
+    a: 'hello',
+    b: {
+      d: 'world'
+    },
+    c: [{ u: { v: -100 } }, { u: { v: 200 } }, {}, { u: { v: -300 } }]
+  }
+
+  // Here are a few examples of deep object traversal using (a) optional chaining vs
+  // (b) logic expressions. Each of the following pairs are equivalent in
+  // result. Note how the benefits of optional chaining accrue with
+  // the depth and complexity of the traversal.
+
+  console.log(oc(x).a())
+  console.log(x.a)
+
+  console.log(oc(x).b.d())
+  console.log(x.b && x.b.d)
+
+  console.log(oc(x).c[0].u.v())
+  console.log(x.c && x.c[0] && x.c[0].u && x.c[0].u.v)
+
+  console.log(oc(x).c[100].u.v())
+  console.log(x.c && x.c[100] && x.c[100].u && x.c[100].u.v)
+
+  console.log(oc(x).c[100].u.v(1234))
+  console.log((x.c && x.c[100] && x.c[100].u && x.c[100].u.v) || 1234)
+
+  console.log(oc(x).e.f())
+  console.log(x.e && x.e.f)
+
+  console.log(oc(x).e.f('optional default value'))
+  console.log((x.e && x.e.f) || 'optional default value')
+
+// NOTE: working with function value types can be risky. Additional run-time
+// checks to verify that object types are functions before invocation are advised!
+  console.log(oc(x).e.g(() => 'Yo Yo')())
+  console.log(((x.e && x.e.g) || (() => 'Yo Yo'))())
 }

@@ -1,4 +1,4 @@
-import { objectify, range, sum } from '../Reference, JS/reduce'
+import { objectify, range, sum } from '../Reference, JS/C/reduce'
 
 it('should sum values',
   () => {
@@ -30,5 +30,5 @@ const testCases: { input: unknown, output: unknown }[] = [
   { input: 1, output: 3 },
   { input: 1, output: 3 },
   { input: 1, output: 3 },
-  { input: 1, output: 3 },
+  { input: 1, output: 3 }
 ]

@@ -3,7 +3,7 @@ export { sleep }
  * sleep for x sec
  */
 const sleep = (time: number) =>
-  new Promise(r => setTimeout(r, time))
+  new Promise((resolve, reject) => setTimeout(resolve, time))
 
 const asyncText = async (text: string, time: number) => {
   console.log('waiting ' + (time / 1000).toFixed(1) + 's..')

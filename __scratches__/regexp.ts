@@ -98,3 +98,4 @@ console.log(
   [1, 4, 5, 6, 3, 4, 2, 12, 0, null]
     .map(value => value || 'empty')
 )
+

@@ -45,6 +45,9 @@ type ThreeStringProps2 = { prop1: string, prop2: string, prop3: string }
 const partial: Partial<Part> = { name: 'namestr' }
 // all are optional
 
+type Writable<T> = {
+  -readonly [K in keyof T]: T[K]
+} // removes readonly from object properties
 type MutableRequired<T> = { -readonly [P in keyof T]-?: T[P] };  // Remove readonly and ?
 type ReadonlyPartial<T> = { +readonly [P in keyof T]+?: T[P] };  // Add readonly and ?
 type Foo = { a?: string };  // Same as { a?: string | undefined }
@@ -137,6 +140,6 @@ function fetchDataLogged(...params: Parameters<typeof fetchData>) {
 
 const foo = (arg: number, arg2: string) => arg
 const params: Parameters<typeof foo> =
-  [20, 'strparam']
-
+  [333, 'this']
+console.log(params)
 // const constrParams: ConstructorParameters = // for constructor parameters

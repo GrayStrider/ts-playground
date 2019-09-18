@@ -1,20 +1,29 @@
-import *  as React from 'react';
-import { connect } from 'react-redux';
-import { Grid, Icon, Menu, Modal, Image, Header, Portal, Segment, Input } from 'semantic-ui-react';
-import { map } from 'lodash';
-import { Wrapper } from './styles';
-import { selectList, selectTab } from './actions';
-import messages from './messages';
-import { ETabs, ICustomList, IList, ITag } from 'app/types/types';
-import { RootState } from 'app/reducers';
-import { getLists } from 'app/components/Lists/selectors';
+import { getLists } from 'app/components/Lists/selectors'
+import { RootState } from 'app/reducers'
+import { ETabs, ICustomList, IList, ITag } from 'app/types/types'
+import { map } from 'lodash'
+import *  as React from 'react'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+import { Grid, Icon, Input, Menu, Portal, Segment } from 'semantic-ui-react'
+import { Lists, selectList, selectTab } from './actions'
+import messages from './messages'
+import { Wrapper } from './styles'
 
-function Lists(props) {
+interface Props {
+  selectedTab?: any;
+  selectedList?: any;
+  lists?: any;
+  selectListAction?: any;
+  selectTabAction?: any;
+}
+
+function Lists(props: Props) {
   const {
     selectedTab, selectedList, lists, selectListAction
-  } = props;
+  } = props
 
-  const [addNewListModalisOpen, openAddNewListModal] = React.useState(false);
+  const [addNewListModalisOpen, openAddNewListModal] = React.useState(false)
   const Tabs =
 
     <Menu pointing secondary inverted> {
@@ -26,7 +35,7 @@ function Lists(props) {
 
           {messages[key]}
         </Menu.Item>
-      ))}</Menu>;
+      ))}</Menu>
   const tabMenuLists =
     <Menu vertical inverted fluid>
       {map(lists[selectedTab], (list: ITag | IList | ICustomList) => (
@@ -36,7 +45,7 @@ function Lists(props) {
           onClick={() => selectListAction({
             type: list.type,
             name: list.name,
-            id: list.id
+            id:   list.id
           })}
         >
           <span><Icon name='list'/>{lists[selectedTab][list.id].name}</span>
@@ -48,7 +57,7 @@ function Lists(props) {
         active={false}>
         <span><Icon name='plus'/>Add new {selectedTab}</span>
       </Menu.Item>
-    </Menu>;
+    </Menu>
   return (
     <Wrapper>
       {Tabs}
@@ -58,28 +67,28 @@ function Lists(props) {
           onClose={() => openAddNewListModal(!addNewListModalisOpen)}
           open={addNewListModalisOpen}>
           <Segment style={{
-            left: '40%',
+            left:     '40%',
             position: 'fixed',
-            top: '50%',
-            zIndex: 1000
+            top:      '50%',
+            zIndex:   1000
           }}>
             <Input placeholder={`${selectedTab} name:`}/>
           </Segment>
         </Portal>
       </Grid.Row>
     </Wrapper>
-  );
+  )
 }
 
 const mapStateToProps = (state: RootState) => ({
-  selectedTab: state.ticktick.ui.selectedTab,
+  selectedTab:  state.ticktick.ui.selectedTab,
   selectedList: state.ticktick.ui.selectedList,
-  lists: getLists(state)
-});
+  lists:        getLists(state)
+})
 
-const mapDispatchToProps = dispatch => ({
-  selectTabAction: (payload: ETabs) => dispatch(selectTab(payload)),
-  selectListAction: (index) => dispatch(selectList(index))
-});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  selectTabAction:  (payload: ETabs) => dispatch(selectTab(payload)),
+  selectListAction: (index: Lists) => dispatch(selectList(index))
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(Lists);
+export default connect(mapStateToProps, mapDispatchToProps)(Lists)

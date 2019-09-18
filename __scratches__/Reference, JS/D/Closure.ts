@@ -1,5 +1,3 @@
-import { arrayOf } from 'prop-types'
-
 export default {}
 
 let name = 'John'
@@ -30,8 +28,8 @@ work() // what will it show? "Pete" (name where created) or "John" (name where c
  * sum with closure
  * @param a
  */
-const sum = a =>
-  b =>
+const sum = (a: number) =>
+  (b: number) =>
     a + b
 console.log(sum(1))
 console.log(sum(1)(3))

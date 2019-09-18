@@ -1,3 +1,5 @@
+import { ajax } from 'rxjs/ajax'
+import { XMLHttpRequest } from 'xmlhttprequest'
 import {
   audit,
   auditTime,
@@ -9,9 +11,11 @@ import {
   filter,
   map,
   mergeMap,
-  take
+  take, tap
 } from 'rxjs/operators'
 import { asyncScheduler, from, fromEvent, interval, Observable, of, timer } from 'rxjs'
+import Promise from 'bluebird'
+import axios, { AxiosResponse } from 'axios'
 
 //================================================================================
 // Helpers
@@ -69,7 +73,7 @@ interval(300)
     map(i => [...STR][i]), // map each emit to corresponding member
     endWith('Done!')
   )
-  .subscribe(console.log)
+// .subscribe(console.log)
 
 
 /**
@@ -141,4 +145,59 @@ interval(200)
     bufferCount(3)
   )
 
-  // .subscribe(v => console.log(v))
+// .subscribe(v => console.log(v))
+
+/**
+ * combination with Promises
+ * seem to ignore setTimeout
+ */
+const promise = Promise
+  .resolve('resolved')
+
+const promise2 =
+  new Promise((resolve, reject) => {
+    console.log('vaiting in Promise...')
+    setTimeout(resolve('delayed with promise'), 4000)
+  })
+
+// console.time()
+from(promise)
+  .pipe(
+    tap(() => console.log('vaiting in observable..')),
+    // delay(100),
+    map(value => value + '!')
+  )
+// .subscribe(console.log)
+// console.timeEnd()
+
+
+const hondas = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/honda?format=json'
+/**
+ * built-in ajax observable
+ */
+const ajaxOptions = {
+  createXHR: () => new XMLHttpRequest, // required to avoid CORS error
+  url:       hondas
+}
+
+ajax(ajaxOptions)
+  .pipe(
+    map(result => result.status)
+  )
+  .subscribe(console.log)
+
+
+/**
+ * promisify axios
+ */
+const axiosAsync =
+  new Promise<AxiosResponse>((resolve, reject) => {
+    resolve(axios.get(hondas))
+  })
+
+
+from(axiosAsync)
+  .pipe(
+    map(result => result.status)
+  )
+// .subscribe((result) => console.log(result))

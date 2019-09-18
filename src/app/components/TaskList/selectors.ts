@@ -1,7 +1,7 @@
-import { createSelector } from 'reselect';
-import { getTaskLists, getSelectedList, getTasks } from 'app/selectors-global';
-import { filter, forEach } from 'lodash';
-import { IList, TTasks } from 'app/types/types';
+import { getSelectedList, getTaskLists, getTasks } from 'app/selectors-global'
+import { IList, TTasks } from 'app/types/types'
+import { filter, forEach } from 'lodash'
+import { createSelector } from 'reselect'
 
 export const getCurrentListTasks = createSelector(
   getTaskLists,
@@ -13,12 +13,12 @@ export const getCurrentListTasks = createSelector(
     tasks: TTasks) =>
     filter(tasks, (task) => (
         data[selectedList.type][selectedList.id].tasks
-          .includes(task.id)
+                                                .includes(task.id)
       )
     )
-);
+)
 
-let filtered = {};
+let filtered: TTasks = {}
 export const getCurrentListTasks2 = createSelector(
   getTaskLists,
   getSelectedList,
@@ -27,12 +27,12 @@ export const getCurrentListTasks2 = createSelector(
     data,
     selectedList: IList,
     tasks: TTasks) => {
-    filtered = {};
+    filtered = {}
     forEach(data[selectedList.type][selectedList.id].tasks,
       (taskID) => {
-        filtered[taskID] = tasks[taskID];
+        filtered[taskID] = tasks[taskID]
       }
-    );
-    return filtered;
+    )
+    return filtered
   }
 )
