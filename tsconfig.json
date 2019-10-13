@@ -10,7 +10,6 @@
     "jsx": "react",
     "lib": [
       "dom",
-      "es2019",
       "esnext"
     ],
     "module": "es6",
