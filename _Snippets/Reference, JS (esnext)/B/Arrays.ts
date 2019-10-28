@@ -13,9 +13,9 @@ const range = (from: number, to: number) => ({
         return this.current <= this.last
                ? { done: false, value: this.current++ }
                : { done: true }
-      }
+      },
     }
-  }
+  },
 })
 const isEven = (num: number) => !(num % 2)
 const NUMS: number[] = Array.from(Array(10).keys())
@@ -95,7 +95,7 @@ const students: Student[] = [
   { name: 'Nick', grade: 10 },
   { name: 'John', grade: 15 },
   { name: 'Julia', grade: 19 },
-  { name: 'Nathalie', grade: 9 }
+  { name: 'Nathalie', grade: 9 },
 ]
 
 console.log(students
@@ -106,7 +106,7 @@ console.log(students
 export const objectify = (target: Student[]) =>
   target.reduce((previousValue, currentValue) => ({
     ...previousValue, // spread existing data
-    [currentValue.name]: currentValue.grade // overwrite / add new data on top
+    [currentValue.name]: currentValue.grade, // overwrite / add new data on top
   }), {}) // intialize with empty object, optional (may need to provide appropriate types with <>)
 
 console.log(objectify(students))
@@ -114,8 +114,8 @@ console.log(objectify(students))
 console.log(
   STRS.reduce((acc, curr, index) => ({
     ...acc,
-    [`[${index}] ` + curr]: curr.length
-  }), {})
+    [`[${index}] ` + curr]: curr.length,
+  }), {}),
 )
 
 /**
@@ -139,13 +139,13 @@ let arrayLike = {
   0: 'Hello',
   1: 'World',
   2: 'prop',
-  length: 5 // needs this
+  length: 5, // needs this
 }
 
 console.log(Array.from(arrayLike))
 console.log(Array.from(range(-3, 4)))
 // optional map function
-console.log(Array.from(range(-3, 5),
-  (num) => num !== undefined
-           ? num * 2
-           : undefined))
+// console.log(Array.from(range(-3, 5),
+//   (num) => num !== undefined
+//            ? num * 2
+//            : undefined))

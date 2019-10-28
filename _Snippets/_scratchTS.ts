@@ -18,9 +18,9 @@ namespace optionalChaining {
     param: {
       param2: 'test',
       param3: {
-        param4: '123'
-      }
-    }
+        param4: '123',
+      },
+    },
   }
 
   console.log(obj?.parm)

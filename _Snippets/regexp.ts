@@ -26,7 +26,7 @@ const obj: { data: string }[] = [
   { data: 'test' },
   { data: 'test' },
   { data: 'test' },
-  { data: 'test2' }
+  { data: 'test2' },
 ]
 console.log(obj
   .filter(item => !/\d/.test(item.data))
@@ -35,7 +35,7 @@ console.log(obj
 
 
 const test = '12weord test'
-// Non-capture group:
+// Non-capturing group:
 console.log(test.match(/(?:\d+)(\w+)/))
 // Positive lookahead: (one or more \d, followed by one or more \w)
 console.log(test.match(/(\d+)(?=\w+)/))
@@ -75,7 +75,7 @@ const regexpReplacer = /(?<=[_-])(.)/ig
 console.log(text
   .replace(regexp,
     (fullMatch, firstGroup, ...rest: any[]) =>
-      firstGroup.toLowerCase())
+      firstGroup.toLowerCase()),
 )
 
 console.log(text
@@ -92,12 +92,12 @@ console.log(text
  * backreference; no way to modify the value before replacement
  */
 console.log(text
-  .replace(regexp, '$1')
+  .replace(regexp, '$1'),
 )
 
 console.log(
   [1, 4, 5, 6, 3, 4, 2, 12, 0, null]
-    .map(value => value || 'empty')
+    .map(value => value || 'empty'),
 )
 
 const str = '1 2 3 tes tes F F'

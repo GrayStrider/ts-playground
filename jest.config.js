@@ -3,22 +3,22 @@ module.exports = {
   collectCoverage: true,
 
   collectCoverageFrom: [
-    '<rootDir>/_Snippets/**/*.{ts,tsx,js,jsx}'
+    '<rootDir>/_Snippets/**/*.{ts,tsx,js,jsx}',
   ],
 
   testPathIgnorePatterns: [
-    '<rootDir>/_Snippets/Reference, TS/D/BigInt.ts'
+    '<rootDir>/_Snippets/Reference, TS/D/BigInt.ts',
   ],
 
   roots: [
-    '<rootDir>/src/',
-    '<rootDir>/_Snippets/'
+    // '<rootDir>/src/',
+    '<rootDir>/_Snippets/',
   ],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest'
+    '^.+\\.tsx?$': 'ts-jest',
   },
   modulePaths: [
     '<rootDir>/src/',
-    '<rootDir>/_Snippets/'
-  ]
+    '<rootDir>/_Snippets/',
+  ],
 }

@@ -21,7 +21,8 @@ const FooBaz = (iterations: number, conditions: Conditions, continueOnFirstMatch
 const conditionsMap: Conditions = new Map([
   [(i) => i % 3 === 0, 'Foo'],
   [(i) => i % 5 === 0, 'Divisible by 5!'],
-  [(i) => i === 10, 'is 10!']
+  [(i) => i === 10, 'is 10!'],
 ])
 
 FooBaz(10, conditionsMap, false)
+FooBaz(20, conditionsMap, true)
