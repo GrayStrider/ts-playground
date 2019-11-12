@@ -1,13 +1,13 @@
 module.exports = {
 
-  collectCoverage: true,
+  // collectCoverage: true,
 
   collectCoverageFrom: [
     '<rootDir>/_Snippets/**/*.{ts,tsx,js,jsx}',
   ],
 
   testPathIgnorePatterns: [
-    '<rootDir>/_Snippets/Reference, TS/D/BigInt.ts',
+    /*'<rootDir>/_Snippets/Reference, TS/D/BigInt.ts',*/
   ],
 
   roots: [

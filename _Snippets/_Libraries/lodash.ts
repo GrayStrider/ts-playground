@@ -1,7 +1,5 @@
 import _, { flow } from 'lodash'
 
-export {}
-
 const object = {
   x: 42,
   y: 50,
@@ -10,7 +8,6 @@ const object = {
   az: 50,
   falsy: false,
 }
-
 
 console.log(
   /**
@@ -27,6 +24,7 @@ console.log(
           .filter(([key, value]) =>
             key.length === 1 && typeof value === 'number'),
   ))
+
 
 /**
  * lodash object
@@ -54,26 +52,29 @@ console.log(
 
 const doubleSay = (str: string) =>
   str + ', ' + str
+
 const capitalize = (str: string) =>
   str[0].toUpperCase() + str.substring(1)
 const exclaim = (str: string) =>
   str + '!'
-
 // let res = 'hello'|> doubleSay|> capitalize|> exclaim|> console.log
 flow([doubleSay, capitalize, exclaim, console.log])('hello')
+
 console.log(flow([])('hello'))
 
-
-const myFlow = (funcs: Function[]) =>
+const myFlow = (funcs: ((arg: any) => any)[]) =>
   funcs.length === 0
-  ? (...args: any[]) => args.join(', ')
-  : (...args: any[]) => {
+  ? (arg: any) => arg
+  : (arg: any) => {
     const [first, ...rest] = funcs
     return rest.reduce((curr, acc) =>
-      acc(curr), first(args) as any)
+      acc(curr), first(arg) as any)
   }
 
+
 myFlow([doubleSay, capitalize, exclaim, console.log])('hello')
+
 console.log(myFlow([doubleSay, capitalize, exclaim])('hello'))
 console.log(myFlow([doubleSay])('hello'))
 console.log(myFlow([])('hello'))
+export { doubleSay, capitalize, exclaim, myFlow }
