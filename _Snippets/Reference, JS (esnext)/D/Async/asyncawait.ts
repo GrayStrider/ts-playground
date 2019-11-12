@@ -4,7 +4,6 @@ import Promise from 'bluebird'
 export {}
 
 async function f() {
-
   let promise = new Promise((resolve, reject) => {
     setTimeout(() => resolve('done!'), 1000)
   })
@@ -22,18 +21,14 @@ namespace AxiosFetchHondasAsyncAwait {
   }
 
   interface vhpicResults {
-    Make_ID: number,
-    Make_Name: string,
-    Model_ID: number,
+    Make_ID: number
+    Make_Name: string
+    Model_ID: number
     Model_Name: string
   }
 
-  const formatResponse = (
-    response: AxiosResponse<vhpicResponse>,
-    key: keyof vhpicResults) =>
-    response
-      .data.Results
-      .map((value) => value[key])
+  const formatResponse = (response: AxiosResponse<vhpicResponse>, key: keyof vhpicResults) =>
+    response.data.Results.map(value => value[key])
 
   /**
    * fetches car models
@@ -41,9 +36,7 @@ namespace AxiosFetchHondasAsyncAwait {
   const example = async (key: keyof vhpicResults) => {
     const data = await axios.get(hondas)
     return formatResponse(data, key)
-
   }
 
-  example('Model_Name')
-    .then(console.log)
+  example('Model_Name').then(console.log)
 }

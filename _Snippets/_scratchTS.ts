@@ -8,9 +8,9 @@ namespace optionalChaining {
     param: {
       param3: {
         param4: string
-      };
+      }
       param2: string
-    },
+    }
     [key: string]: unknown
   }
 
@@ -56,9 +56,7 @@ namespace optionalChaining {
 
   const logger = (msg: string) => console.log(msg)
   const url = 'https://google.com'
-  makeRequest(url, logger)
-    .then(console.log)
-
+  makeRequest(url, logger).then(console.log)
 }
 
 namespace nullishCoalescing {
@@ -66,7 +64,6 @@ namespace nullishCoalescing {
   console.log(hasArgument(20))
   console.log(hasArgument(0))
 }
-
 
 /** more examples */
 console.table({ one: 'one', two: 'two' })
