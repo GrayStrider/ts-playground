@@ -9,14 +9,14 @@ interface Command {
  * Some commands can implement simple operations on their own.
  */
 class SimpleCommand implements Command {
-  private readonly payload: string;
+  private readonly payload: string
 
   constructor(payload: string) {
-    this.payload = payload;
+    this.payload = payload
   }
 
   public execute(): void {
-    console.log(`SimpleCommand: See, I can do simple things like printing (${this.payload})`);
+    console.log(`SimpleCommand: See, I can do simple things like printing (${this.payload})`)
   }
 }
 
@@ -25,32 +25,32 @@ class SimpleCommand implements Command {
  * called "receivers."
  */
 class ComplexCommand implements Command {
-  private receiver: Receiver;
+  private receiver: Receiver
 
   /**
    * Context data, required for launching the receiver's methods.
    */
-  private readonly a: string;
+  private readonly a: string
 
-  private readonly b: string;
+  private readonly b: string
 
   /**
    * Complex commands can accept one or several receiver objects along with
    * any context data via the constructor.
    */
   constructor(receiver: Receiver, a: string, b: string) {
-    this.receiver = receiver;
-    this.a = a;
-    this.b = b;
+    this.receiver = receiver
+    this.a = a
+    this.b = b
   }
 
   /**
    * Commands can delegate to any methods of a receiver.
    */
   public execute(): void {
-    console.log('ComplexCommand: Complex stuff should be done by a receiver object.');
-    Receiver.doSomething(this.a);
-    Receiver.doSomethingElse(this.b);
+    console.log('ComplexCommand: Complex stuff should be done by a receiver object.')
+    Receiver.doSomething(this.a)
+    Receiver.doSomethingElse(this.b)
   }
 }
 
@@ -61,11 +61,11 @@ class ComplexCommand implements Command {
  */
 class Receiver {
   public static doSomething(a: string): void {
-    console.log(`Receiver: Working on (${a}.)`);
+    console.log(`Receiver: Working on (${a}.)`)
   }
 
   public static doSomethingElse(b: string): void {
-    console.log(`Receiver: Also working on (${b}.)`);
+    console.log(`Receiver: Also working on (${b}.)`)
   }
 }
 
@@ -74,19 +74,23 @@ class Receiver {
  * the command.
  */
 class Invoker {
-  private onStart!: Command;
+  private onStart!: Command
 
-  private onFinish!: Command;
+  private onFinish!: Command
+
+  private static isCommand(object: Command): object is Command {
+    return object.execute !== undefined
+  }
 
   /**
    * Initialize commands.
    */
   public setOnStart(command: Command): void {
-    this.onStart = command;
+    this.onStart = command
   }
 
   public setOnFinish(command: Command): void {
-    this.onFinish = command;
+    this.onFinish = command
   }
 
   /**
@@ -95,30 +99,26 @@ class Invoker {
    * command.
    */
   public doSomethingImportant(): void {
-    console.log('Invoker: Does anybody want something done before I begin?');
+    console.log('Invoker: Does anybody want something done before I begin?')
     if (Invoker.isCommand(this.onStart)) {
-      this.onStart.execute();
+      this.onStart.execute()
     }
 
-    console.log('Invoker: ...doing something really important...');
+    console.log('Invoker: ...doing something really important...')
 
-    console.log('Invoker: Does anybody want something done after I finish?');
+    console.log('Invoker: Does anybody want something done after I finish?')
     if (Invoker.isCommand(this.onFinish)) {
-      this.onFinish.execute();
+      this.onFinish.execute()
     }
-  }
-
-  private static isCommand(object): object is Command {
-    return object.execute !== undefined;
   }
 }
 
 /**
  * The client code can parameterize an invoker with any commands.
  */
-const invoker = new Invoker();
-invoker.setOnStart(new SimpleCommand('Say Hi!'));
-const receiver = new Receiver();
-invoker.setOnFinish(new ComplexCommand(receiver, 'Send email', 'Save report'));
+const invoker = new Invoker()
+invoker.setOnStart(new SimpleCommand('Say Hi!'))
+const receiver = new Receiver()
+invoker.setOnFinish(new ComplexCommand(receiver, 'Send email', 'Save report'))
 
-invoker.doSomethingImportant();
+invoker.doSomethingImportant()

@@ -69,7 +69,7 @@ function prop2<T>(obj: T, key: keyof T) {
 let o = {
   p1: 0,
   p2: '',
-  p3: []
+  p3: [],
 }
 
 let v = prop(o, 'p1') // is number, K is of type 'p1'
@@ -98,8 +98,12 @@ reversed[0] = 1       // Okay
 reversed = [1, 2]     // Okay
 
 class Car {
+
+  static instances = 0
   label: string = 'Generic Car'
   numWheels: Number = 4
+
+  constructor() {Car.instances++}
 
   static horn() {
     return 'beep beep!'
@@ -128,6 +132,7 @@ const washCar = <T extends Car>(car: T): T => {
 const myVespa = new Vespa()
 const myTruck = new Truck()
 const car = new Car()
+console.log(Car.instances) // static prop demo
 
 washCar(myVespa)
 washCar(myTruck)
@@ -158,7 +163,7 @@ namespace Constraints {
 
   let x = { a: 1, b: 2, c: 3, d: 4 }
   assign(x,
-    { b: 10, d: 20 }
+    { b: 10, d: 20 },
   )
   // assign(x, { e: 0 })  // Error
 }

@@ -1,5 +1,6 @@
-import * as React from 'react';
-import Scrollbars from 'react-custom-scrollbars';
+import * as React from 'react'
+import { CSSProperties } from 'react'
+import Scrollbars from 'react-custom-scrollbars'
 
 // TODO Don't hide track while mouse inside the container
 // https://github.com/malte-wessel/react-custom-scrollbars/blob/master/src/Scrollbars/index.js
@@ -15,22 +16,22 @@ type Props = {
 
 export default class Scrollbar extends React.Component<Props> {
 
-  constructor(props, ...rest) {
-    super(props, ...rest);
-    Scrollbar.renderThumb = Scrollbar.renderThumb.bind(this);
+  constructor(props: Props, ...rest: React.ComponentProps<any>) {
+    super(props, ...rest)
+    Scrollbar.renderThumb = Scrollbar.renderThumb.bind(this)
   }
 
 
-  static renderThumb({ style, ...props }) {
+  static renderThumb({ style, ...props }: { style: CSSProperties, props: React.ComponentProps<any> }) {
     const thumbStyle = {
       backgroundColor: `gray`,
-      borderRadius: '3px'
-    };
+      borderRadius: '3px',
+    }
     return (
       <div
         style={{ ...style, ...thumbStyle }}
         {...props}/>
-    );
+    )
   }
 
   render() {
@@ -39,6 +40,6 @@ export default class Scrollbar extends React.Component<Props> {
         renderThumbHorizontal={Scrollbar.renderThumb}
         renderThumbVertical={Scrollbar.renderThumb}
         {...this.props}/>
-    );
+    )
   }
 }

@@ -139,7 +139,7 @@ namespace AbstractPropertiesAccessors {
 type Constructor<T> = new(...args: any[]) => T;
 
 //================================================================================
-// Mixins
+// Mixins, Point
 //================================================================================
 
 namespace Mixins {
