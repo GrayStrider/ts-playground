@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import _, { flow } from 'lodash'
 
 export {}
 
@@ -8,7 +8,7 @@ const object = {
   abc: 9001,
   z: 'test',
   az: 50,
-  falsy: false
+  falsy: false,
 }
 
 
@@ -25,7 +25,7 @@ console.log(
   Object.fromEntries(
     Object.entries(object)
           .filter(([key, value]) =>
-            key.length === 1 && typeof value === 'number')
+            key.length === 1 && typeof value === 'number'),
   ))
 
 /**
@@ -34,7 +34,7 @@ console.log(
 console.log(_(object)
   .pickBy((value, key) =>
     value === 50 && key.length === 1)
-  .value()
+  .value(),
 )
 
 /**
@@ -44,10 +44,20 @@ console.log(
   _(object)
     .filter((value) => typeof value === 'number')
     .map((value: number) => value * 2)
-    .value()
+    .value(),
 )
 
 console.log(
   _.filter(object,
-    (value) => !!value)
+    (value) => !!value),
 )
+
+const doubleSay = (str: string) =>
+  str + ', ' + str
+const capitalize = (str: string) =>
+  str[0].toUpperCase() + str.substring(1)
+const exclaim = (str: string) =>
+  str + '!'
+
+// let res = 'hello'|> doubleSay|> capitalize|> exclaim|> console.log
+flow([doubleSay, capitalize, exclaim, console.log])('hello')

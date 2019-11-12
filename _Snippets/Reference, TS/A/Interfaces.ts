@@ -17,28 +17,21 @@ let obj: x1 = {
   nestedObj: {
     hardcoded: 10,
     type: 3,
-    'one': 1,
-    'two': 2,
-    'three': 3,
-    'four': 4
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
   },
   arr: [1],
   readonly: false,
-  optional: 'optional'
+  optional: 'optional',
   // another: false
 }
 
-// functions in JS can not return nothing, use undefined
-type returnsVoid = (...args: number[]) => void
-
-interface IReturnsVoid {
-  (...args: number[]): void
-}
-
-const foo: returnsVoid /* IReturnsVoid */ = (...args) => {
+function foo(...args: number[]): void {
   console.log(args)
-  return 0
 }
+
 foo(3, 4, 5)
 
 namespace Clock {
@@ -259,7 +252,7 @@ namespace IntersectionA {
   const object: TaggedUnion = {
     propA: 'stringA',
     propB: 50,
-    propA1: 'anystring'
+    propA1: 'anystring',
   }
 }
 

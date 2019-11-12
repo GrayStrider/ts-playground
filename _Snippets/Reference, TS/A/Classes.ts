@@ -12,6 +12,10 @@ class Greeter3 {
 let greeter = new Greeter3('world')
 
 // Inheritance
+//================================================================================
+// Animals
+//================================================================================
+
 abstract class Animal { // cannot be instantiated directly
   protected owner: string // cannot be accessed externaly
 
@@ -81,7 +85,10 @@ console.log(cham)
 
 
 class Song {
-  constructor(public title: string, public duration: string | number) {}
+  constructor(
+    public title: string,
+    public duration: string | number,
+  ) {}
 }
 
 function getSongDuration(item: Song) {
@@ -94,16 +101,16 @@ function getSongDuration(item: Song) {
   return `${minutes}:${seconds}`
 }
 
-const songDurationFromString = getSongDuration(
-  new Song('Wonderful Wonderful', '05:31')
-)
-console.log(songDurationFromString)
+console.log(getSongDuration(
+  new Song('Wonderful Wonderful', '05:31'),
+))
+console.log(getSongDuration(
+  new Song('Wonderful Wonderful', 330000),
+))
 
-
-const songDurationFromMS = getSongDuration(
-  new Song('Wonderful Wonderful', 330000)
-)
-console.log(songDurationFromMS)
+//================================================================================
+// AbstractPropertiesAccessors
+//================================================================================
 
 namespace AbstractPropertiesAccessors {
   abstract class Base {
@@ -130,6 +137,10 @@ namespace AbstractPropertiesAccessors {
 }
 
 type Constructor<T> = new(...args: any[]) => T;
+
+//================================================================================
+// Mixins
+//================================================================================
 
 namespace Mixins {
 
@@ -193,6 +204,10 @@ namespace Mixins2 {
   const point2 = new pointWithLocation(10, 12)
   console.log(point2.location)
 }
+
+//================================================================================
+// DefinitiveAssignmentAssertion
+//================================================================================
 
 namespace DefinitiveAssignmentAssertion {
   class C {

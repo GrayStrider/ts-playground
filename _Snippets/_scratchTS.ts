@@ -61,13 +61,11 @@ namespace optionalChaining {
 
 }
 
-// namespace nullishCoalescing {
-//   const hasArgument = (arg: number) => arg ?? /*||*/ false;
-//
-//            console.log(hasArgument(20))
-//            console.log(hasArgument(0))
-//
-// }
+namespace nullishCoalescing {
+  const hasArgument = (arg: number) => arg ?? /*||*/ false
+  console.log(hasArgument(20))
+  console.log(hasArgument(0))
+}
 
 
 /** more examples */
