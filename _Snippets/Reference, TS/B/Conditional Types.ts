@@ -134,7 +134,7 @@ type GetElementType<T extends Array<any>> = T extends (infer U)[] ? U : never
 
 const getType: GetElementType<number[]> = 0
 const getType2: GetElementType<string[]> = '0'
-const getTypeTuple: GetElementType<['const', 40]> = 'const'
+const getTypeTuple: GetElementType<['const', 40]> = 40/*'const'*/
 
 
 type MapArraysToValues<T extends { [key: string]: any[] }> = {
