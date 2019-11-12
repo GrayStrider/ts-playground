@@ -61,3 +61,19 @@ const exclaim = (str: string) =>
 
 // let res = 'hello'|> doubleSay|> capitalize|> exclaim|> console.log
 flow([doubleSay, capitalize, exclaim, console.log])('hello')
+console.log(flow([])('hello'))
+
+
+const myFlow = (funcs: Function[]) =>
+  funcs.length === 0
+  ? (...args: any[]) => args.join(', ')
+  : (...args: any[]) => {
+    const [first, ...rest] = funcs
+    return rest.reduce((curr, acc) =>
+      acc(curr), first(args) as any)
+  }
+
+myFlow([doubleSay, capitalize, exclaim, console.log])('hello')
+console.log(myFlow([doubleSay, capitalize, exclaim])('hello'))
+console.log(myFlow([doubleSay])('hello'))
+console.log(myFlow([])('hello'))
