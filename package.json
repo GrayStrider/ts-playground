@@ -6,7 +6,7 @@
     "test:typecheck": "tsc --noEmit --incremental false"
   },
   "dependencies": {
-
+    "monet": "^0.9.1"
   },
   "devDependencies": {
     "@types/jest": "^25.1.1",
