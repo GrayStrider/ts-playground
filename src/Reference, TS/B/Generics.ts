@@ -195,3 +195,5 @@ namespace MapGeneric {
   console.log(mappable)
 
 }
+
+export {}
