@@ -1,6 +1,6 @@
 export default {}
 
-let slow = x => {
+let slow = (x: unknown) => {
   // there can be a heavy CPU-intensive job here
   console.log(`Called with ${x}`)
   return x
@@ -12,10 +12,10 @@ const memoize = <Arg extends any, Func extends (arg: Arg) => any>(func: Func) =>
   return (arg: Arg) => {
     if (cache.has(arg)) {
       console.log(`returned result of ${arg} from cache`)
-      return <ReturnType<Func>>cache.get(arg)
+      return cache.get(arg)
     }
 
-    let result: ReturnType<Func> = func(arg)  // otherwise call func
+    let result = func(arg)  // otherwise call func
     console.log('from catche')
     cache.set(arg, result)  // and cache (remember) the result
     return result
