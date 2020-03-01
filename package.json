@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "main": "src/index.js",
   "scripts": {
+    "start:dev:file": "ts-node-dev --respawn --transpile-only --ignore-watch .spec -r tsconfig-paths/register",
     "test:typecheck": "tsc --noEmit --incremental false"
   },
   "dependencies": {
-    "monet": "^0.9.1"
+    "monet": "^0.9.1",
+    "@strider/utils-ts": "0.0.1"
   },
   "devDependencies": {
     "@types/jest": "^25.1.1",
