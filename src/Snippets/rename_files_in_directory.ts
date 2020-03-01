@@ -20,12 +20,5 @@ const renameFile = (file: string) => {
 }
 
 fs.readdirSync(dir)
-  .forEach(file => {
-      try {
-        renameFile(file)
-      } catch { // can omit variable
-        console.log('Error')
-      }
-    }
-  )
+  .forEach(renameFile)
 
