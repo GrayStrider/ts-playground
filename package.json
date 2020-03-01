@@ -1,5 +1,5 @@
 {
-  "name": "@strider/template-ts",
+  "name": "@strider/ts-playground",
   "version": "0.0.1",
   "main": "src/index.js",
   "dependencies": {
