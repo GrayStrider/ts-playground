@@ -1,5 +1,5 @@
-import { objectify, sum } from '../Reference, JS (esnext)/B/Arrays'
-import { Generators } from '../Reference, JS (esnext)/C/Generators, Iterators, array-like'
+import { objectify, sum } from 'src/Reference, JS (esnext)/B/Arrays'
+import { Generators } from 'src/Reference, JS (esnext)/C/Generators, Iterators, array-like'
 import range2 = Generators.range2
 
 // describe('sum', () => {
