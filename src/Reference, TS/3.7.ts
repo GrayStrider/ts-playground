@@ -39,17 +39,17 @@ console.log(bar(20)) // 20
 //================================================================================
 
 
-// function assertIsString(val: any): asserts val is string {
-//   if (typeof val !== "string") {
-//     throw new AssertionError({message: "Not a string!"});
-//   }
-// }
-//
-// function yell(str: any) {
-//   assertIsString(str);
-//   // Now TypeScript knows that 'str' is a 'string'.
-//   return str.toUpperCase();
-// }
+function assertIsString(val: any): asserts val is string {
+  if (typeof val !== "string") {
+    throw new AssertionError({message: "Not a string!"});
+  }
+}
+
+function yell(str: any) {
+  assertIsString(str);
+  // Now TypeScript knows that 'str' is a 'string'.
+  return str.toUpperCase();
+}
 
 //================================================================================
 // Recursive types
