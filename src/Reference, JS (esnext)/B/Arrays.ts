@@ -2,17 +2,17 @@ export {}
 
 /** helpers */
 const range = (from: number, to: number) => ({
-  length: (to - from) > 0 ? (to - from) : 0,
-
+  length: to - from > 0 ? to - from : 0,
+  
   [Symbol.iterator]: () => {
     return {
       current: from,
       last: to,
-
+      
       next() {
         return this.current <= this.last
-               ? { done: false, value: this.current++ }
-               : { done: true }
+          ? { done: false, value: this.current++ }
+          : { done: true }
       },
     }
   },
@@ -41,8 +41,8 @@ console.log(STRS.reverse())
 console.log(NUMS.every(isEven))
 console.log(NUMS.some(isEven))
 console.log(NUMS.find(value => value > 3))
-console.log(STRS.find/*some*/(/th/g.test))
-console.log(STRS.findIndex((value) => value.length > 3)) // it's reversed..
+console.log(STRS.find(/*some*/ /th/g.test))
+console.log(STRS.findIndex(value => value.length > 3)) // it's reversed..
 console.log(STRS.indexOf('one')) // -1 if nothing found
 console.log(STRS.lastIndexOf('one'))
 console.log(STRS.includes('one'))
@@ -53,20 +53,17 @@ console.log(NUMS.slice(-3, -1)) // piece of arrray, does not mutate
 console.log(NUMS.concat([2, 3, 4]))
 console.log([...NUMS, 2, 3, '3']) // alternative, does not inherit the type
 
-console.log(['one', ['two', ['three', ['four', ['five']]]]]
-  .flat(Infinity))
-console.log(['This is', 'pretty awesome', '!']
-  .flatMap((segment) => segment.match(/\w+|!/g)))
-
+console.log(['one', ['two', ['three', ['four', ['five']]]]].flat(Infinity))
+console.log(
+  ['This is', 'pretty awesome', '!'].flatMap(segment => segment.match(/\w+|!/g)),
+)
 
 /**
  * functional;
  * may provide optional 'this' argument
  */
-console.log(NUMS.reduce((acc, curr) =>
-  acc + curr, 0)) // sum, starting value
-console.log(NUMS.reduceRight((acc, curr) =>
-  acc + curr, 0)) // same, but from the right
+console.log(NUMS.reduce((acc, curr) => acc + curr, 0)) // sum, starting value
+console.log(NUMS.reduceRight((acc, curr) => acc + curr, 0)) // same, but from the right
 console.log(NUMS.map(value => value + 1))
 /** as long as map / reduce function conforms to parameters, you can pass it
  * without param => foo(param) */
@@ -75,16 +72,14 @@ console.log([1, 3, 4, 5].map(double))
 console.log(NUMS.sort((a, b) => a - b)) // provide comparator
 
 /** iteration */
-for (let str1 of STRS)
-  console.log(str1)
+for (let str1 of STRS) console.log(str1)
 STRS.forEach(console.log)
 
 /** advanced reduce examples */
 export const sum = (numbers: number[]): number =>
   numbers.reduce((prev, current) => prev + current)
 /** [0, 1, 2, ..., n] */
-const rangeSpreadArray = (length: number): number[] =>
-  [...Array(length).keys()]
+const rangeSpreadArray = (length: number): number[] => [...Array(length).keys()]
 
 interface Student {
   name: string
@@ -98,24 +93,32 @@ const students: Student[] = [
   { name: 'Nathalie', grade: 9 },
 ]
 
-console.log(students
-  .map(student => student.grade)
-  .filter(grade => grade >= 10)
-  .reduce((acc, curr) => acc + curr, 0))
+console.log(
+  students
+    .map(student => student.grade)
+    .filter(grade => grade >= 10)
+    .reduce((acc, curr) => acc + curr, 0),
+)
 
 export const objectify = (target: Student[]) =>
-  target.reduce((previousValue, currentValue) => ({
-    ...previousValue, // spread existing data
-    [currentValue.name]: currentValue.grade, // overwrite / add new data on top
-  }), {}) // intialize with empty object, optional (may need to provide appropriate types with <>)
+  target.reduce(
+    (previousValue, currentValue) => ({
+      ...previousValue, // spread existing data
+      [currentValue.name]: currentValue.grade, // overwrite / add new data on top
+    }),
+    {},
+  ) // intialize with empty object, optional (may need to provide appropriate types with <>)
 
 console.log(objectify(students))
 
 console.log(
-  STRS.reduce((acc, curr, index) => ({
-    ...acc,
-    [`[${index}] ` + curr]: curr.length,
-  }), {}),
+  STRS.reduce(
+    (acc, curr, index) => ({
+      ...acc,
+      [`[${index}] ` + curr]: curr.length,
+    }),
+    {},
+  ),
 )
 
 /**

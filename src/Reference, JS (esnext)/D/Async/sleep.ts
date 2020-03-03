@@ -13,5 +13,4 @@ const asyncText = async (text: string, ms: number) => {
   return text
 }
 
-asyncText('test', 1000)
-  .then(console.log)
+asyncText('test', 1000).then(console.log)

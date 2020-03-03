@@ -5,12 +5,13 @@ interface Person {
   age: number
   grades: number[]
   isEmployed: boolean
+  
   action(subj: string): string
 }
 
 const target = {
   newprop: 'newPropValue',
-  symbol: Symbol('hi')
+  symbol: Symbol('hi'),
 }
 
 /**
@@ -21,7 +22,7 @@ const person: Person = {
   age: 30,
   grades: [20, 5, 3],
   isEmployed: false,
-  action: (subj) => subj.toUpperCase()
+  action: subj => subj.toUpperCase(),
 }
 
 /**
@@ -34,24 +35,25 @@ const person: Person = {
  * JSON.parse parses a string to object,
  * use 'replacer' to transform data types based on key name
  */
-let map = new Map(
-  Object.entries(person)
-)
+let map = new Map(Object.entries(person))
 console.log(map.get('name'))
 console.log(map.get('action')('test'))
 // ...and the other way:
-console.log(JSON.stringify(
-  Object.fromEntries(map) // implicit .entries()
-  // methods are omitted!
-))
+console.log(
+  JSON.stringify(
+    Object.fromEntries(map), // implicit .entries()
+    // methods are omitted!
+  ),
+)
 
-console.log(JSON.stringify(
-  { ...person, prop: { age: 40 } },
-  (key, value) =>
-    key === 'age' ? undefined : value,
-  // all except 'age'; RECURSIVELY REMOVED SECOND NESTED 'age'
-  2
-))
+console.log(
+  JSON.stringify(
+    { ...person, prop: { age: 40 } },
+    (key, value) => (key === 'age' ? undefined : value),
+    // all except 'age'; RECURSIVELY REMOVED SECOND NESTED 'age'
+    2,
+  ),
+)
 /**
  * Methods
  */

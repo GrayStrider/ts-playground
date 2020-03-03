@@ -8,16 +8,16 @@ const fibonacci = {
     let a = 1
     let b = 1
     let temp
-
+    
     yield b
-
+    
     while (true) {
       temp = a
       a = a + b
       b = temp
       yield b
     }
-  }
+  },
 }
 
 // Prints every Fibonacci number less than 100
@@ -36,7 +36,6 @@ for (const x of fibonacci) {
 const symbol1: unique symbol = Symbol('my symbol')
 // let symbol2: unique symbol = Symbol('my symbol') // error
 const symbol2: unique symbol = Symbol('my symbol')
-
 
 // symbol1 === symbol2; // false
 console.log(symbol1) // 'Symbol(my symbol)'
@@ -61,18 +60,17 @@ class C {
 let c = new C()
 let className = c[getClassNameSymbol]() //?
 
-
 /**
  * Symbols also work as property keys, but are not iterable,
  * which is great for serialisation
  */
 const print = Symbol('print')
 const user = {
-  name:    'Stefan',
-  age:     37,
+  name: 'Stefan',
+  age: 37,
   [print]: function() {
     console.log(`${this.name} is ${this.age} years old`)
-  }
+  },
 }
 
 JSON.stringify(user) // { name: 'Stefan', age: 37 }

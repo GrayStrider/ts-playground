@@ -22,33 +22,29 @@ if (foo?.bar?.baz) {
   // ...
 }
 
-
 //================================================================================
 // Nullish coalescing
 //================================================================================
 
-const bar = (num?: number) =>
-  num ?? 100
+const bar = (num?: number) => num ?? 100
 console.log(bar()) // 100
 console.log(bar(0)) // 0, works correctly (|| would coerce to 'false')
 console.log(bar(20)) // 20
-
 
 //================================================================================
 // Assertion functions
 //================================================================================
 
-
 function assertIsString(val: any): asserts val is string {
-  if (typeof val !== "string") {
-    throw new AssertionError({message: "Not a string!"});
+  if (typeof val !== 'string') {
+    throw new AssertionError({ message: 'Not a string!' })
   }
 }
 
 function yell(str: any) {
-  assertIsString(str);
+  assertIsString(str)
   // Now TypeScript knows that 'str' is a 'string'.
-  return str.toUpperCase();
+  return str.toUpperCase()
 }
 
 //================================================================================
@@ -61,4 +57,4 @@ type Json =
   | boolean
   | null
   | { [property: string]: Json }
-  | Json[];
+  | Json[]

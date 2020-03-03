@@ -1,7 +1,7 @@
 export default {}
 
 interface User {
-  name: string
+	name: string
 }
 
 let john: User = { name: 'John' }
@@ -20,13 +20,14 @@ console.log([...new Set(arr).values()])
 
 let set: Set<User> = new Set([{ name: 'Ivan' }])
 
-set.add(john)
-   .add(pete)
-   .add(mary)
-   .add(john)
-   .add(mary)
-   // same value, but different object!
-   .add({ name: 'Ivan' })
+set
+	.add(john)
+	.add(pete)
+	.add(mary)
+	.add(john)
+	.add(mary)
+	// same value, but different object!
+	.add({ name: 'Ivan' })
 
 console.log(set)
 console.log(set.size)
@@ -41,13 +42,11 @@ console.log(set.has(john))
 console.log(set.has({ name: 'Ivan' })) // different object
 console.log(set.delete(mary)) // returns success
 
-
 for (let user of set) {
-  console.log(user.name)
+	console.log(user.name)
 }
 
-set.forEach((user) =>
-  console.log(user.name))
+set.forEach(user => console.log(user.name))
 
 set.clear() // deletes everything
 console.log(set)

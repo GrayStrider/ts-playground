@@ -4,7 +4,7 @@
  * you'll be able to pass it a proxy instead of a real subject.
  */
 interface Subject {
-  request(): void;
+	request(): void
 }
 
 /**
@@ -14,48 +14,48 @@ interface Subject {
  * changes to the RealSubject's code.
  */
 class RealSubject implements Subject {
-  public request(): void {
-    console.log('RealSubject: Handling request.');
-  }
+	public request(): void {
+		console.log('RealSubject: Handling request.')
+	}
 }
 
 /**
  * The ProxyCustom has an interface identical to the RealSubject.
  */
 class ProxyCustom implements Subject {
-  private realSubject: RealSubject;
-
-  /**
-   * The ProxyCustom maintains a reference to an object of the RealSubject class. It
-   * can be either lazy-loaded or passed to the ProxyCustom by the client.
-   */
-  constructor(realSubject: RealSubject) {
-    this.realSubject = realSubject;
-  }
-
-  /**
-   * The most common applications of the ProxyCustom pattern are lazy loading,
-   * caching, controlling the access, logging, etc. A ProxyCustom can perform one of
-   * these things and then, depending on the result, pass the execution to the
-   * same method in a linked RealSubject object.
-   */
-  public request(): void {
-    if (ProxyCustom.checkAccess()) {
-      this.realSubject.request();
-      ProxyCustom.logAccess();
-    }
-  }
-
-  private static checkAccess(): boolean {
-    // Some real checks should go here.
-    console.log('ProxyCustom: Checking access prior to firing a real request.');
-
-    return true;
-  }
-
-  private static logAccess(): void {
-    console.log('ProxyCustom: Logging the time of request.');
-  }
+	private realSubject: RealSubject
+	
+	/**
+	 * The ProxyCustom maintains a reference to an object of the RealSubject class. It
+	 * can be either lazy-loaded or passed to the ProxyCustom by the client.
+	 */
+	constructor(realSubject: RealSubject) {
+		this.realSubject = realSubject
+	}
+	
+	private static checkAccess(): boolean {
+		// Some real checks should go here.
+		console.log('ProxyCustom: Checking access prior to firing a real request.')
+		
+		return true
+	}
+	
+	private static logAccess(): void {
+		console.log('ProxyCustom: Logging the time of request.')
+	}
+	
+	/**
+	 * The most common applications of the ProxyCustom pattern are lazy loading,
+	 * caching, controlling the access, logging, etc. A ProxyCustom can perform one of
+	 * these things and then, depending on the result, pass the execution to the
+	 * same method in a linked RealSubject object.
+	 */
+	public request(): void {
+		if (ProxyCustom.checkAccess()) {
+			this.realSubject.request()
+			ProxyCustom.logAccess()
+		}
+	}
 }
 
 /**
@@ -66,19 +66,19 @@ class ProxyCustom implements Subject {
  * your proxy from the real subject's class.
  */
 function clientCode(subject: Subject) {
-  // ...
-
-  subject.request();
-
-  // ...
+	// ...
+	
+	subject.request()
+	
+	// ...
 }
 
-console.log('Client: Executing the client code with a real subject:');
-const realSubject = new RealSubject();
-clientCode(realSubject);
+console.log('Client: Executing the client code with a real subject:')
+const realSubject = new RealSubject()
+clientCode(realSubject)
 
-console.log('');
+console.log('')
 
-console.log('Client: Executing the same client code with a proxy:');
-const proxy = new ProxyCustom(realSubject);
-clientCode(proxy);
+console.log('Client: Executing the same client code with a proxy:')
+const proxy = new ProxyCustom(realSubject)
+clientCode(proxy)

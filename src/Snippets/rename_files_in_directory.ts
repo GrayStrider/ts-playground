@@ -8,17 +8,15 @@ const dir = 'C:\\tools\\bash test\\'
 const regex = /^(?:_+)?(.*?)(?:_+)?$/gi
 
 const renameFile = (file: string) => {
-  const nameParts = file.match(/(.*)(\..*)/)
-  if (nameParts) {
-    const [, name, extension] = nameParts
-    fs.rename(
-      dir + file,
-      dir + name.replace(regex, '_$1_') + extension,
-      (console.log))
-  }
-
+	const nameParts = file.match(/(.*)(\..*)/)
+	if (nameParts) {
+		const [, name, extension] = nameParts
+		fs.rename(
+			dir + file,
+			dir + name.replace(regex, '_$1_') + extension,
+			console.log,
+		)
+	}
 }
 
-fs.readdirSync(dir)
-  .forEach(renameFile)
-
+fs.readdirSync(dir).forEach(renameFile)

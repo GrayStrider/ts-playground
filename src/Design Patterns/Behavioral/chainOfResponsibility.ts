@@ -5,31 +5,31 @@ export default {}
  * It also declares a method for executing a request.
  */
 interface Handler {
-  setNext(handler: Handler): Handler;
-
-  handle(request: string): string | null;
+  setNext(handler: Handler): Handler
+  
+  handle(request: string): string | null
 }
 
 /**
  * The default chaining behavior can be implemented inside a base handler class.
  */
 abstract class AbstractHandler implements Handler {
-  private nextHandler!: Handler;
-
+  private nextHandler!: Handler
+  
   public setNext(handler: Handler): Handler {
-    this.nextHandler = handler;
+    this.nextHandler = handler
     // Returning a handler from here will let us link handlers in a
     // convenient way like this:
     // monkey.setNext(squirrel).setNext(dog);
-    return handler;
+    return handler
   }
-
+  
   public handle(request: string): string | null {
     if (this.nextHandler) {
-      return this.nextHandler.handle(request);
+      return this.nextHandler.handle(request)
     }
-
-    return null;
+    
+    return null
   }
 }
 
@@ -40,27 +40,27 @@ abstract class AbstractHandler implements Handler {
 class MonkeyHandler extends AbstractHandler {
   public handle(request: string): string | null {
     if (request === 'Banana') {
-      return `Monkey: I'll eat the ${request}.`;
+      return `Monkey: I'll eat the ${request}.`
     }
-    return super.handle(request);
-
+    return super.handle(request)
   }
 }
+
 class SquirrelHandler extends AbstractHandler {
   public handle(request: string): string | null {
     if (request === 'Nut') {
-      return `Squirrel: I'll eat the ${request}.`;
+      return `Squirrel: I'll eat the ${request}.`
     }
-    return super.handle(request);
+    return super.handle(request)
   }
 }
 
 class DogHandler extends AbstractHandler {
   public handle(request: string): string | null {
     if (request === 'MeatBall') {
-      return `Dog: I'll eat the ${request}.`;
+      return `Dog: I'll eat the ${request}.`
     }
-    return super.handle(request);
+    return super.handle(request)
   }
 }
 
@@ -69,16 +69,16 @@ class DogHandler extends AbstractHandler {
  * cases, it is not even aware that the handler is part of a chain.
  */
 const clientCode = (handler: Handler) => {
-  const foods = ['Nut', 'Banana', 'Cup of coffee'];
-
+  const foods = ['Nut', 'Banana', 'Cup of coffee']
+  
   for (const food of foods) {
-    console.log(`Client: Who wants a ${food}?`);
-
-    const result = handler.handle(food);
+    console.log(`Client: Who wants a ${food}?`)
+    
+    const result = handler.handle(food)
     if (result) {
-      console.log(`  ${result}`);
+      console.log(`  ${result}`)
     } else {
-      console.log(`  ${food} was left untouched.`);
+      console.log(`  ${food} was left untouched.`)
     }
   }
 }
@@ -86,19 +86,19 @@ const clientCode = (handler: Handler) => {
 /**
  * The other part of the client code constructs the actual chain.
  */
-const monkey = new MonkeyHandler();
-const squirrel = new SquirrelHandler();
-const dog = new DogHandler();
+const monkey = new MonkeyHandler()
+const squirrel = new SquirrelHandler()
+const dog = new DogHandler()
 
-monkey.setNext(squirrel).setNext(dog);
+monkey.setNext(squirrel).setNext(dog)
 
 /**
  * The client should be able to send a request to any handler, not just the
  * first one in the chain.
  */
-console.log('Chain: Monkey > Squirrel > Dog\n');
-clientCode(monkey);
-console.log('');
+console.log('Chain: Monkey > Squirrel > Dog\n')
+clientCode(monkey)
+console.log('')
 
-console.log('Subchain: Squirrel > Dog\n');
-clientCode(squirrel);
+console.log('Subchain: Squirrel > Dog\n')
+clientCode(squirrel)

@@ -1,5 +1,3 @@
-import {sleep} from '@strider/utils-ts'
-
 console.log('Waiting...')
 
 /**

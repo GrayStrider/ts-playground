@@ -6,7 +6,7 @@ const NUM = 1234.123
  * parseInt/float read the number until it can't
  */
 console.log(+NUM.toPrecision(5)) // digits total
-console.log(0.445.toPrecision(2)) // 0 doesn't count!
+console.log((0.445).toPrecision(2)) // 0 doesn't count!
 console.log(+NUM.toFixed(3)) // digits after dot
 console.log(parseFloat('120.5 px'))
 console.log(parseInt('120.5 px'))

@@ -1,7 +1,6 @@
 export default {}
 const STR = ' test123TEST 123ee '
 
-
 console.log(STR.length)
 console.log(STR.includes('est'))
 console.log(STR.startsWith('t'))
@@ -28,14 +27,13 @@ console.log(STR.padEnd(25, '-'))
 console.log(STR.padStart(25, '-'))
 
 /** iteration */
-for (const strElement of STR)
-  console.log(strElement)
+for (const strElement of STR) console.log(strElement)
 console.log([...STR])
 let str = 'As sly as a fox, as strong as an ox'
 let target = 'as'
 let pos = -1
 while ((pos = str.indexOf(target, pos + 1)) != -1) {
-  console.log(pos)
+	console.log(pos)
 }
 
 /**  */
@@ -43,43 +41,44 @@ console.log(String.fromCharCode(937, 45, 78))
 // newer and twice as fast:
 console.log(String.fromCodePoint(937, 45, 78))
 const peculiarChar = '𝒳' // surrogate pair
-console.log(peculiarChar[0] + peculiarChar + peculiarChar.charCodeAt(0) + `, ${peculiarChar.length}!`)
-
+console.log(
+	peculiarChar[0] +
+	peculiarChar +
+	peculiarChar.charCodeAt(0) +
+	`, ${peculiarChar.length}!`,
+)
 
 /**
  * tagged template literals
  * note argument types
  */
 const F = (strings: TemplateStringsArray, ...values: number[]) => {
-
-  let result = ``
-
-  // Receive **parts of the Template Literal in "strings" and iterate over them
-  strings.map((value, index) => {
-
-    // Note: "...values" will hold ${A}, ${B}, and ${C} (see the code below this function)
-    // or list of values enumerating all Template Literals (${A}, ${B}, ...) from the TL string
-
-    // Get TL number at current index, but avoid last one, which will always be 'undefined'
-    let number = (index <= values.length - 1) ? values[index] : ``
-
-    // Rewrite digits to strings -- this is one of the benefits of using
-    // Template Literal-based functions. That is... reformatting the input.
-    number == 1 ? number = 'One' : null
-    number == 2 ? number = 'Two' : null
-    number == 3 ? number = 'Three' : null
-
-    // Combine string and numbers and add to the tail of the running string
-    result += value + number
-  })
-
-  return result
+	let result = ``
+	
+	// Receive **parts of the Template Literal in "strings" and iterate over them
+	strings.map((value, index) => {
+		// Note: "...values" will hold ${A}, ${B}, and ${C} (see the code below this function)
+		// or list of values enumerating all Template Literals (${A}, ${B}, ...) from the TL string
+		
+		// Get TL number at current index, but avoid last one, which will always be 'undefined'
+		let number = index <= values.length - 1 ? values[index] : ``
+		
+		// Rewrite digits to strings -- this is one of the benefits of using
+		// Template Literal-based functions. That is... reformatting the input.
+		number == 1 ? (number = 'One') : null
+		number == 2 ? (number = 'Two') : null
+		number == 3 ? (number = 'Three') : null
+		
+		// Combine string and numbers and add to the tail of the running string
+		result += value + number
+	})
+	
+	return result
 }
 console.log(F` ${3} String ${1} ${2} and this`)
 
 const template = (strings: TemplateStringsArray, ...args: string[]) => {
-  let result = strings.map((value, index) =>
-    `${index}: ${value}`)
-  return [...result, ...args]
+	let result = strings.map((value, index) => `${index}: ${value}`)
+	return [...result, ...args]
 }
 console.log(template`String Another ${'test'} one`)

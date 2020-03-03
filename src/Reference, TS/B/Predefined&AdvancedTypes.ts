@@ -3,22 +3,23 @@ import _ from 'lodash'
 export {}
 
 interface Person {
-  name: string;
-  age: number;
-  occupation: string;
+	name: string;
+	age: number;
+	occupation: string;
 }
 
 let person: Person = {
-  name: 'Jarid',
-  age: 35,
-  occupation: 'Janitor'
+	name: 'Jarid',
+	age: 35,
+	occupation: 'Janitor',
 }
 
 interface Part {
-  id: number;
-  name: string;
-  subparts?: Part[];
-  updatePart(newName: string): void;
+	id: number;
+	name: string;
+	subparts?: Part[];
+	
+	updatePart(newName: string): void;
 }
 
 const Options: Record<number, number> = { '33': 4, 10_10: 54.3 /*test: 'str'*/ }
@@ -28,7 +29,7 @@ const Options2: Record<string, number> = { 3: 4, 10_10: 54.3 }
 const Options3: Record<string, number[]> = { 10: [1, 2], 'string': [1, 2, 3] }
 
 enum names {
-  prop1, prop2, prop3
+	prop1, prop2, prop3
 }
 
 type ThreeStringProps = Record<names, string>
@@ -58,7 +59,7 @@ type T44 = Pick<Part, 'id' | 'name'>
 const t44: T44 = { id: 30, name: 'namestr' }
 
 function pluck<T, K extends keyof T>(o: T, names: K[]): T[K][] {
-  return names.map(n => o[n])
+	return names.map(n => o[n])
 }
 
 console.log(pluck(person, ['name', 'occupation']))
@@ -92,12 +93,12 @@ type T05 = NonNullable<(() => string) | string[] | null | undefined>;
 // (() => string) | string[]
 
 function f1(s: string) {
-  return { a: 1, b: s }
+	return { a: 1, b: s }
 }
 
 class C {
-  x = 0
-  y = 0
+	x = 0
+	y = 0
 }
 
 type T10 = ReturnType<() => string>;
@@ -106,6 +107,13 @@ type T11 = ReturnType<(s: string) => void>;
 // void
 type T12 = ReturnType<(<T>() => T)>;
 // {}
+
+type num = ReturnType<(() => number)>
+
+const n: num = 10
+
+const a: T12 = { foo: 'bar' }
+
 type T13 = ReturnType<(<T extends U, U extends number[]>() => T)>;
 // number[]
 type T14 = ReturnType<typeof f1>;
@@ -136,41 +144,41 @@ type IdType = FetchDataParams[0]; // number
 function fetchData(id: number, filter: string) {}
 
 function fetchDataLogged(...params: Parameters<typeof fetchData>) {
-  console.log('calling fetchData')
-  fetchData(...params)
+	console.log('calling fetchData')
+	fetchData(...params)
 }
 
 const foo = (arg: number, arg2: string) => arg
 const params: Parameters<typeof foo> =
-  [333, 'this']
+	[333, 'this']
 console.log(params)
 // const constrParams: ConstructorParameters = // for constructor parameters
 
 
 namespace OneOrMore {
-
-  type OneOrMore<T> = T | T[];
-
-  type Opts<T> = { path: OneOrMore<T> } | { paths: OneOrMore<T> } | never;
-
-  const foo2 = (o: Opts<string>) => {}
+	
+	type OneOrMore<T> = T | T[];
+	
+	type Opts<T> = { path: OneOrMore<T> } | { paths: OneOrMore<T> } | never;
+	
+	const foo2 = (o: Opts<string>) => {}
 
 // foo2({})
-
-
-  interface Opts2 {
-    paths?: string[],
-    path?: string
-  }
-
-  type EitherField<T, TKey extends keyof T = keyof T> =
-    TKey extends keyof T
-    ? { [P in TKey]-?: T[TKey] } & Partial<Record<Exclude<keyof T, TKey>, never>>
-    : never
-
-  const foo3 = (o: EitherField<Opts2>) => {}
-  foo3({ path: '' })
-  foo3({ paths: [''] })
+	
+	
+	interface Opts2 {
+		paths?: string[],
+		path?: string
+	}
+	
+	type EitherField<T, TKey extends keyof T = keyof T> =
+		TKey extends keyof T
+			? { [P in TKey]-?: T[TKey] } & Partial<Record<Exclude<keyof T, TKey>, never>>
+			: never
+	
+	const foo3 = (o: EitherField<Opts2>) => {}
+	foo3({ path: '' })
+	foo3({ paths: [''] })
 // foo({ path: '', paths: '' }) // error
 // foo({}) // error
 }

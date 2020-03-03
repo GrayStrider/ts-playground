@@ -22,15 +22,13 @@ const diff2: DiffObjects<typeof one, typeof two> = {
   prop2: '',
 }
 
-const union:
-  UnionObjects<typeof one, typeof two> = {
+const union: UnionObjects<typeof one, typeof two> = {
   prop2: '',
   prop: '',
   prop3: '',
 }
 
-const union2:
-  typeof one & typeof two = {
+const union2: typeof one & typeof two = {
   prop: '',
   prop2: '',
   prop3: '',

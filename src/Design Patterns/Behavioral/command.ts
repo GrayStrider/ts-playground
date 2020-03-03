@@ -2,22 +2,24 @@
  * The Command interface declares a method for executing a command.
  */
 interface Command {
-  execute(): void;
+	execute(): void
 }
 
 /**
  * Some commands can implement simple operations on their own.
  */
 class SimpleCommand implements Command {
-  private readonly payload: string
-
-  constructor(payload: string) {
-    this.payload = payload
-  }
-
-  public execute(): void {
-    console.log(`SimpleCommand: See, I can do simple things like printing (${this.payload})`)
-  }
+	private readonly payload: string
+	
+	constructor(payload: string) {
+		this.payload = payload
+	}
+	
+	public execute(): void {
+		console.log(
+			`SimpleCommand: See, I can do simple things like printing (${this.payload})`,
+		)
+	}
 }
 
 /**
@@ -25,33 +27,35 @@ class SimpleCommand implements Command {
  * called "receivers."
  */
 class ComplexCommand implements Command {
-  private receiver: Receiver
-
-  /**
-   * Context data, required for launching the receiver's methods.
-   */
-  private readonly a: string
-
-  private readonly b: string
-
-  /**
-   * Complex commands can accept one or several receiver objects along with
-   * any context data via the constructor.
-   */
-  constructor(receiver: Receiver, a: string, b: string) {
-    this.receiver = receiver
-    this.a = a
-    this.b = b
-  }
-
-  /**
-   * Commands can delegate to any methods of a receiver.
-   */
-  public execute(): void {
-    console.log('ComplexCommand: Complex stuff should be done by a receiver object.')
-    Receiver.doSomething(this.a)
-    Receiver.doSomethingElse(this.b)
-  }
+	private receiver: Receiver
+	
+	/**
+	 * Context data, required for launching the receiver's methods.
+	 */
+	private readonly a: string
+	
+	private readonly b: string
+	
+	/**
+	 * Complex commands can accept one or several receiver objects along with
+	 * any context data via the constructor.
+	 */
+	constructor(receiver: Receiver, a: string, b: string) {
+		this.receiver = receiver
+		this.a = a
+		this.b = b
+	}
+	
+	/**
+	 * Commands can delegate to any methods of a receiver.
+	 */
+	public execute(): void {
+		console.log(
+			'ComplexCommand: Complex stuff should be done by a receiver object.',
+		)
+		Receiver.doSomething(this.a)
+		Receiver.doSomethingElse(this.b)
+	}
 }
 
 /**
@@ -60,13 +64,13 @@ class ComplexCommand implements Command {
  * fact, any class may serve as a Receiver.
  */
 class Receiver {
-  public static doSomething(a: string): void {
-    console.log(`Receiver: Working on (${a}.)`)
-  }
-
-  public static doSomethingElse(b: string): void {
-    console.log(`Receiver: Also working on (${b}.)`)
-  }
+	public static doSomething(a: string): void {
+		console.log(`Receiver: Working on (${a}.)`)
+	}
+	
+	public static doSomethingElse(b: string): void {
+		console.log(`Receiver: Also working on (${b}.)`)
+	}
 }
 
 /**
@@ -74,43 +78,43 @@ class Receiver {
  * the command.
  */
 class Invoker {
-  private onStart!: Command
-
-  private onFinish!: Command
-
-  private static isCommand(object: Command): object is Command {
-    return object.execute !== undefined
-  }
-
-  /**
-   * Initialize commands.
-   */
-  public setOnStart(command: Command): void {
-    this.onStart = command
-  }
-
-  public setOnFinish(command: Command): void {
-    this.onFinish = command
-  }
-
-  /**
-   * The Invoker does not depend on concrete command or receiver classes. The
-   * Invoker passes a request to a receiver indirectly, by executing a
-   * command.
-   */
-  public doSomethingImportant(): void {
-    console.log('Invoker: Does anybody want something done before I begin?')
-    if (Invoker.isCommand(this.onStart)) {
-      this.onStart.execute()
-    }
-
-    console.log('Invoker: ...doing something really important...')
-
-    console.log('Invoker: Does anybody want something done after I finish?')
-    if (Invoker.isCommand(this.onFinish)) {
-      this.onFinish.execute()
-    }
-  }
+	private onStart!: Command
+	
+	private onFinish!: Command
+	
+	private static isCommand(object: Command): object is Command {
+		return object.execute !== undefined
+	}
+	
+	/**
+	 * Initialize commands.
+	 */
+	public setOnStart(command: Command): void {
+		this.onStart = command
+	}
+	
+	public setOnFinish(command: Command): void {
+		this.onFinish = command
+	}
+	
+	/**
+	 * The Invoker does not depend on concrete command or receiver classes. The
+	 * Invoker passes a request to a receiver indirectly, by executing a
+	 * command.
+	 */
+	public doSomethingImportant(): void {
+		console.log('Invoker: Does anybody want something done before I begin?')
+		if (Invoker.isCommand(this.onStart)) {
+			this.onStart.execute()
+		}
+		
+		console.log('Invoker: ...doing something really important...')
+		
+		console.log('Invoker: Does anybody want something done after I finish?')
+		if (Invoker.isCommand(this.onFinish)) {
+			this.onFinish.execute()
+		}
+	}
 }
 
 /**

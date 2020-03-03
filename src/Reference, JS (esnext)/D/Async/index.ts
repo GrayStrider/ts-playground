@@ -8,13 +8,15 @@ import Promise from 'bluebird' // provides more utility functions
 export {}
 
 namespace callback {
-  const callingCallback =
-    (input: string, callback: (input: string) => void) => {
-      const doStuff = input.toUpperCase()
-      // ...
-      callback(doStuff)
-    }
-
+  const callingCallback = (
+    input: string,
+    callback: (input: string) => void,
+  ) => {
+    const doStuff = input.toUpperCase()
+    // ...
+    callback(doStuff)
+  }
+  
   // callingCallback(
   //   'hello',
   //   (input) => console.log('callback:', input)
@@ -35,10 +37,10 @@ namespace promise {
        * jumps to the closest rejection handler
        */
       param.length > 1
-      ? setTimeout(() => resolve(param), 1000)
-      : reject(new Error('param too short!'))
+        ? setTimeout(() => resolve(param), 1000)
+        : reject(new Error('param too short!')),
     )
-
+  
   // promise('1')
   //   .finally(() => console.log('ready!'))
   //   .then(
@@ -48,8 +50,6 @@ namespace promise {
   // promise('ok').then(
   //   (result) => console.log(result),
   //   (error) => console.log(error))
-
-
 }
 
 namespace API {
@@ -58,7 +58,7 @@ namespace API {
    * 60 requests per hour for unauntheficated
    */
   let names = ['iliakan', 'remy', 'jeresig']
-
+  
   // let requests = names.map(name => axios.get(`https://api.github.com/users/${name}`))
   //
   // const example = () =>
@@ -76,7 +76,7 @@ namespace API {
   //          // all JSON answers are parsed: "users" is the array of them
   //          .then(users => users.forEach(user => console.log(user)))
   //
-
+  
   /**
    * Promise.allSetted
    * Promise.allSettled waits for all promises to settle. The resulting array has:
@@ -84,13 +84,11 @@ namespace API {
    {status:"fulfilled", value:result} for successful responses,
    {status:"rejected", reason:error} for errors.
    */
-
-
+  
   /**
    * Promise.race
    * waits for the first settled promise, ignores rest
    */
-
 }
 
 namespace chaining {
@@ -103,12 +101,12 @@ namespace chaining {
   const promise: Promise<number> = new Promise((resolve, reject) => {
     setTimeout(() => resolve(1), 1000)
   })
-
+  
   const multiply = (result: number) => {
     console.log(result) // 1
     return result * 2
   }
-
+  
   // promise
   //   .then(multiply) //1
   //   .then(multiply) //2
@@ -116,44 +114,41 @@ namespace chaining {
 }
 
 namespace AxiosFetchHondas {
-  const hondas = 'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/honda?format=json'
-
+  const hondas =
+    'https://vpic.nhtsa.dot.gov/api/vehicles/GetModelsForMake/honda?format=json'
+  
   interface vhpicResponse {
     Results: vhpicResults[]
   }
-
+  
   interface vhpicResults {
-    Make_ID: number,
-    Make_Name: string,
-    Model_ID: number,
+    Make_ID: number
+    Make_Name: string
+    Model_ID: number
     Model_Name: string
   }
-
+  
   const formatResponse = (
     response: AxiosResponse<vhpicResponse>,
-    key: keyof vhpicResults) =>
-    response
-      .data.Results
-      .map((value) => value[key])
-
+    key: keyof vhpicResults,
+  ) => response.data.Results.map(value => value[key])
+  
   /**
    * fetches car models
    */
   const example = () =>
-    axios.get(hondas)
-         .then((value) =>
-           console.log(formatResponse(value, 'Model_Name')))
-         .catch(console.log)
-
+    axios
+      .get(hondas)
+      .then(value => console.log(formatResponse(value, 'Model_Name')))
+      .catch(console.log)
+  
   // example()
 }
 
 namespace alwaysAsync {
   let promise = Promise.resolve()
-
-  promise
-    .delay(2000)
-    .then(() => console.log('promise done!'))
-
+  
+  promise.delay(2000).then(() => console.log('promise done!'))
+  
   console.log('code finished') // this console.log shows first
 }

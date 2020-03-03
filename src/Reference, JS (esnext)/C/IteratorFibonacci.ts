@@ -1,9 +1,9 @@
 class Fib implements IterableIterator<number> {
   protected fn1 = 0
   protected fn2 = 1
-
+  
   constructor(protected maxValue?: number) {}
-
+  
   public next(): IteratorResult<number> {
     const current = this.fn1
     this.fn1 = this.fn2
@@ -19,7 +19,7 @@ class Fib implements IterableIterator<number> {
       value: current,
     }
   }
-
+  
   [Symbol.iterator](): IterableIterator<number> {
     return this
   }

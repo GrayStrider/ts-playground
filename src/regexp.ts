@@ -7,13 +7,13 @@ export default {}
  * except when using .replace
  */
 const parseProtocol = (url: string) => {
-  const parsedURL = /^(\w+):\/\/([^\/]+)\/(.*)$/.exec(url)
-  if (!parsedURL) {
-    return null
-  }
-  /** named capture groups do not work well with TS; use sequentual destructuring */
-  const [, protocol, fullhost, fullpath]: string[] = parsedURL
-  return [protocol, fullhost, fullpath]
+	const parsedURL = /^(\w+):\/\/([^\/]+)\/(.*)$/.exec(url)
+	if (!parsedURL) {
+		return null
+	}
+	/** named capture groups do not work well with TS; use sequentual destructuring */
+	const [, protocol, fullhost, fullpath]: string[] = parsedURL
+	return [protocol, fullhost, fullpath]
 }
 
 /**
@@ -21,18 +21,19 @@ const parseProtocol = (url: string) => {
  * .test
  */
 const obj: { data: string }[] = [
-  { data: 'test' },
-  { data: 'test' },
-  { data: 'test' },
-  { data: 'test' },
-  { data: 'test' },
-  { data: 'test2' },
+	{ data: 'test' },
+	{ data: 'test' },
+	{ data: 'test' },
+	{ data: 'test' },
+	{ data: 'test' },
+	{ data: 'test2' },
 ]
-console.log(obj
-  .filter(item => !/\d/.test(item.data))
-  .map(item => item.data)
-  .join('-'))
-
+console.log(
+	obj
+		.filter(item => !/\d/.test(item.data))
+		.map(item => item.data)
+		.join('-'),
+)
 
 const test = '12weord test'
 // Non-capturing group:
@@ -55,7 +56,6 @@ console.log(regExp.test('Strider🐌'))
 
 'Stride4r🐌'.match(regExp)
 
-
 /**
  * using (skip, skip, ..., value) => value replacer (string destructuring)
  * doesn't look very reliable
@@ -70,36 +70,28 @@ console.log(regExp.test('Strider🐌'))
  */
 const text = 'test_abas_ere_fd_JF'
 const regexp = /[_-](.)/gi
-const regexpReplacer = /(?<=[_-])(.)/ig
+const regexpReplacer = /(?<=[_-])(.)/gi
 
-console.log(text
-  .replace(regexp,
-    (fullMatch, firstGroup, ...rest: any[]) =>
-      firstGroup.toLowerCase()),
+console.log(
+	text.replace(regexp, (fullMatch, firstGroup, ...rest: any[]) =>
+		firstGroup.toLowerCase(),
+	),
 )
 
-console.log(text
-  .replace(regexp,
-    (x) => {
-      console.log(x)
-      const match = x
-        .match(regexpReplacer)![0]
-      return match.toUpperCase() || ''
-
-    }))
+console.log(
+	text.replace(regexp, x => {
+		console.log(x)
+		const match = x.match(regexpReplacer)![0]
+		return match.toUpperCase() || ''
+	}),
+)
 
 /**
  * backreference; no way to modify the value before replacement
  */
-console.log(text
-  .replace(regexp, '$1'),
-)
+console.log(text.replace(regexp, '$1'))
 
-console.log(
-  [1, 4, 5, 6, 3, 4, 2, 12, 0, null]
-    .map(value => value || 'empty'),
-)
+console.log([1, 4, 5, 6, 3, 4, 2, 12, 0, null].map(value => value || 'empty'))
 
 const str = '1 2 3 tes tes F F'
 const match = str.match(/(<numbers>\d)/g)
-

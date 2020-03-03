@@ -1,20 +1,13 @@
-import Value = Animated.Value
-
 export {}
-import { all } from 'async'
-import axios from 'axios'
 import Promise from 'bluebird'
-import { Animated } from 'react-native'
 
 /**
  * basic promise template
  */
 const promise = (param: boolean) =>
-  new Promise((resolve, reject) => {
-    param
-    ? resolve('Resolved!')
-    : reject(new Error('Rejected.'))
-  })
+	new Promise((resolve, reject) => {
+		param ? resolve('Resolved!') : reject(new Error('Rejected.'))
+	})
 
 // promise(false)
 //   .then(console.log)
@@ -33,12 +26,7 @@ const promise = (param: boolean) =>
 //     ? console.log('equal!')
 //     : console.log('not equal!'))
 
-
-const promises = [
-  Promise.resolve(1),
-  Promise.resolve(2),
-  Promise.resolve(3)
-]
+const promises = [Promise.resolve(1), Promise.resolve(2), Promise.resolve(3)]
 
 /**
  * standart map/reduce/filter
@@ -62,7 +50,4 @@ const promises = [
 //   }, 0)
 //        .then(console.log)
 //
-Promise
-  .filter(promises,
-    (resolved) => resolved < 2)
-  .then(console.log) // [1]
+Promise.filter(promises, resolved => resolved < 2).then(console.log) // [1]
