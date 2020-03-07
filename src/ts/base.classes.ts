@@ -21,9 +21,9 @@ abstract class Animal {
 	// initialize without a constructor!
 	// cannot be accessed externaly
 	protected owner: string = 'None'
-	
+
 	protected constructor(private readonly name: string) {}
-	
+
 	move(distanceInMeters: number = 0) {
 		console.log(`${this.name} moved ${distanceInMeters.toPrecision(4)}m.`)
 	}
@@ -33,7 +33,7 @@ class Snake extends Animal {
 	constructor(name: string) {
 		super(name)
 	}
-	
+
 	move(distanceInMeters = 5) {
 		console.log('Slithering...')
 		super.move(distanceInMeters)
@@ -44,12 +44,12 @@ class Horse extends Animal {
 	constructor(name: string) {
 		super(name)
 	}
-	
+
 	move(distanceInMeters = 45) {
 		console.log('Galloping...')
 		super.move(distanceInMeters)
 	}
-	
+
 	setOwner(newOwner: string) {
 		this.owner = newOwner
 	}
@@ -64,14 +64,14 @@ tom.move(34)
 // In TypeScript, each member is public by default
 namespace Chameleon {
 	type color = 'green' | 'black'
-	
+
 	export class Chameleon {
 		newColor: color
-		
+
 		constructor({ newColor = 'green' }: { newColor?: color } = {}) {
 			this.newColor = newColor
 		}
-		
+
 		colorChange(newColor: color) {
 			this.newColor = newColor
 			return this.newColor
@@ -114,22 +114,22 @@ console.log(getSongDuration(new Song('Wonderful Wonderful', 330000)))
 namespace AbstractPropertiesAccessors {
 	abstract class Base {
 		abstract name: string
-		
+
 		abstract get value()
 		abstract set value(v: number)
 	}
-	
+
 	// ok
 	class Derived extends Base {
 		name = 'derived'
 		value = 1
 	}
-	
+
 	// have to be abstract
 	abstract class DerivedAbstract extends Base {
 		value = 20
 	}
-	
+
 	const derived = new Derived()
 	console.log((derived.value = 5))
 	console.log(derived.value)
@@ -149,26 +149,26 @@ namespace Mixins {
 	class Person {
 		constructor(public name: string) {}
 	}
-	
+
 	const Tagged = <T extends Constructor<{}>>(Base: T) =>
 		class extends Base {
 			_tag: string
-			
+
 			constructor(...args: any[]) {
 				super(...args)
 				this._tag = ''
 			}
 		}
-	
+
 	const TaggedPoint = Tagged(Point)
-	
+
 	let point = new TaggedPoint(10, 20)
 	point._tag = 'hello'
-	
+
 	class Customer extends Tagged(Person) {
 		accountBalance: number | undefined
 	}
-	
+
 	let customer = new Customer('Joe')
 	customer._tag = 'test'
 	customer.accountBalance = 0
@@ -179,20 +179,20 @@ namespace Mixins2 {
 		x: number
 		y: number
 	}
-	
+
 	class Point implements IPoint {
 		constructor(public x: number, public y: number) {}
 	}
-	
+
 	const WithLocation = <T extends Constructor<IPoint>>(Base: T) =>
 		class extends Base {
 			private _location: [number, number] = [this.x, this.y]
-			
+
 			get location(): [number, number] {
 				return this._location
 			}
 		}
-	
+
 	const point = new Point(10, 12)
 	const pointWithLocation = WithLocation(Point)
 	const point2 = new pointWithLocation(10, 12)
@@ -209,31 +209,31 @@ namespace DefinitiveAssignmentAssertion {
 		// ^
 		// Notice this '!' modifier.
 		// This is the "definite assignment assertion"
-		
+
 		constructor() {
 			this.initialize()
 		}
-		
+
 		initialize() {
 			this.foo = 0
 		}
 	}
-	
+
 	let x!: number
 	initialize()
-	
+
 	// No error!
 	console.log(x + x)
-	
+
 	// equal to x! + x!
-	
+
 	/**
 	 * will not work with function expression
 	 */
 	function initialize() {
 		x = 10
 	}
-	
+
 	/**
 	 * non-null assertion
 	 */

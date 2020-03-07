@@ -3,9 +3,9 @@ import _ from 'lodash'
 export {}
 
 interface Person {
-	name: string;
-	age: number;
-	occupation: string;
+	name: string
+	age: number
+	occupation: string
 }
 
 let person: Person = {
@@ -15,26 +15,28 @@ let person: Person = {
 }
 
 interface Part {
-	id: number;
-	name: string;
-	subparts?: Part[];
-	
-	updatePart(newName: string): void;
+	id: number
+	name: string
+	subparts?: Part[]
+
+	updatePart(newName: string): void
 }
 
 const Options: Record<number, number> = { '33': 4, 10_10: 54.3 /*test: 'str'*/ }
 // coerces string number to number
 const Options2: Record<string, number> = { 3: 4, 10_10: 54.3 }
 // coerces number to string
-const Options3: Record<string, number[]> = { 10: [1, 2], 'string': [1, 2, 3] }
+const Options3: Record<string, number[]> = { 10: [1, 2], string: [1, 2, 3] }
 
 enum names {
-	prop1, prop2, prop3
+	prop1,
+	prop2,
+	prop3,
 }
 
 type ThreeStringProps = Record<names, string>
 // equivalent to
-type ThreeStringProps2 = { prop1: string, prop2: string, prop3: string }
+type ThreeStringProps2 = { prop1: string; prop2: string; prop3: string }
 
 /**
  * add or remove modifier of a mapped type,
@@ -48,10 +50,10 @@ const partial: Partial<Part> = { name: 'namestr' }
 
 /** Mapped types */
 type Writable<T> = { -readonly [K in keyof T]: T[K] } // removes readonly from object properties
-type MutableRequired<T> = { -readonly [P in keyof T]-?: T[P] };  // Remove readonly and ?
-type ReadonlyPartial<T> = { +readonly [P in keyof T]+?: T[P] };  // Add readonly and ?
-type Foo = { a?: string };
-type Bar = Required<Foo>;
+type MutableRequired<T> = { -readonly [P in keyof T]-?: T[P] } // Remove readonly and ?
+type ReadonlyPartial<T> = { +readonly [P in keyof T]+?: T[P] } // Add readonly and ?
+type Foo = { a?: string }
+type Bar = Required<Foo>
 
 const Foo3434: Foo = {}
 
@@ -59,7 +61,7 @@ type T44 = Pick<Part, 'id' | 'name'>
 const t44: T44 = { id: 30, name: 'namestr' }
 
 function pluck<T, K extends keyof T>(o: T, names: K[]): T[K][] {
-	return names.map(n => o[n])
+	return names.map((n) => o[n])
 }
 
 console.log(pluck(person, ['name', 'occupation']))
@@ -74,21 +76,21 @@ const readonlyvar: Partial<Readonly<Part>> = { name: 'namestr' }
 // readonlyvar.name = ''
 // readonlyvar.id = 10 // errors
 
-type T00 = Exclude<'a' | 'b' | 'c' | 'd', 'a' | 'c' | 'f'>;
+type T00 = Exclude<'a' | 'b' | 'c' | 'd', 'a' | 'c' | 'f'>
 // same as T, but with all U values removed
 // "b" | "d"
-type T02 = Exclude<string | number | (() => void), Function>;
+type T02 = Exclude<string | number | (() => void), Function>
 // string | number
 
-type T01 = Extract<'a' | 'b' | 'c' | 'd', 'a' | 'c' | 'f'>;
+type T01 = Extract<'a' | 'b' | 'c' | 'd', 'a' | 'c' | 'f'>
 // "a" | "c"
 // return those types included in T that are assignable to U
-type T03 = Extract<string | number | (() => void), Function>;
+type T03 = Extract<string | number | (() => void), Function>
 // () => void
 
-type T04 = NonNullable<string | number | undefined>;
+type T04 = NonNullable<string | number | undefined>
 // string | number
-type T05 = NonNullable<(() => string) | string[] | null | undefined>;
+type T05 = NonNullable<(() => string) | string[] | null | undefined>
 
 // (() => string) | string[]
 
@@ -101,37 +103,36 @@ class C {
 	y = 0
 }
 
-type T10 = ReturnType<() => string>;
+type T10 = ReturnType<() => string>
 // string
-type T11 = ReturnType<(s: string) => void>;
+type T11 = ReturnType<(s: string) => void>
 // void
-type T12 = ReturnType<(<T>() => T)>;
+type T12 = ReturnType<<T>() => T>
 // {}
 
-type num = ReturnType<(() => number)>
-
+type num = ReturnType<() => number>
 const n: num = 10
 
 const a: T12 = { foo: 'bar' }
 
-type T13 = ReturnType<(<T extends U, U extends number[]>() => T)>;
+type T13 = ReturnType<<T extends U, U extends number[]>() => T>
 // number[]
-type T14 = ReturnType<typeof f1>;
+type T14 = ReturnType<typeof f1>
 // { a: number, b: string }
-type T15 = ReturnType<any>;
+type T15 = ReturnType<any>
 // any
-type T16 = ReturnType<never>;
+type T16 = ReturnType<never>
 // any
 // type T17 = ReturnType<string>;
 // Error
 // type T18 = ReturnType<Function>;
 // Error
 
-type T20 = InstanceType<typeof C>;
+type T20 = InstanceType<typeof C>
 // C
-type T21 = InstanceType<any>;
+type T21 = InstanceType<any>
 // any
-type T22 = InstanceType<never>;
+type T22 = InstanceType<never>
 // any
 // type T23 = InstanceType<string>;
 // Error
@@ -139,8 +140,8 @@ type T22 = InstanceType<never>;
 // Error
 
 // tuple of types of parameters of given function
-type FetchDataParams = Parameters<typeof fetchData>; // [number, string]
-type IdType = FetchDataParams[0]; // number
+type FetchDataParams = Parameters<typeof fetchData> // [number, string]
+type IdType = FetchDataParams[0] // number
 function fetchData(id: number, filter: string) {}
 
 function fetchDataLogged(...params: Parameters<typeof fetchData>) {
@@ -149,36 +150,32 @@ function fetchDataLogged(...params: Parameters<typeof fetchData>) {
 }
 
 const foo = (arg: number, arg2: string) => arg
-const params: Parameters<typeof foo> =
-	[333, 'this']
+const params: Parameters<typeof foo> = [333, 'this']
 console.log(params)
 // const constrParams: ConstructorParameters = // for constructor parameters
 
-
 namespace OneOrMore {
-	
-	type OneOrMore<T> = T | T[];
-	
-	type Opts<T> = { path: OneOrMore<T> } | { paths: OneOrMore<T> } | never;
-	
+	type OneOrMore<T> = T | T[]
+
+	type Opts<T> = { path: OneOrMore<T> } | { paths: OneOrMore<T> } | never
+
 	const foo2 = (o: Opts<string>) => {}
 
-// foo2({})
-	
-	
+	// foo2({})
+
 	interface Opts2 {
-		paths?: string[],
+		paths?: string[]
 		path?: string
 	}
-	
-	type EitherField<T, TKey extends keyof T = keyof T> =
-		TKey extends keyof T
-			? { [P in TKey]-?: T[TKey] } & Partial<Record<Exclude<keyof T, TKey>, never>>
-			: never
-	
+
+	type EitherField<T, TKey extends keyof T = keyof T> = TKey extends keyof T
+		? { [P in TKey]-?: T[TKey] } &
+				Partial<Record<Exclude<keyof T, TKey>, never>>
+		: never
+
 	const foo3 = (o: EitherField<Opts2>) => {}
 	foo3({ path: '' })
 	foo3({ paths: [''] })
-// foo({ path: '', paths: '' }) // error
-// foo({}) // error
+	// foo({ path: '', paths: '' }) // error
+	// foo({}) // error
 }

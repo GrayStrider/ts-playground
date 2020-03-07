@@ -3,7 +3,7 @@ import Promise from 'bluebird'
 import { from, fromEvent, interval, of, timer } from 'rxjs'
 import { ajax } from 'rxjs/ajax'
 import { auditTime, bufferCount, concatMap, delay, endWith, filter, map, take, tap } from 'rxjs/operators'
-import { XMLHttpRequest } from 'xmlhttprequest'
+import { XMLHttpRequest } from 'xmlhttprequest-ts'
 
 //================================================================================
 // Helpers
@@ -54,7 +54,7 @@ from(STR).pipe(
 interval(300).pipe(
 	take(STR.length), // limit emits
 	map(i => [...STR][i]), // map each emit to corresponding member
-	endWith('Done!'),
+	endWith('Done!')
 )
 // .subscribe(console.log)
 
@@ -129,7 +129,7 @@ const promise = Promise.resolve('resolved')
 
 const promise2 = new Promise((resolve, reject) => {
 	console.log('vaiting in Promise...')
-	setTimeout(resolve('delayed with promise'), 4000)
+	setTimeout(() => resolve('delayed with promise'), 4000)
 })
 
 // console.time()
@@ -151,7 +151,8 @@ const ajaxOptions = {
 	url: hondas,
 }
 
-ajax(ajaxOptions).pipe(map(result => result.status))
+// Looks like XML HTTP Requiest is not needed
+ajax(hondas).pipe(map(result => result.status))
 // .subscribe(console.log)
 
 /**
