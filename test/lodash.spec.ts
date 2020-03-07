@@ -1,4 +1,4 @@
-import { capitalize, doubleSay, exclaim, myFlow } from 'src/_Libraries/lodash'
+import { myFlow, doubleSay, exclaim, capitalize } from '../src/Libraries/lodash'
 
 it('should do the thing', () => {
   const cases: [Array<(arg: any) => any>, string][] = [
