@@ -26,7 +26,7 @@ if (foo?.bar?.baz) {
 // Nullish coalescing
 //================================================================================
 
-const bar = (num?: number) => num ?? 100
+const bar = (num?: number) => (num ?? 100)
 console.log(bar()) // 100
 console.log(bar(0)) // 0, works correctly (|| would coerce to 'false')
 console.log(bar(20)) // 20

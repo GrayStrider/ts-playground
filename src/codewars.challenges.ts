@@ -7,7 +7,7 @@ const deleteNth = (arr: number[], x: number) => {
 	const cache: {
 		[index: number]: number
 	} = {}
-	return arr.filter(n => {
+	return arr.filter((n) => {
 		cache[n] = (cache[n] || 0) + 1
 		return cache[n] <= x
 	})
@@ -37,8 +37,8 @@ console.log(sum_pairs([10, 5, 2, 3, 7, 5, -10], -5))
  * @param int
  */
 const findOutlier = (int: number[]) => {
-	const even = int.filter(a => a % 2) // filter by even
-	const odd = int.filter(a => !(a % 2)) // filter by odd
+	const even = int.filter((a) => a % 2) // filter by even
+	const odd = int.filter((a) => !(a % 2)) // filter by odd
 	return even.length === 1 ? even[0] : odd[0] // whichever has one alement is the one we need.
 }
 
