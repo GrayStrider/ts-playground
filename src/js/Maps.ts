@@ -64,3 +64,5 @@ console.log([...map.keys()])
  * built-in iterable method
  */
 map.forEach((value, key) => console.log(`${key}: ${value}`))
+
+export {}
