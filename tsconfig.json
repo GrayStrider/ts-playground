@@ -2,7 +2,7 @@
   "extends": "@strider/utils-ts/tsconfig.base.json",
 
   "compilerOptions": {
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": "."
   }
-
 }
