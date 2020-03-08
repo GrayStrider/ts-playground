@@ -1,7 +1,6 @@
-import { resolve, fork, encaseP, promise, map, attemptP } from 'fluture'
+import { resolve, fork, attemptP } from 'fluture'
 import sanctuary, { env } from 'sanctuary'
 import { env as flutureEnv } from 'fluture-sanctuary-types'
-import { identity } from 'fp-ts/lib/function'
 import { sig } from '@strider/utils-ts'
 
 const log = (title: string) => (data: any) => sig.info(`[${title}]: ${data}`)

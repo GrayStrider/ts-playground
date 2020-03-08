@@ -1,6 +1,6 @@
 import * as RA from 'ramda-adjunct'
-import * as R from 'src/libraries/ramda'
-import _ from 'src/libraries/lodash'
+import * as R from 'ramda'
+import _ from 'lodash'
 
 type User = {
 	occupation: string
