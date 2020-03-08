@@ -15,6 +15,13 @@ it ('should mock fs', async () => {
   expect (readFile).toHaveBeenCalledWith('path', cb)
 })
 
+it ('should return mock file', async () => {
+	expect.assertions(1)
+	
+	const res = readFile ('', () => '')
+	expect (res).toStrictEqual('myfile.txt')
+})
+
 describe ('fluture', () => {
 	function getPackageName (file: string) {
 		return node (done => readFile (file, 'utf8', done))
