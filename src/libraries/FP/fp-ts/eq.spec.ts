@@ -1,7 +1,7 @@
 import { Eq, getStructEq, contramap } from 'fp-ts/lib/Eq'
 import { getEq } from 'fp-ts/lib/Array'
 
-const eqNumber: Eq<number> = {
+export const eqNumber: Eq<number> = {
 	equals: (x, y) => x === y,
 }
 
