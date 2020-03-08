@@ -34,4 +34,14 @@ describe ('axios', () => {
 		
 	})
 	
+	it ('should catch errors', async () => {
+		expect.assertions(1)
+		
+		const res = promise (faxiosGet ('fakepath'))
+		
+		await expect (res).rejects.toMatchObject ({
+			code: 'ECONNREFUSED'
+		})
+	})
+	
 })
