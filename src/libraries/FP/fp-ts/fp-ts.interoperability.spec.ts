@@ -1,7 +1,11 @@
 import { Option, none, some, fromNullable } from 'fp-ts/lib/Option'
 import { tryCatch, Either, right, left } from 'fp-ts/lib/Either'
 import matchers from '@pacote/jest-either'
-expect.extend(matchers)
+import { IO } from 'fp-ts/lib/IO'
+import { IOEither, tryCatch as tryCatchIO } from 'fp-ts/lib/IOEither'
+import * as fs from 'fs'
+
+expect.extend (matchers)
 
 
 // Sentinels
@@ -47,33 +51,63 @@ it ('should return none', async () => {
 // Exceptions
 // Use case: an API that may throw.
 
-function parse(s: string): Either<Error, unknown> {
-	return tryCatch(() => JSON.parse(s), reason => new Error(String(reason)))
+function parse (s: string): Either<Error, unknown> {
+	return tryCatch (() => JSON.parse (s), reason => new Error (String (reason)))
 }
 
 it ('should parse JSON', async () => {
-	expect.assertions(1)
-	const res = parse('{"foo": "bar"}')
-	expect (res).toEqualRight({foo: 'bar'})
+	expect.assertions (1)
+	const res = parse ('{"foo": "bar"}')
+	expect (res).toEqualRight ({ foo: 'bar' })
 })
 
 it ('should match', async () => {
-	expect.assertions(1)
-  expect (right({foo: 'bar', baz: 10})).toMatchRight({foo: 'bar'})
+	expect.assertions (1)
+	expect (right ({ foo: 'bar', baz: 10 })).toMatchRight ({ foo: 'bar' })
 })
 
 it ('should return error', async () => {
-	expect.assertions(1)
+	expect.assertions (1)
 	const res = parse ('{234}')
-	expect (res).toBeLeft()
+	expect (res).toBeLeft ()
 	
 })
 
 it ('passes when value is an Either', () => {
-	expect(left(true)).toBeEither()
-	expect(right(true)).toBeEither()
+	expect (left (true)).toBeEither ()
+	expect (right (true)).toBeEither ()
 })
 
 it ('passes when value is not an Either', () => {
-	expect(undefined).not.toBeEither()
+	expect (undefined).not.toBeEither ()
+})
+
+// Random values
+// Use case: an API that returns a non deterministic value.
+
+const random: IO<number> = () => Math.random ()
+
+// Synchronous side effects
+// Use case: an API that reads and/or writes to a global state.
+
+function getItem (key: string): IO<Option<string>> {
+	return () => fromNullable (localStorage.getItem (key))
+}
+
+// Use case: an API that reads and/or writes to a global state and may throw.
+
+function readFileSync (path: string): IOEither<Error, string> {
+	return tryCatchIO (() => fs.readFileSync (path, 'utf8'), reason => new Error (String (reason)))
+}
+
+test ('passes when file is read correctly', async () => {
+	expect.assertions(1)
+	const res = readFileSync ('package.json')
+	expect (res()).toBeRight()
+})
+
+test ('passes when file doest exist', async () => {
+	expect.assertions(1)
+  const res = readFileSync('a/b/c/d##%%')
+	expect (res()).toBeLeft()
 })
