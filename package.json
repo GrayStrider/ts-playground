@@ -21,6 +21,7 @@
     "fp-ts-ramda": "^0.1.7",
     "fp-ts-rxjs": "^0.6.8",
     "immer": "^6.0.1",
+    "immutable": "^4.0.0-rc.12",
     "io-ts": "^2.1.2",
     "io-ts-types": "^0.5.6",
     "lodash": "^4.17.15",
