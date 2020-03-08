@@ -3,7 +3,9 @@ import { readFile } from "fs"
 import { prop } from 'fp-ts-ramda'
 import ErrnoException = NodeJS.ErrnoException
 
-jest.mock('fs')
+jest.mock('fs', () => ({
+	readFile: jest.fn((args) => 'myfile.txt')
+}))
 
 it ('should mock fs', async () => {
 	expect.assertions(1)
