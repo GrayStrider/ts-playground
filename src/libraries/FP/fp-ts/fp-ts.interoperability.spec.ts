@@ -1,11 +1,9 @@
 import { Option, none, some, fromNullable } from 'fp-ts/lib/Option'
 import { tryCatch, Either, right, left } from 'fp-ts/lib/Either'
-import matchers from '@pacote/jest-either'
 import { IO } from 'fp-ts/lib/IO'
 import { IOEither, tryCatch as tryCatchIO } from 'fp-ts/lib/IOEither'
 import * as fs from 'fs'
 
-expect.extend (matchers)
 
 
 // Sentinels

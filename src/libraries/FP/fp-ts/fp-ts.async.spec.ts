@@ -2,9 +2,6 @@ import { TaskEither, tryCatch } from 'fp-ts/lib/TaskEither'
 import nock from 'nock'
 import axios, { AxiosResponse, AxiosError } from 'axios'
 import { prop } from 'fp-ts-ramda'
-import matchers from '@pacote/jest-either'
-
-expect.extend (matchers)
 
 
 function get (url: string): TaskEither<AxiosError, AxiosResponse> {
@@ -26,7 +23,7 @@ describe ('axios', () => {
 	test ('passes when axios fetches', async () => {
 		expect.assertions (1)
 		const res = get (url)
-		expect (await res ()).toEqualRight ('done')
+		expect (await res ()).toEqualRight ('done') 
 	})
 	
 	test ('passes when axios rejects', async () => {
