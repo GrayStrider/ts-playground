@@ -57,9 +57,23 @@ it ('should parse JSON', async () => {
 	expect (res).toEqualRight({foo: 'bar'})
 })
 
+it ('should match', async () => {
+	expect.assertions(1)
+  expect (right({foo: 'bar', baz: 10})).toMatchRight({foo: 'bar'})
+})
+
 it ('should return error', async () => {
 	expect.assertions(1)
 	const res = parse ('{234}')
 	expect (res).toBeLeft()
 	
+})
+
+it ('passes when value is an Either', () => {
+	expect(left(true)).toBeEither()
+	expect(right(true)).toBeEither()
+})
+
+it ('passes when value is not an Either', () => {
+	expect(undefined).not.toBeEither()
 })
