@@ -1,4 +1,4 @@
-import { Ord, fromCompare } from 'fp-ts/lib/Ord'
+import { Ord, fromCompare, contramap, getDualOrd } from 'fp-ts/lib/Ord'
 import { eqNumber } from './eq.spec'
 
 
@@ -13,14 +13,14 @@ import { eqNumber } from './eq.spec'
 
 const ordNumber: Ord<number> = {
 	compare: (x, y) => (x < y ? -1 : x > y ? 1 : 0),
-	...eqNumber,
+	equals: eqNumber.equals,
 }
 
 test ('passes when number are ordered', async () => {
-	expect.assertions(3)
-  expect (ordNumber.compare(1,2)).toEqual(-1)
-  expect (ordNumber.compare(1,1)).toEqual(0)
-  expect (ordNumber.compare(2,1)).toEqual(1)
+	expect.assertions (3)
+	expect (ordNumber.compare (1, 2)).toEqual (-1)
+	expect (ordNumber.compare (1, 1)).toEqual (0)
+	expect (ordNumber.compare (2, 1)).toEqual (1)
 })
 
 /*
@@ -47,7 +47,75 @@ const ordNumber2: Ord<number> = fromCompare (
 	(x, y) => (x < y ? -1 : x > y ? 1 : 0))
 
 test ('passes when numbers are equal', async () => {
-	expect.assertions(2)
-  expect (ordNumber2.equals(1,2)).toBe(false)
-  expect (ordNumber2.equals(2,2)).toBe(true)
+	expect.assertions (2)
+	expect (ordNumber2.equals (1, 2)).toBe (false)
+	expect (ordNumber2.equals (2, 2)).toBe (true)
+})
+
+
+function min<A> (O: Ord<A>): (x: A, y: A) => A {
+	return (x, y) => (O.compare (x, y) === 1 ? y : x)
+}
+
+test ('passes when min value is found', async () => {
+	expect.assertions (1)
+	expect (min (ordNumber) (2, 1)).toBe (1)
+})
+
+/*
+ Totality might seem obvious (i.e. either x <= y or y <= x)
+ when we're talking about numbers, but this isn't always the case.
+ Let's consider a more complex type
+ */
+
+interface User {
+	name: string
+	age: number
+}
+
+
+/*
+ How can we define an Ord<User>?
+ Well it really depends, but a possible choice is to sort users by their age
+ */
+
+const byAge: Ord<User> = fromCompare (
+	(x, y) => ordNumber.compare (x.age, y.age))
+
+/*
+ We can avoid some boilerplate by using the contramap combinator: given an instance of Ord for A and a function from B to A, we can derive an instance of Ord for B
+ */
+
+const byAge2 = contramap ((user: User) => user.age) (ordNumber)
+
+// Now we can pick the younger of two users using min
+
+const getYounger = min(byAge)
+
+it ('should compare users', async () => {
+	expect.assertions(1)
+	const first = { name: 'Guido', age: 48 }
+	const second = { name: 'Giulio', age: 45 }
+	expect (getYounger (first, second)).toBe(second)
+	
+})
+
+/*
+ What if we want to pick the older instead? We'd need to "reverse the order",
+  or more technically speaking, get the dual order.
+ 
+ Fortunately there's another exported combinator for this
+ */
+
+const max = <A> (O: Ord<A>): (x: A, y: A) => A =>
+	min (getDualOrd (O))
+
+const getOlder = max(byAge)
+
+it ('should get older', async () => {
+	expect.assertions(1)
+	const first = { name: 'Guido', age: 48 }
+	const second = { name: 'Giulio', age: 45 }
+	expect (getOlder (first, second)).toBe(first)
+	
 })
