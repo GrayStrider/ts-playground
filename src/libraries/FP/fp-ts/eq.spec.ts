@@ -1,4 +1,4 @@
-import { Eq, getStructEq } from 'fp-ts/lib/Eq'
+import { Eq, getStructEq, contramap } from 'fp-ts/lib/Eq'
 import { getEq } from 'fp-ts/lib/Array'
 
 const eqNumber: Eq<number> = {
@@ -26,7 +26,7 @@ elem (eqNumber) (4, [1, 2, 3]) // false
 //
 //================================================================================
 
-type Point = {
+interface Point {
 	x: number
 	y: number
 }
@@ -48,7 +48,7 @@ const eqPoint: Eq<Point> = getStructEq ({
 
 // We can go on and feed getStructEq with the instance just defined
 
-type Vector = {
+interface Vector {
 	from: Point
 	to: Point
 }
@@ -64,11 +64,40 @@ const eqArrayOfPoints = getEq (eqPoint)
 
 test ('passes when arrays of points are equal', async () => {
 	expect.assertions (2)
-	const first: Point[] = [{ x: 1, y: 2 }, {x: 2, y: 4}]
-	const second: Point[] = [{ x: 1, y: 2 }, {x: 2, y: 4}]
-	expect (eqArrayOfPoints.equals(first, second))
-		.toBe(true)
-	expect (eqArrayOfPoints.equals(first, [{
-		x: 0, y: 0
-	}])).toBe(false)
+	const first: Point[] = [{ x: 1, y: 2 }, { x: 2, y: 4 }]
+	const second: Point[] = [{ x: 1, y: 2 }, { x: 2, y: 4 }]
+	expect (eqArrayOfPoints.equals (first, second))
+		.toBe (true)
+	expect (eqArrayOfPoints.equals (first, [
+		{
+			x: 0, y: 0,
+		},
+	])).toBe (false)
+})
+
+
+//================================================================================
+// Contramap
+//================================================================================
+
+
+interface User {
+	userId: number
+	name: string
+}
+
+/** two users are equal if their `userId` field is equal */
+const eqUser = contramap ((user: User) => user.userId) (eqNumber)
+
+
+test ('passes when users are equal', async () => {
+	expect.assertions (2)
+	expect (eqUser.equals (
+		{ userId: 1, name: 'Giulio' },
+		{ userId: 1, name: 'Giulio Canti' }))
+		.toBe (true)
+	expect (eqUser.equals (
+		{ userId: 1, name: 'Giulio' },
+		{ userId: 2, name: 'Giulio' }))
+		.toBe (false)
 })
