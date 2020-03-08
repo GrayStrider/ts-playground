@@ -1,14 +1,10 @@
-import { attemptP, mapRej, fork } from 'fluture'
+import { mapRej, fork } from 'fluture'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { map } from 'fp-ts-fluture/lib/Future'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { prop } from 'fp-ts-ramda'
 import nock from 'nock'
-
-const toTheFuture =
-	<Err, Res, T extends (...args: any[]) => Promise<any> = any>
-	(func: T) => (...args: Parameters<T>) =>
-		attemptP<Err, Res> (() => func (...args))
+import toTheFuture from './toTheFuture'
 
 const axiosF = toTheFuture<AxiosError, AxiosResponse> (axios.get)
 
