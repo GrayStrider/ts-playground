@@ -1,6 +1,6 @@
 import nock from 'nock'
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { encaseP, promise, map } from 'fluture'
+import { encaseP, promise, map, fork } from 'fluture'
 import { prop } from 'fp-ts-ramda'
 
 const faxiosGet = encaseP<AxiosError, AxiosResponse, string>
@@ -24,7 +24,7 @@ describe ('axios', () => {
 	it ('should invoke axios', async () => {
 		expect.assertions (1)
 		
-
+		
 		const act = promise (
 			faxiosGet (url).pipe (
 				map (prop ('data')),
@@ -35,13 +35,33 @@ describe ('axios', () => {
 	})
 	
 	it ('should catch errors', async () => {
-		expect.assertions(1)
+		expect.assertions (1)
 		
 		const res = promise (faxiosGet ('fakepath'))
 		
 		await expect (res).rejects.toMatchObject ({
-			code: 'ECONNREFUSED'
+			code: 'ECONNREFUSED',
 		})
+	})
+	
+	it ('should do with callback', (done) => {
+		expect.assertions (1)
+		
+		fork (done) ((res) => {
+			expect (res).toStrictEqual ('done')
+			done ()
+		}) (faxiosGet (url).pipe (map (prop ('data'))))
+		
+	})
+	
+	it ('should do with callback source first', (done) => {
+		expect.assertions (1)
+		faxiosGet (url)
+			.pipe (map (prop ('data')))
+			.pipe (fork (done) ((res) => {
+				expect (res).toStrictEqual ('done')
+				done ()
+			}))
 	})
 	
 })
