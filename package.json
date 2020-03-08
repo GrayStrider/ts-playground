@@ -4,6 +4,7 @@
   "main": "src/index.js",
   "scripts": {
     "start:dev:file": "ts-node-dev --respawn --transpile-only --ignore-watch .spec --cls -r tsconfig-paths/register",
+    "start:dev-once:file": "ts-node --transpile-only -r tsconfig-paths/register",
     "test:typecheck": "tsc --noEmit --incremental false"
   },
   "dependencies": {
