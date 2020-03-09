@@ -1,5 +1,6 @@
 import { Option, isNone, none, some } from 'fp-ts/lib/Option'
 import { Task } from 'fp-ts/lib/Task'
+import { Functor1 } from 'fp-ts/lib/Functor'
 
 //==========================================================
 // How can we compose two generic functions
@@ -138,3 +139,144 @@ const _liftTask = <B, C>
 //==========================================================
 // Functors
 //==========================================================
+
+/*
+ * Functors are mappings between categories that preserve the categorical structure, i.e. that preserve identity morphisms and composition.
+ 
+ Since categories are constituted of two things (objects and morphisms)
+ * a functor is constituted of two things as well:
+ 
+ - a mapping between objects that associates to each
+ * object X in C an object in D
+ *
+ - a mapping between morphisms that associates to each morphism
+ * in C a morphism in D
+ *
+ * where C and D are two categories (aka two programming languages).
+ *
+ * Even if a mapping between two different programming languages is an
+ * intriguing idea, we are more interested in a mapping where C
+ * and D coincide (with TS). In this case we talk about endofunctors
+ * ("endo" means "within", "inside").
+ 
+ From now on when I write "functor" I actually mean an endofunctor in TS.
+ * */
+
+//==========================================================
+// Definition
+//==========================================================
+
+/*
+ * A functor is a pair (F, lift) where
+ 
+ - F is a n-ary type constructor (n >= 1) which maps each
+ * type X to the type F<X> (mapping between objects)
+ *
+ - lift is a function with the following signature
+ *
+ * lift: <A, B>(f: (a: A) => B) => ((fa: F<A>) => F<B>)
+ *
+ * which maps each function
+ * f: (a: A) => B to a function
+ * lift(f): (fa: F<A>) => F<B> (mapping between morphisms).
+ *
+ * The following properties must hold
+ 
+ - lift(identityX) = identityF(X) (identities map to identities)
+ - lift(g ∘ f) = lift(g) ∘ lift(f) (mapping a composition is
+ * the composition of the mappings)
+ The lift function is also known through a variant called map,
+ * which is basically lift with the arguments rearranged
+ *
+ * - lift: <A, B>(f: (a: A) => B) => ((fa: F<A>) => F<B>)
+ * - map:  <A, B>(fa: F<A>, f: (a: A) => B) => F<B>
+ 
+ * Note that map can be derived from lift (and viceversa).
+ * */
+
+//==========================================================
+// Functors in fp-ts
+//==========================================================
+
+/*
+ How can we define a functor instance in fp-ts? Let's see a practical example.
+ 
+ The following declaration defines a model for the response of an API call
+ */
+
+interface Response<A> {
+	url: string
+	status: number
+	headers: Record<string, string>
+	body: A
+}
+
+/*
+ * Note that the body field is parametrized, this makes Response a good
+ * candidate for a functor instance since Response is a
+ * n-ary type constructors with n >= 1 (a necessary precondition)
+ * ("generic type"?..).
+ 
+ In order to define a functor instance for Response we must
+ * define a map function (along with some technicalities required by fp-ts)
+ * */
+
+export const URI = 'Response'
+
+export type URI = typeof URI
+
+declare module 'fp-ts/lib/HKT' {
+	interface URItoKind<A> {
+		Response: Response<A>
+	}
+}
+
+const map = <A, B> (
+	fa: Response<A>,
+	f: (a: A) => B,
+): Response<B> => ({
+	...fa,
+	body: f (fa.body),
+})
+
+// functor instance for `Response`
+export const functorResponse: Functor1<URI> = {
+	URI,
+	map,
+}
+
+const effect = ({ data }: { data: string }) => data.length
+
+it ('should transform body', async () => {
+	expect.assertions (1)
+	const response: Response<{ data: string }> = {
+		body: {
+			data: 'Hello, FP',
+		}, status: 200,
+		headers: {},
+		url: 'https://hello.fp',
+	}
+	
+	const { body } = functorResponse.map (response, effect)
+	expect (body).toStrictEqual (9)
+})
+
+/*
+ * Is the general problem solved?
+ *
+ Not at all. Functors allow us to compose an effectful program f
+ * with a pure program g, but g must be unary, that is it must accept
+ * only one argument as input. What if g accepts two arguments? Or three?
+ *
+ ┌───────────┬─────────────────────┬─────────────┐
+ │ Program f │      Program g      │ Composition │
+ ├───────────┼─────────────────────┼─────────────┤
+ │ pure      │ pure                │ g ∘ f       │
+ │ effectful │ pure (unary)        │ lift(g) ∘ f │
+ │ effectful │ pure (n-ary, n > 1) │ ?           │
+ └───────────┴─────────────────────┴─────────────┘
+ *
+ * In order to handle such circumstances we need something more:
+ * in the next post I'll talk about another remarkable abstraction of
+ * functional programming: applicative functors.
+ * */
