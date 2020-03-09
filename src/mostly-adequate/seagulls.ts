@@ -9,3 +9,4 @@ const result = add(
 	multiply(flockA, flockB)
 )
 
+export {}
