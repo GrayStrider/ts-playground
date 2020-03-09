@@ -1,6 +1,6 @@
-import { until, times, length, lte, repeat, add } from 'ramda'
+import { until, times, lte, repeat, add } from 'ramda'
 import { chance } from '@strider/utils-ts'
-import { all, equals } from 'fp-ts-ramda'
+import { all, equals, prop } from 'fp-ts-ramda'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { eqNumber } from 'fp-ts/lib/Eq'
 import { map } from 'fp-ts/lib/Array'
@@ -19,7 +19,7 @@ it ('should have all words len > 6', async () => {
 	expect.assertions (1)
 	const words = morethanxwords (6)
 	expect (pipe (
-		words.map (length),
+		words.map (prop('length')),
 		all (lte (6)),
 		),
 	).toBe (true)
@@ -29,7 +29,7 @@ it ('through params', async () => {
 	expect.assertions (1)
 	const words = times (() => chance.word ({ length: 6 }), 10)
 	expect (pipe (
-		words.map (length),
+		words.map (prop('length')),
 		all (lte (6)),
 		),
 	).toBe (true)
