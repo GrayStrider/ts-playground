@@ -1,5 +1,6 @@
 import { Semigroup } from 'fp-ts/lib/Semigroup'
 import { Monoid, monoidSum, getStructMonoid, monoidAny, fold, monoidAll, monoidString, monoidProduct } from 'fp-ts/lib/Monoid'
+import { getApplyMonoid, some, none, getFirstMonoid, getLastMonoid } from 'fp-ts/lib/Option'
 
 // https://dev.to/gcanti/getting-started-with-fp-ts-monoid-ja0
 
@@ -116,4 +117,93 @@ it ('should fold using monoids', async () => {
 		.toStrictEqual(false)
 	expect(fold(monoidAny)([true, false, true]))
 		.toStrictEqual(true)
+})
+
+/*
+ ==========================================================
+ Monoids for type constructors
+ ==========================================================
+ We already know that given a semigroup instance for A we can derive
+  a semigroup instance for Option<A>.
+ 
+ If we can find a monoid instance for A then we can derive
+  a monoid instance for Option<A> (via getApplyMonoid) which works like this:
+ 
+ ┌─────────┬─────────┬────────────────────┐
+ │    x    │    y    │    concat(x, y)    │
+ ├─────────┼─────────┼────────────────────┤
+ │ none    │ none    │ none               │
+ │ some(a) │ none    │ none               │
+ │ none    │ some(a) │ none               │
+ │ some(a) │ some(b) │ some(concat(a, b)) │
+ └─────────┴─────────┴────────────────────┘
+ 
+ */
+
+it ('should concat Option monoids', async () => {
+	expect.assertions(3)
+	
+	const M = getApplyMonoid(monoidSum)
+	
+	expect (M.concat(some(1), none))
+		.toStrictEqual(none)
+	expect (M.concat(some(1), some(2)))
+		.toStrictEqual(some(3))
+	expect (M.concat(some(1), M.empty))
+		.toStrictEqual(some(1))
+})
+
+/*
+ We can derive two other monoids for Option<A> (for all A)
+ 
+ 1) getFirstMonoid...
+ 
+ Monoid returning the left-most non-None value
+ 
+ ┌─────────┬─────────┬──────────────┐
+ │    x    │    y    │ concat(x, y) │
+ ├─────────┼─────────┼──────────────┤
+ │ none    │ none    │ none         │
+ │ some(a) │ none    │ some(a)      │
+ │ none    │ some(a) │ some(a)      │
+ │ some(a) │ some(b) │ some(a)      │
+ └─────────┴─────────┴──────────────┘
+ */
+
+it ('should return left-most non-None value', async () => {
+	expect.assertions(2)
+	
+	const M = getFirstMonoid<number>()
+	
+	expect (M.concat (some (1), none))
+		.toStrictEqual(some(1))
+	expect (	M.concat(some(1), some(2)))
+		.toStrictEqual(some(1))
+})
+
+/*
+ 2) ...and its dual: getLastMonoid
+ 
+ Monoid returning the right-most non-None value
+ 
+ ┌─────────┬─────────┬──────────────┐
+ │    x    │    y    │ concat(x, y) │
+ ├─────────┼─────────┼──────────────┤
+ │ none    │ none    │ none         │
+ │ some(a) │ none    │ some(a)      │
+ │ none    │ some(a) │ some(a)      │
+ │ some(a) │ some(b) │ some(b)      │
+ └─────────┴─────────┴──────────────┘
+ */
+
+it ('should return the right-most non-None value', async () => {
+	expect.assertions(2)
+	
+	const M = getLastMonoid<number>()
+	
+	expect (M.concat(some(1), none))
+		.toStrictEqual(some(1))
+	expect (M.concat(some(1), some(2)))
+		.toStrictEqual(some(2))
+ 
 })
