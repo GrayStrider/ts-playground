@@ -1,4 +1,4 @@
-import _, { flow } from 'src/FP/lodash'
+import _, { flow } from 'lodash'
 
 const object = {
 	x: 42,

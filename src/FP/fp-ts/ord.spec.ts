@@ -2,7 +2,7 @@ import { Ord, fromCompare, contramap, getDualOrd, ordNumber, min, ordString } fr
 import { eqNumber } from 'fp-ts/lib/Eq'
 import { sort } from 'fp-ts/lib/Array'
 import { chance, sig } from '@strider/utils-ts/index'
-import { times, until } from 'src/FP/ramda'
+import { times } from 'ramda'
 import { IO } from 'fp-ts/lib/IO'
 
 /*

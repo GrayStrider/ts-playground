@@ -1,4 +1,4 @@
-import { until, times, lte, repeat, add } from 'src/FP/ramda'
+import { until, times, lte, repeat, add } from 'ramda'
 import { chance } from '@strider/utils-ts'
 import { all, equals, prop } from 'fp-ts-ramda'
 import { pipe } from 'fp-ts/lib/pipeable'
