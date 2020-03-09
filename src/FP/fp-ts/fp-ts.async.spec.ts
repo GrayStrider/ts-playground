@@ -23,7 +23,7 @@ describe ('axios', () => {
 	test ('passes when axios fetches', async () => {
 		expect.assertions (1)
 		const res = get (url)
-		expect (await res ()).toEqualRight ('done') 
+		expect (await res ()).toEqualRight ('done')
 	})
 	
 	test ('passes when axios rejects', async () => {

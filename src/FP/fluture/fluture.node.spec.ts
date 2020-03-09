@@ -1,5 +1,5 @@
-import { node, chain, encase, map, fork } from 'fluture'
-import { readFile } from "fs"
+import { node, chain, encase, map } from 'fluture'
+import { readFile } from 'fs'
 import { prop } from 'fp-ts-ramda'
 import ErrnoException = NodeJS.ErrnoException
 
