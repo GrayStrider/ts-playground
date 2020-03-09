@@ -131,6 +131,28 @@ it ('should test compose', async () => {
 	
 })
 
+/**
+ * simply swap arguments in place
+ */
+const _pipe = <A, B, C>
+(
+	a: (a_: A) => B,
+	b: (b_: B) => C,
+): (a1_: A) => C =>
+	c => b (a (c))
+
+it ('should test pipe', async () => {
+	expect.assertions (2)
+	const c = _pipe (b, a)
+	
+	expect (c (false))
+		.toStrictEqual ('yes')
+	
+	expect (c (true))
+		.toStrictEqual ('no')
+	
+})
+
 /*
  * But what if B != C? How can we compose such functions? Should we just give up?
  
