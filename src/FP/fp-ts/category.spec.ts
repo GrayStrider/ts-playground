@@ -1,3 +1,6 @@
+import { flow } from 'fp-ts/lib/function'
+
+
 /*
  * In the last posts we saw some basic abstractions used in functional programming: Eq, Ord, Semigroup and Monoid.
  
@@ -160,4 +163,18 @@ it ('should test pipe', async () => {
  * composition is possible. We'll talk about functors.
  
  TLDR: functional programming is all about composition
+ * (piping ftw)
  * */
+
+const c = (c: 'yes' | 'no') => c === 'yes'
+
+/**
+ * Same idea (?), but can supply unlimited functions
+ */
+const f = flow(b, a, c, b, a)
+
+it ('should test flow', async () => {
+	expect.assertions(1)
+	const act = f(true)
+	expect (act).toStrictEqual('yes')
+})
