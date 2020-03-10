@@ -1,14 +1,13 @@
 import nock from 'nock'
 import axios, { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios'
-import { encaseP, promise, map, fork } from 'fluture'
+import { encaseP, promise, map, fork, attemptP } from 'fluture'
 import { prop } from 'fp-ts-ramda'
 
 const faxiosGet = encaseP<AxiosError, AxiosResponse, string>
 (axios.get)
 
-const faxiosGet2 = (url: string) =>
-	encaseP ((config?: AxiosRequestConfig) =>
-		axios.get (url, config))
+export const get = (url: string, config?: AxiosRequestConfig) =>
+	attemptP (() => axios.get (url, config))
 
 
 describe ('axios', () => {
