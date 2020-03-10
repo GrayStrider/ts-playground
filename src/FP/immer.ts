@@ -1,4 +1,4 @@
-import produce from 'src/FP/immer'
+import produce from 'immer'
 
 const baseState = [
 	{
