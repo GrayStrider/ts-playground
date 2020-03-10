@@ -23,8 +23,8 @@ it ('should resolve', async () => {
 })
 
 it ('futures should be equal', async () => {
-	expect.assertions(1)
-  expect (future.of(1))
-	  .toStrictEqual(resolve(1))
+	expect.assertions (1)
+	expect (future.of (1))
+		.toStrictEqual (resolve (1))
 })
 
