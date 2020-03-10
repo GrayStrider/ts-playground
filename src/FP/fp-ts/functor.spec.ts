@@ -1,6 +1,10 @@
-import { Option, isNone, none, some } from 'fp-ts/lib/Option'
+import { Option, isNone, none, some, toNullable } from 'fp-ts/lib/Option'
 import { Task } from 'fp-ts/lib/Task'
 import { Functor1 } from 'fp-ts/lib/Functor'
+import { head } from 'fp-ts/lib/Array'
+import { tryCatch } from 'fp-ts/lib/TaskEither'
+import { getOrElse } from 'fp-ts/lib/Either'
+import { identity } from 'fp-ts/lib/function'
 
 //==========================================================
 // How can we compose two generic functions
@@ -109,6 +113,15 @@ const _liftArray = <B, C>
 ): (fb: Array<B>) => Array<C> =>
 	fb => fb.map (g)
 
+const newArr = _liftArray<number, string>
+((v) => v.toFixed (2))
+
+it ('should conver to string', async () => {
+	expect.assertions (1)
+	const act = newArr ([1, 2, 3])
+	expect (act).toStrictEqual (['1.00', '2.00', '3.00'])
+})
+
 // Example (F = Option)
 const _liftOption = <B, C>
 (
@@ -118,6 +131,15 @@ const _liftOption = <B, C>
 		? none
 		: some (g (fb.value))
 
+const newOpt = _liftOption<number, string> (v => v.toFixed (1))
+it ('should convert option', async () => {
+	expect.assertions (2)
+	const act = newOpt (head ([]))
+	expect (act).toStrictEqual (none)
+	const act2 = newOpt (head ([1]))
+	expect (toNullable (act2)).toStrictEqual ('1.0')
+})
+
 // Example (F = Task)
 const _liftTask = <B, C>
 (
@@ -125,6 +147,22 @@ const _liftTask = <B, C>
 ): (fb: Task<B>) => Task<C> =>
 	fb => () => fb ().then (g)
 
+it ('should transform promise', async () => {
+	expect.assertions (1)
+	const newTask = _liftTask<number, string> (v => v.toFixed (1))
+	const act = newTask (() => new Promise ((res, rej) => res (1)))
+	expect (await act ()).toStrictEqual ('1.0')
+})
+
+it ('should return never reject', async () => {
+	expect.assertions (3)
+	const act = await tryCatch (() => Promise.resolve (1),
+		identity) ()
+	expect (act).toEqualRight (1)
+	const act2 = await tryCatch (() => Promise.reject (1), identity) ()
+	expect (act2).toEqualLeft (1)
+	expect (getOrElse (() => 2) (act)).toStrictEqual (1)
+})
 
 /*
  * All those lift functions almost look the same.
@@ -257,8 +295,8 @@ it ('should transform body', async () => {
 		url: 'https://hello.fp',
 	}
 	
-	const { body } = functorResponse.map (response, effect)
-	expect (body).toStrictEqual (9)
+	const res: Response<number> = functorResponse.map (response, effect)
+	expect (res.body).toStrictEqual (9)
 })
 
 /*
