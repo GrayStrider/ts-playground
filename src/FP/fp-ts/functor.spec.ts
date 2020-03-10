@@ -76,6 +76,7 @@ import { identity } from 'fp-ts/lib/function'
  * We already know that if B = C then the solution
  * is the usual function composition:
  * */
+
 const _compose = <A, B, C>
 (
 	a: (b_: B) => C,
@@ -107,14 +108,15 @@ const _compose = <A, B, C>
  * */
 
 // Example (F = Array)
-const _liftArray = <B, C>
+const liftArray = <B, C>
 (
 	g: (b: B) => C,
 ): (fb: Array<B>) => Array<C> =>
 	fb => fb.map (g)
 
-const newArr = _liftArray<number, string>
+const newArr = liftArray<number, string>
 ((v) => v.toFixed (2))
+
 
 it ('should conver to string', async () => {
 	expect.assertions (1)
@@ -122,8 +124,13 @@ it ('should conver to string', async () => {
 	expect (act).toStrictEqual (['1.00', '2.00', '3.00'])
 })
 
+const makeMapper = <B, C>(mapper: (arg: B) => C) =>
+	liftArray<B, C>(mapper)
+
+const stringify = makeMapper(String)
+
 // Example (F = Option)
-const _liftOption = <B, C>
+const liftO = <B, C>
 (
 	g: (b: B) => C,
 ): (fb: Option<B>) => Option<C> =>
@@ -131,7 +138,7 @@ const _liftOption = <B, C>
 		? none
 		: some (g (fb.value))
 
-const newOpt = _liftOption<number, string> (v => v.toFixed (1))
+const newOpt = liftO<number, string> (v => v.toFixed (1))
 it ('should convert option', async () => {
 	expect.assertions (2)
 	const act = newOpt (head ([]))
