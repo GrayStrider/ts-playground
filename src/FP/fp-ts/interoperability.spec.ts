@@ -3,6 +3,7 @@ import { tryCatch, Either, right, left } from 'fp-ts/lib/Either'
 import { IO } from 'fp-ts/lib/IO'
 import { IOEither, tryCatch as tryCatchIO } from 'fp-ts/lib/IOEither'
 import * as fs from 'fs'
+import { AnyObject } from 'tsdef'
 
 
 
@@ -49,13 +50,13 @@ it ('should return none', async () => {
 // Exceptions
 // Use case: an API that may throw.
 
-function parse (s: string): Either<Error, unknown> {
+function parse <T = AnyObject>(s: string): Either<Error, T> {
 	return tryCatch (() => JSON.parse (s), reason => new Error (String (reason)))
 }
 
 it ('should parse JSON', async () => {
 	expect.assertions (1)
-	const res = parse ('{"foo": "bar"}')
+	const res = parse <{foo: string}> ('{"foo": "bar"}')
 	expect (res).toEqualRight ({ foo: 'bar' })
 })
 
@@ -101,6 +102,7 @@ function readFileSync (path: string): IOEither<Error, string> {
 test ('passes when file is read correctly', async () => {
 	expect.assertions(1)
 	const res = readFileSync ('package.json')
+	
 	expect (res()).toBeRight()
 })
 

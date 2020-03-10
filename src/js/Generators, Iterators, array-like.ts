@@ -1,4 +1,5 @@
-import { sig, td } from '@strider/utils-ts'
+import { sig } from '@strider/utils-ts'
+import { AnyFunction } from 'tsdef'
 
 /**
  * creates range object with iterator functionality
@@ -49,7 +50,7 @@ withTime(() => {
 	}
 })
 
-function withTime<T extends td.AnyFunction>(cb: T): ReturnType<T> {
+function withTime<T extends AnyFunction>(cb: T): ReturnType<T> {
 	console.time()
 	console.log('starting excecution')
 	const res = cb()

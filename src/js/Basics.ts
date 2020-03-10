@@ -1,4 +1,5 @@
-import { r, l, sig } from '@strider/utils-ts'
+import { sig } from '@strider/utils-ts'
+import { times, map, prop } from 'ramda'
 
 export default {}
 
@@ -31,9 +32,8 @@ for (let i = 0; i < 10; i++) {
 	// fori
 	console.log(i)
 }
-r.times(console.log, 10)
-l.times(10, console.log)
-const getAllfoos = r.map(r.prop('foo'))
+times(console.log, 10)
+const getAllfoos = map(prop('foo'))
 const foos = getAllfoos([{ foo: 'bar' }, {foo: 'baz'}])
 sig.debug(foos)
 // switch (true) {

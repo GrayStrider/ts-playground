@@ -131,14 +131,14 @@ const semigroupVector: Semigroup<Vector> = getStructSemigroup ({
  */
 
 /** `semigroupAll` is the boolean semigroup under conjunction */
-const semigroupPredicate = getFunctionSemigroup (semigroupAll)<Point> ()
+const { concat: concatPred } = getFunctionSemigroup (semigroupAll)<Point> ()
 
 // Now we can "merge" two predicates on Points
 
 const isPositiveX = (p: Point) => p.x >= 0
 const isPositiveY = (p: Point) => p.y >= 0
 
-const isPositiveXY = semigroupPredicate.concat (isPositiveX, isPositiveY)
+const isPositiveXY = concatPred (isPositiveX, isPositiveY)
 
 it ('should test function semigroups', async () => {
 	expect.assertions (4)
