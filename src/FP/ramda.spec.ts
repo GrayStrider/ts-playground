@@ -27,7 +27,7 @@ it ('should have all words len > 6', async () => {
 
 it ('through params', async () => {
 	expect.assertions (1)
-	const words = times (() => chance.word ({ length: 6 }), 10)
+	const words = times (() => chance.word ({ length: 7 }), 10)
 	expect (pipe (
 		words.map (prop('length')),
 		all (lte (6)),
