@@ -4,9 +4,6 @@ import pM from './promise'
 let pS = interpret (pM)
 const listener = jest.fn ()
 
-const is = (act: unknown = true, exp: unknown = false) => expect
-(act).toStrictEqual (exp)
-
 const isNow = (e?: unknown) => expect
 (listener).toHaveBeenLastCalledWith (e)
 
@@ -34,3 +31,4 @@ describe ('should reset the state and between 2 tests', () => {
 		isNow('rejected')
 	})
 })
+
