@@ -107,7 +107,7 @@ type T10 = ReturnType<() => string>
 // string
 type T11 = ReturnType<(s: string) => void>
 // void
-type T12 = ReturnType<<T>() => T>
+type T12 = ReturnType< <T>() => T>
 // {}
 
 type num = ReturnType<() => number>
@@ -115,7 +115,7 @@ const n: num = 10
 
 const a: T12 = { foo: 'bar' }
 
-type T13 = ReturnType<<T extends U, U extends number[]>() => T>
+type T13 = ReturnType< <T extends U, U extends number[]>() => T>
 // number[]
 type T14 = ReturnType<typeof f1>
 // { a: number, b: string }
