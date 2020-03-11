@@ -3,6 +3,8 @@ import { getEq } from 'fp-ts/lib/Array'
 
 
 /*
+ The Eq class defines equality (==) and inequality (/=).
+ 
  Instances must satisfy the following laws:
  
  Reflexivity: equals(x, x) === true, for all x in A
