@@ -6,7 +6,6 @@ import * as t from 'io-ts'
 import { flow } from 'fp-ts/lib/function'
 import { fold } from 'fp-ts/lib/Either'
 import { map } from 'fp-ts/lib/Array'
-import { prop } from 'fp-ts-ramda'
 
 const isString = (u: unknown): u is string => typeof u === 'string'
 
