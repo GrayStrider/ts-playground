@@ -1,4 +1,4 @@
-import { Map, Record } from 'src/FP/immutable'
+import { Map, Record } from 'immutable'
 
 // Aliases: p = player, a = attacker, t = target
 

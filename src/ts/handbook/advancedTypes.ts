@@ -1,10 +1,6 @@
-import { r, mix } from '@strider/utils-ts'
+import mix, { Mixin } from 'ts-mixer'
+// Determines how ts-mixer will mix class prototypes togeher
 
-const list = r.times(r.gt(r.__, 5), 10)
-const filtered = list.filter(Boolean)
-const opposite = list.filter(r.complement(Boolean))
-
-// Determines how ts-mixer will mix class prototypes together
 mix.settings.prototypeStrategy = 'copy'
 // Determines how static properties are inherited
 mix.settings.staticsStrategy = 'copy'
@@ -32,7 +28,7 @@ class Animal {
 	constructor(public species: Species) {}
 }
 
-class MyPerson extends mix.Mixin(Person, Entity, Animal) {
+class MyPerson extends Mixin(Person, Entity, Animal) {
 	get stats() {
 		const { isFictional, species, name, age } = this
 		return { isFictional, species, name, age }

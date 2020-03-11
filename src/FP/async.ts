@@ -28,4 +28,4 @@ get ('https://hello.coms').then (fold (
 	console.log,
 ))
 
-getF3 ('https://hello.codmf').pipe (logF)
+getF3 ('https://hello.codm').pipe (logF)

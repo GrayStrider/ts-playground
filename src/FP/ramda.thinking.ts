@@ -1,4 +1,4 @@
-import { forEach, map, complement, find, append } from 'src/FP/ramda'
+import { forEach, map, complement, find, append } from 'ramda'
 
 const logger = forEach(console.log)
 const appendString = map((value: number) => value + '_')

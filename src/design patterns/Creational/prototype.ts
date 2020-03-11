@@ -26,11 +26,8 @@ class Prototype {
 }
 
 class ComponentWithBackReference {
-	public prototype
 	
-	constructor(prototype: Prototype) {
-		this.prototype = prototype
-	}
+	constructor(public prototype: Prototype) {}
 }
 
 /**
@@ -76,3 +73,5 @@ function clientCode() {
 }
 
 clientCode()
+
+export {}

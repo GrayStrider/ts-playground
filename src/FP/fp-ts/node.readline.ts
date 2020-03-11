@@ -1,7 +1,7 @@
 import { Task } from 'fp-ts/lib/Task'
 import { createInterface } from 'readline'
 import { pipe } from 'fp-ts/lib/pipeable'
-import { toUpper } from 'src/FP/ramda'
+import { toUpper } from 'ramda'
 import { sig } from '@strider/utils-ts'
 
 const read: Task<string> = () =>

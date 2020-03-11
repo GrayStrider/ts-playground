@@ -11,7 +11,7 @@ class Flyweight {
 		this.sharedState = sharedState
 	}
 	
-	public operation(uniqueState): void {
+	public operation(uniqueState: unknown): void {
 		const s = JSON.stringify(this.sharedState)
 		const u = JSON.stringify(uniqueState)
 		console.log(`Flyweight: Displaying shared (${s}) and unique (${u}) state.`)
