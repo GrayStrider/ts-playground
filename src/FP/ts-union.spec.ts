@@ -59,34 +59,35 @@ describe ('matching', () => {
 	})
 	
 	const toStr = PM.match ({
-		Cash: () => 'cash',
+		Cash: () => 'yo that\'s cash',
 		default: _v => 'not cash' // _v is the union obj
 	})
 	
 	const toStrOpt = PM.match ({
-		Cash: () => some('got cash'),
+		Cash: () => some ('got cash'),
 		default: _v => none // _v is the union obj
 	})
 	
 	it ('should match curried', async () => {
-		expect.assertions (3)
+		expect.assertions (4)
+		isSE (toStr (cash), 'yo that\'s cash')
 		isSE (toStr (card), 'not cash')
-		isSE(toStrOpt(cash), some('got cash'))
-		isSE(toStrOpt(check), none)
+		isSE (toStrOpt (cash), some ('got cash'))
+		isSE (toStrOpt (check), none)
 	})
 	
 	it ('should simplified match', async () => {
-		expect.assertions (3)
+		expect.assertions (4)
 		isSE (PM.if.Cash (cash, () => 'yep'),
-			'yep'
-		)
+			'yep')
+		isSE (PM.if.Cash (card, () => 'yep'),
+			undefined)
 		
 		const safeVal = (v: any) => fromNullable (
-			PM.if.Cash (v, () => 'yep')
-		)
+			PM.if.Cash (v, () => 'yep'))
 		
-		isSE (safeVal(cash), some ('yep'))
-		isSE (safeVal(card), none)
+		isSE (safeVal (cash), some ('yep'))
+		isSE (safeVal (card), none)
 		
 	})
 })
