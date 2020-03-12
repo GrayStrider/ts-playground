@@ -1,4 +1,4 @@
-import { alt, range, ap, apFirst, map, apSecond, chain, chainFirst, chop, spanLeft, chunksOf, compact, copy, deleteAt, comprehension, difference, getMonoid } from 'fp-ts/lib/Array'
+import { alt, range, ap, apFirst, map, apSecond, chain, chainFirst, chop, spanLeft, chunksOf, compact, copy, deleteAt, comprehension, difference, getMonoid, replicate, rotate } from 'fp-ts/lib/Array'
 import { isSE } from '@strider/utils-ts'
 import { increment, flow, tuple } from 'fp-ts/lib/function'
 import { add, repeat, flatten, split } from 'ramda'
@@ -45,7 +45,7 @@ it ('apFirst', async () => {
 	(['hello', 'world'])
 	const exp3 = pipe (
 		['hello', 'world'],
-		map (x => repeat (x, nums.length)),
+		map (x => replicate (nums.length, x)),
 		flatten)
 	isSE (act, exp3)
 })
@@ -91,7 +91,7 @@ it ('chainFirst', async () => {
 	const ma = ['hello', 'myDarling']
 	const act = chainFirst (f) (ma)
 	const exp = flow (
-		map ((elem: string) => pipe (f (elem), map (x => elem))),
+		map ((elem: string) => pipe (f (elem), map (() => elem))),
 		flatten) (ma)
 	isSE (act, exp)
 })
@@ -234,3 +234,10 @@ it ('difference', async () => {
 })
 
 // ...
+
+it ('should rotate', async () => {
+	expect.assertions(1)
+  const act = rotate(2)
+  const exp = [4, 5, 1, 2, 3]
+  isSE (act(range(1, 5)), exp)
+})
