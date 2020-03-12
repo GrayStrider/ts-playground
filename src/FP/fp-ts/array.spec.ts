@@ -1,4 +1,4 @@
-import { alt, range, ap, apFirst, map, apSecond, chain, chainFirst, chop, spanLeft, chunksOf, compact, copy, deleteAt, comprehension, difference, getMonoid, replicate, rotate } from 'fp-ts/lib/Array'
+import { alt, range, ap, apFirst, map, apSecond, chain, chainFirst, chop, spanLeft, chunksOf, compact, copy, deleteAt, comprehension, difference, getMonoid, replicate, rotate, union } from 'fp-ts/lib/Array'
 import { isSE } from '@strider/utils-ts'
 import { increment, flow, tuple } from 'fp-ts/lib/function'
 import { add, repeat, flatten, split } from 'ramda'
@@ -240,4 +240,13 @@ it ('should rotate', async () => {
   const act = rotate(2)
   const exp = [4, 5, 1, 2, 3]
   isSE (act(range(1, 5)), exp)
+})
+
+it ('union', async () => {
+	expect.assertions(1)
+	const first = [1, 2]
+	const second = [2, 3]
+	const act = union(eqNumber)(first, second)
+	const exp = [1, 2, 3]
+	isSE(act, exp)
 })
