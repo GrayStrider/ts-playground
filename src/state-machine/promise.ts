@@ -1,4 +1,4 @@
-import { Machine } from 'xstate'
+import { Machine, Interpreter } from 'xstate'
 
 interface promiseContext {
 
@@ -20,6 +20,7 @@ const promiseMachine = Machine<promiseContext, promiseSchema, promiseEvent>
 ({
 	id: 'promise',
 	initial: 'pending',
+	context: {},
 	states: {
 		pending: {
 			on: {
@@ -37,3 +38,4 @@ const promiseMachine = Machine<promiseContext, promiseSchema, promiseEvent>
 })
 
 export default promiseMachine
+export type promiseInterpreter = Interpreter<promiseContext, promiseSchema, promiseEvent>
