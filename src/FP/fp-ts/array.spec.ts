@@ -1,10 +1,10 @@
-import { alt, range, ap, apFirst, map, apSecond, chain, chainFirst, chop, spanLeft, chunksOf, compact, copy, deleteAt, comprehension, difference } from 'fp-ts/lib/Array'
+import { alt, range, ap, apFirst, map, apSecond, chain, chainFirst, chop, spanLeft, chunksOf, compact, copy, deleteAt, comprehension, difference, getMonoid } from 'fp-ts/lib/Array'
 import { isSE } from '@strider/utils-ts'
 import { increment, flow, tuple } from 'fp-ts/lib/function'
 import { add, repeat, flatten, split } from 'ramda'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { Eq, eqNumber } from 'fp-ts/lib/Eq'
-import { some, none, fromNullable, toNullable } from 'fp-ts/lib/Option'
+import { some, none, fromNullable, toNullable, getOrElse } from 'fp-ts/lib/Option'
 import { cons } from './cons.curried.spec'
 
 const nums = range (0, 5)
@@ -211,8 +211,19 @@ describe ('delete at', () => {
 		const deleteThird = deleteAt (2)
 		const act = deleteThird ([3, 4])
 		isSE (act, none)
-		
 	})
+	
+	it ('default value', async () => {
+		expect.assertions (1)
+		const deleteThird = deleteAt (2)
+		const act = flow (
+			getOrElse
+			(() => getMonoid<number> ().empty))
+		(deleteThird ([3, 4]))
+		isSE (act, [])
+	})
+	
+	
 })
 
 it ('difference', async () => {
