@@ -1,10 +1,10 @@
-import { alt, range, ap, apFirst, map, apSecond, chain, chainFirst, chop, spanLeft, chunksOf, compact, copy, deleteAt, comprehension } from 'fp-ts/lib/Array'
+import { alt, range, ap, apFirst, map, apSecond, chain, chainFirst, chop, spanLeft, chunksOf, compact, copy, deleteAt, comprehension, difference } from 'fp-ts/lib/Array'
 import { isSE } from '@strider/utils-ts'
 import { increment, flow, tuple } from 'fp-ts/lib/function'
 import { add, repeat, flatten, split } from 'ramda'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { Eq, eqNumber } from 'fp-ts/lib/Eq'
-import { some, none, fromNullable, getOrElse, toNullable } from 'fp-ts/lib/Option'
+import { some, none, fromNullable, toNullable } from 'fp-ts/lib/Option'
 import { cons } from './cons.curried.spec'
 
 const nums = range (0, 5)
@@ -181,7 +181,7 @@ describe ('comprehension', () => {
 
 it ('cons', async () => {
 	expect.assertions (1)
-	const act = cons (0)([1, 2])
+	const act = cons (0) ([1, 2])
 	const exp = [0, 1, 2]
 	isSE (act, exp)
 })
@@ -215,3 +215,11 @@ describe ('delete at', () => {
 	})
 })
 
+it ('difference', async () => {
+	expect.assertions (1)
+	const act = difference (eqNumber) ([1, 3, 2, 4], [1, 3])
+	const exp = [2, 4]
+	isSE (act, exp)
+})
+
+// ...
