@@ -45,7 +45,7 @@ const fetchMachine = Machine<FetchContext, FetchSchema, FetchEvent> ({
 				RETRY: {
 					target: 'loading',
 					actions: assign ({
-						retries: (context, event) => context.retries + 1
+						retries: ({ retries }, event) => retries + 1
 					})
 				}
 			}
