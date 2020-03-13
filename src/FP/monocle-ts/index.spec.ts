@@ -1,6 +1,6 @@
-import { Lens } from 'monocle-ts'
+import { Lens, Optional } from 'monocle-ts'
 import { isSE } from '@strider/utils-ts'
-import { cloneDeep } from 'lodash'
+import { some, none } from 'fp-ts/lib/Option'
 
 
 interface Street {
@@ -87,17 +87,40 @@ const capitalizeEmployee = company
 
 it ('should be capitalized', async () => {
 	expect.assertions (1)
-	const act = capitalizeEmployee(employee)
-	isSE(act, expSpread)
+	const act = capitalizeEmployee (employee)
+	isSE (act, expSpread)
 	
 })
 
 
 it ('should use fromPath API', async () => {
-	expect.assertions(1)
-	const name = Lens.fromPath<Employee>()
+	expect.assertions (1)
+	const name = Lens.fromPath<Employee> ()
 	(['company', 'address', 'street', 'name'])
-	const act = name.modify(capitalize)(employee)
+	const act = name.modify (capitalize) (employee)
+	isSE (act, expSpread)
+	
+})
+
+/**
+ * Zoom in on the first letter
+ */
+
+const firstLetterLens = new Optional<string, string> (
+	s => (s.length > 0 ? some (s[0]) : none),
+	a => s => a + s.substring (1))
+
+const firstLetter = company
+	.compose (address)
+	.compose (street)
+	.compose (name)
+	.asOptional ()
+	.compose (firstLetterLens)
+
+it ('should modify first letter', async () => {
+	expect.assertions (1)
+	const act = firstLetter.modify
+	(s => s.toUpperCase ()) (employee)
 	isSE(act, expSpread)
 	
 })
