@@ -1,6 +1,13 @@
 import * as A from 'fp-ts/lib/Array'
 import * as O from 'fp-ts/lib/Option'
 
+/**
+ * A Monad is a Functor, but it also implements the Applicative and Chain specifications.
+Monads can be thought of as a container for a value,
+and to open up the container and do something
+ to the value, you need to map over it.
+ */
+
 interface User {
 	followers: Array<User>
 }
@@ -32,10 +39,10 @@ const followersOfFollowers2 = A.flatten (
 // Say we want to calculate the inverse of the A.head of a numeric list
 
 const inverse = (n: number) =>
-	n === 0 ? O.none : O.some(1 / n)
+	n === 0 ? O.none : O.some (1 / n)
 
-const inverseHead = O.option.map(
-	A.head([1, 2, 3]), inverse)
+const inverseHead = O.option.map (
+	A.head ([1, 2, 3]), inverse)
 
 /*
  Opss, I did it again, inverseHead has the type Option<Option<number>>
@@ -44,17 +51,17 @@ const inverseHead = O.option.map(
  We need to flatten the nested Options.
  */
 
-const flatten = <A>(mma: O.Option<O.Option<A>>): O.Option<A> =>
-	(O.isNone(mma) ? O.none : mma.value)
+const flatten = <A> (mma: O.Option<O.Option<A>>): O.Option<A> =>
+	(O.isNone (mma) ? O.none : mma.value)
 
-const inverseHead2: O.Option<number> = O.flatten(
-	O.option.map(A.head([1, 2, 3]), inverse))
+const inverseHead2: O.Option<number> = O.flatten (
+	O.option.map (A.head ([1, 2, 3]), inverse))
 
 
 // ...
 
 const followersOfFollowers3: Array<User> =
-	A.array.chain(getFollowers(user), getFollowers)
+	A.array.chain (getFollowers (user), getFollowers)
 
-const headInverse3: O.Option<number> = O.option.chain(
-	A.head([1, 2, 3]), inverse)
+const headInverse3: O.Option<number> = O.option.chain (
+	A.head ([1, 2, 3]), inverse)

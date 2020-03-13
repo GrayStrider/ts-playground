@@ -6,6 +6,10 @@ import { tryCatch } from 'fp-ts/lib/TaskEither'
 import { getOrElse } from 'fp-ts/lib/Either'
 import { identity } from 'fp-ts/lib/function'
 
+/**
+ * Functor has .map property
+ */
+
 //==========================================================
 // How can we compose two generic functions
 // f: (a: A) => B and g: (c: C) => D?
