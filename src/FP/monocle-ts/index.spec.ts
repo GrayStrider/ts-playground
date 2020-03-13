@@ -118,9 +118,26 @@ const firstLetter = company
 	.compose (firstLetterLens)
 
 it ('should modify first letter', async () => {
-	expect.assertions (1)
+	expect.assertions (2)
 	const act = firstLetter.modify
 	(s => s.toUpperCase ()) (employee)
-	isSE(act, expSpread)
+	isSE (act, expSpread)
+	
+	const act2 = firstLetter.modify
+	(x => '_')
+	const exp = {
+		'company': {
+			'address': {
+				'city': 'london',
+				'street': {
+					'name': '_igh street',
+					'num': 23
+				}
+			},
+			'name': 'awesome inc'
+		},
+		'name': 'john'
+	}
+	isSE (act2 (employee), exp)
 	
 })
