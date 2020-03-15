@@ -1,4 +1,4 @@
-import { myFlow, doubleSay, exclaim, capitalize } from './lodash'
+import { myFlow, doubleSay, exclaim, capitalize } from './lodash.examples'
 
 it('should do the thing', () => {
   const cases: [Array<(arg: any) => any>, string][] = [
