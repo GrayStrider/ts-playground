@@ -1,17 +1,23 @@
 import { interpret } from 'xstate'
-import fetchMachine from './fetch'
+import { fetchMachine as fM, FetchInterpreter } from './fetch'
+import { flow } from 'fp-ts/lib/function'
+import { prop } from 'fp-ts-ramda/lib/prop'
 
-const fS = interpret (fetchMachine)
+let fS: FetchInterpreter
 
 const listener = jest.fn ()
+const listen = flow (prop ('value'), listener)
 
-fS.onTransition (x => listener (x.value))
-// fS.onEvent (listener)
-// ...
-fS.start ()
-
-const isNow = (e: unknown) => expect
+const isNow = (e?: keyof typeof fM.states) => expect
 (listener).toHaveBeenLastCalledWith (e)
+
+beforeEach (() => {
+	listener.mockClear ()
+	fS = interpret (fM)
+		.onTransition (listen)
+		.start ()
+})
+
 
 it ('should flow through the state correctly', async () => {
 	expect.assertions (3)
